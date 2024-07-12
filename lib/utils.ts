@@ -1,0 +1,44 @@
+import { type ClassValue, clsx } from "clsx"
+import { twMerge } from "tailwind-merge"
+
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs))
+}
+
+export function formatNumber(num: number) {
+  if (num >= 1000000) {
+    return (num / 1000000).toFixed(1) + "M"
+  } else if (num >= 1000) {
+    return (num / 1000).toFixed(0) + "K"
+  } else {
+    return num.toString()
+  }
+}
+
+export function capitalizeFirstLetter(input?: string): string {
+  if (!input) return ""
+  return input
+    .trim() // Remove leading and trailing spaces
+    .split(/\s+/) // Split by one or more spaces
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+    .join(" ")
+}
+
+export function encodeTitleToSlug(title: string): string {
+  return title
+    .toLowerCase() // Convert to lowercase
+    .trim() // Trim leading/trailing whitespace
+    .normalize("NFD") // Normalize to Unicode NFD form
+    .replace(/[\u0300-\u036f]/g, "") // Remove diacritical marks
+    .replace(/[^a-z0-9\s-]/g, "") // Remove all non-alphanumeric characters except spaces and hyphens
+    .replace(/\s+/g, "-") // Replace spaces with hyphens
+    .replace(/-+/g, "-") // Replace multiple hyphens with a single hyphen
+}
+
+export const parseImage = (img: string) => {
+  const parts = img.split("::")
+  return {
+    url: parts[0].trim(),
+    alt: parts[1] ? parts[1].trim() : "",
+  }
+}
