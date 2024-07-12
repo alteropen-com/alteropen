@@ -36,8 +36,7 @@ export function DialogLogin() {
     supabase.auth.signInWithOAuth({
       provider: "google",
       options: {
-        redirectTo:
-          location.origin + "/auth/callback?next=" + location.pathname,
+        redirectTo: location.origin + location.pathname,
       },
     })
   }
