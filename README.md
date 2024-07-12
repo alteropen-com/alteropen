@@ -1,3 +1,9 @@
 # README 
 
-TODO
+
+
+```
+npm run install
+npm run dev
+
+```

@@ -1,5 +1,6 @@
 import { apps } from "#site/content"
 import { CustomMDX } from "@/components/mdx/MdxRemote"
+import ButtonEditPage from "@/components/theme/layout/button-edit-page"
 import ButtonSave from "@/components/theme/layout/button-save"
 import ButtonVisitSite from "@/components/theme/layout/button-visit-site"
 import DetailImage from "@/components/theme/layout/detail-image"
@@ -201,11 +202,18 @@ export default async function PostPage({ params }: PostPageProps) {
           <hr className="my-4" />
           <ItemFeature post={app} />
           <hr className="my-4" />
+          <div className="flex justify-end">
+            <ButtonEditPage app={app} />
+          </div>
           <div className="prose dark:prose-invert max-w-[2000px]">
             <Suspense>
               <CustomMDX source={app.raw} />
             </Suspense>
           </div>
+          <div className="flex justify-end">
+            <ButtonEditPage app={app} />
+          </div>
+          <hr className="my-4" />
         </div>
       </div>
     </article>

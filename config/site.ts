@@ -6,6 +6,7 @@ export const siteConfig = {
   image: "https://picsum.photos/500/500",
   links: {
     twitter: "https://twitter.com/",
+    github: "https://github.com/alteropen-com/alteropen",
   },
   author: "Steven Alter",
 }
