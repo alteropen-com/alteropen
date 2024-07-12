@@ -22,7 +22,7 @@ const ButtonVisitSite = ({
           ? className
           : "text-md text-primary no-underline hover:underline"
       } flex items-center`}
-      href={(href || post?.url) + `?ref=${siteConfig.name}`}
+      href={(href || post?.url) + `?ref=${siteConfig.ref}`}
       target={target}
       rel="noopener noreferrer"
     >

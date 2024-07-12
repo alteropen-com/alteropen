@@ -9,6 +9,7 @@ export const siteConfig = {
     github: "https://github.com/alteropen-com/alteropen",
   },
   author: "Steven Alter",
+  ref: "AlterOpen.com",
 }
 
 export type SiteConfig = typeof siteConfig

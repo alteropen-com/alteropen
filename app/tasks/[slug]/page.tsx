@@ -27,7 +27,7 @@ const filterApps = (slug: string) => {
 }
 
 const pageTitle = (slug: string): string => {
-  if (slug === "all") return "Best Alternative Open List"
+  if (slug === "all") return "Best Alternative OpenSource List"
   return `${
     filterApps(slug).length
   }  Best Alternative for  ${capitalizeFirstLetter(

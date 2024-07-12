@@ -1,7 +1,6 @@
 import { apps } from "@/.velite"
 import { getAllTags, sortTagsByCount } from "@/lib/helper"
 import Link from "next/link"
-import { MdChevronRight } from "react-icons/md"
 import Tags from "./tags"
 
 export default function NavLeft() {
@@ -15,7 +14,7 @@ export default function NavLeft() {
           href="/app"
           className="flex items-center text-sm font-semibold lg:text-xl"
         >
-          <MdChevronRight size={16} className="mr-2" /> Alternative by
+          Alternative by
         </Link>
         <Tags tags={sortedTasks} tasks={tasks} />
       </div>

@@ -60,7 +60,7 @@ export default function ItemAlternative({ post }: { post: App }) {
                   {item.url ? (
                     <a
                       className="text-primary no-underline hover:underline flex items-center"
-                      href={item.url + `?ref=${siteConfig.name}`}
+                      href={item.url + `?ref=${siteConfig.ref}`}
                       target="_black"
                       rel="noopener noreferrer"
                     >
