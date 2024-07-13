@@ -36,7 +36,7 @@ const nextConfig = {
       },
       {
         source: "/alternative",
-        destination: "/tasks/all",
+        destination: "/alternative/all",
         permanent: false,
       },
     ]

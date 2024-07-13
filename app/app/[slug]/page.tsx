@@ -62,7 +62,7 @@ export async function generateMetadata({
     app.alternative && app.alternative.length > 0
       ? " " + app.alternative.length
       : ""
-  } Alternative App. HowTo. Pricing.`
+  } Alternative App. HowTo. Pricing. | ${siteConfig.title}`
   const pageDescription = title + ". " + description
 
   return {

@@ -45,6 +45,9 @@ export function MainNav() {
           <SheetLink onOpenChange={setOpen} href="/tasks">
             Tasks
           </SheetLink>
+          <SheetLink onOpenChange={setOpen} href="/alternative">
+            Alternatives
+          </SheetLink>
         </div>
         <hr className="border-gray-600" />
         <div className="flex flex-col gap-3 mt-5">

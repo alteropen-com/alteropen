@@ -63,7 +63,8 @@ export async function generateMetadata({
     (name || title) +
     " Alternative." +
     (alternateApps.length > 0 ? " Top " + alternateApps.length : "") +
-    " Similar App. (Free or Paid). Review. HowTo. Pricing."
+    " Similar App. (Free or Paid). Review. HowTo. Pricing. " +
+    siteConfig.title
 
   const pageDescription = title + ". " + description
 
