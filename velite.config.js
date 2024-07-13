@@ -51,7 +51,9 @@ export default defineConfig({
           .optional(),
         url: s.string().optional(),
         pricing: s
-          .array(s.enum(["Free", "Freemium", "Subscription", "OpenSource"]))
+          .array(
+            s.enum(["Free", "Freemium", "Subscription", "OpenSource", "Paid"])
+          )
           .optional(),
         visit: s.array(s.number()).default([0]),
         ios: s.string().optional(),
@@ -107,7 +109,9 @@ export default defineConfig({
           .optional(),
         url: s.string().optional(),
         pricing: s
-          .array(s.enum(["Free", "Freemium", "Subscription", "OpenSource"]))
+          .array(
+            s.enum(["Free", "Freemium", "Subscription", "OpenSource", "Paid"])
+          )
           .optional(),
         visit: s.array(s.number()).default([0]),
         ios: s.string().optional(),

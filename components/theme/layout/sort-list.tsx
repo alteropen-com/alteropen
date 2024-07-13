@@ -17,12 +17,11 @@ export default function SortList({ sortBy }: { sortBy?: string }) {
         <Sheet>
           <SheetTrigger asChild className="flex-1">
             <Button variant="outline">
-              <MdChevronRight size={16} className="mr-2" /> Filter Alternative
-              By
+              Filter by <MdChevronRight size={16} className="mr-2" />
             </Button>
           </SheetTrigger>
           <SheetContent side="right">
-            <div className="text-sm lg:text-xl capitalize">Alternative To</div>
+            <div className="text-sm lg:text-xl">Filter by:</div>
             <div className="my-4">
               <Tags tags={sortedTasks} tasks={tasks} />
             </div>

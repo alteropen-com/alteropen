@@ -14,7 +14,7 @@ export default function NavLeft() {
           href="/app"
           className="flex items-center text-sm font-semibold lg:text-xl"
         >
-          Alternative by
+          Filter by:
         </Link>
         <Tags tags={sortedTasks} tasks={tasks} />
       </div>
