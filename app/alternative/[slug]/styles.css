@@ -1,0 +1,8 @@
+.subheading-anchor {
+  @apply no-underline hover:underline;
+  @apply text-primary;
+}
+
+.slick-dots li button:before {
+  color: gray !important;
+}

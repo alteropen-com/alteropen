@@ -27,12 +27,12 @@ const filterApps = (slug: string) => {
 }
 
 const pageTitle = (slug: string): string => {
-  if (slug === "all") return "Best Alternative OpenSource List"
+  if (slug === "all") return "ALTERnative OPENSource List"
   return `${
     filterApps(slug).length
   }  Best Alternative for  ${capitalizeFirstLetter(
     slug.split("-").join(" ")
-  )} Apps / Tasks | ${siteConfig.title}`
+  )} Apps / Tasks`
 }
 
 export async function generateMetadata({

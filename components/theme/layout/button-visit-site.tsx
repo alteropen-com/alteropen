@@ -7,13 +7,13 @@ const ButtonVisitSite = ({
   text,
   target = "_black",
   className,
-  post,
+  app,
 }: {
   href?: string
   text?: string
   target?: string
   className?: string
-  post?: App
+  app?: App
 }) => {
   return (
     <a
@@ -22,11 +22,11 @@ const ButtonVisitSite = ({
           ? className
           : "text-md text-primary no-underline hover:underline"
       } flex items-center`}
-      href={(href || post?.url) + `?ref=${siteConfig.ref}`}
+      href={(href || app?.url) + `?ref=${siteConfig.ref}`}
       target={target}
       rel="noopener noreferrer"
     >
-      {text || post?.name} <RxOpenInNewWindow className="ml-1" />
+      {text || app?.name} <RxOpenInNewWindow className="ml-1" />
     </a>
   )
 }

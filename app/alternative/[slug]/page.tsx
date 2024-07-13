@@ -1,7 +1,6 @@
-import { apps } from "#site/content"
+import { alternatives, apps } from "#site/content"
 import { CustomMDX } from "@/components/mdx/MdxRemote"
 import ButtonEditPage from "@/components/theme/layout/button-edit-page"
-import ButtonSave from "@/components/theme/layout/button-save"
 import ButtonVisitSite from "@/components/theme/layout/button-visit-site"
 import DetailImage from "@/components/theme/layout/detail-image"
 import DetailToc from "@/components/theme/layout/detail-toc"
@@ -16,7 +15,6 @@ import {
   BreadcrumbList,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
-import { Card } from "@/components/ui/card"
 import { siteConfig } from "@/config/site"
 import { encodeTitleToSlug } from "@/lib/utils"
 import { Metadata } from "next"
@@ -35,7 +33,7 @@ interface PostPageProps {
 }
 
 export const generateStaticParams = () => {
-  const paths = apps.map((app) => ({ slug: app.slug }))
+  const paths = alternatives.map((app) => ({ slug: app.slug }))
 
   return paths
 }
@@ -43,7 +41,7 @@ export const generateStaticParams = () => {
 export async function generateMetadata({
   params,
 }: PostPageProps): Promise<Metadata> {
-  const app = apps.find((app) => {
+  const app = alternatives.find((app) => {
     return app.slug === params.slug
   })
 
@@ -53,16 +51,20 @@ export async function generateMetadata({
 
   const { name, title, slug, description, image } = app
 
-  const href = `/app/${slug}`
+  const href = `/alternative/${slug}`
 
   const imageUrl = image.url
 
-  const pageTitle = `
-    ${name || title} Review. Top ${
-    app.alternative && app.alternative.length > 0
-      ? " " + app.alternative.length
-      : ""
-  } Alternative App. HowTo. Pricing.`
+  const alternateApps = apps.filter((item) =>
+    item.alternative?.find((ia) => ia.id === app.id)
+  )
+
+  const pageTitle =
+    (name || title) +
+    " Alternative." +
+    (alternateApps.length > 0 ? " Top " + alternateApps.length : "") +
+    " Similar App. Review. HowTo. Pricing."
+
   const pageDescription = title + ". " + description
 
   return {
@@ -95,11 +97,11 @@ export async function generateMetadata({
 }
 
 export default async function PostPage({ params }: PostPageProps) {
-  const app = apps.find((app) => {
+  const post = alternatives.find((app) => {
     return app.slug === params.slug
   })
 
-  if (!app) {
+  if (!post) {
     notFound()
   }
 
@@ -109,7 +111,7 @@ export default async function PostPage({ params }: PostPageProps) {
         <div className="w-full max-w-[1468px]">
           <Breadcrumb className="mb-3">
             <BreadcrumbList className="text-xs">
-              {app.tasks
+              {post.tasks
                 ?.filter((tag: string) => tag)
                 .slice(0, 3)
                 .map((tag, index) => (
@@ -132,76 +134,74 @@ export default async function PostPage({ params }: PostPageProps) {
           <div className="min-h-[500px] flex flex-col sm:flex-row rounded-lg">
             {/* Image Section */}
             <div className="hidden sm:block flex-[2_1_60%]">
-              <DetailImage post={app} />
+              <DetailImage post={post} />
             </div>
 
             {/* Details Section */}
             <div className="sm:px-4 flex-[2_1_40%]">
-              <h1 className="text-2xl font-semibold mb-2">{app.title}</h1>
+              <h1 className="text-2xl font-semibold mb-2">{post.title}</h1>
               <div className="mt-2 flex justify-between flex-col lg:flex-row">
-                <VisitNumber app={app} />
-                <ButtonVisitSite app={app} />
+                <VisitNumber app={post} />
+                <ButtonVisitSite app={post} />
               </div>
 
               <hr className="my-1 hidden sm:block" />
               <div className="sm:hidden">
-                <DetailImage post={app} />
+                <DetailImage post={post} />
               </div>
               <div className="my-3 flex justify-between flex-col lg:flex-row">
                 <span className="text-sm font-bold uppercase">
-                  {app.pricing?.join(" | ")}
+                  {post.pricing?.join(" | ")}
                 </span>
-
-                {app?.alternative && (
-                  <Link
-                    className="text-md text-primary no-underline hover:underline"
-                    href="#alternativeTo"
-                  >
-                    Best Alternatives
-                  </Link>
-                )}
               </div>
 
-              {app.description ? (
+              <Link
+                className="text-md text-primary no-underline hover:underline"
+                href="#alternativeTo"
+              >
+                Best Alternatives
+              </Link>
+
+              {post.description ? (
                 <p className="text-lg mt-0 text-muted-foreground">
-                  {app.description}
+                  {post.description}
                 </p>
               ) : null}
-              <DetailToc toc={app.toc} />
+              <DetailToc toc={post.toc} />
             </div>
 
             {/* Action Buttons Section */}
             <div className="w-full flex-shrink-0 sm:w-[240px] 2xl:w-[300px]">
-              <Card className="px-4 py-3">
+              {/* <Card className="px-4 py-3">
                 <p className="text-sm text-center my-2">Save this for later</p>
-                <ButtonSave id={app.id} />
+                <ButtonSave id={post.id} />
                 <p className="text-sm text-center my-2">
                   Unlocks personalized recommendations just for you!
                 </p>
-              </Card>
+              </Card> */}
               <div className="px-4 py-3 mt-4 space-y-2">
                 <div>Tasks:</div>
-                {app.tasks?.map((t) => (
+                {post.tasks?.map((t) => (
                   <TagItem tag={t} key={t} type="tasks" />
                 ))}
               </div>
             </div>
           </div>
           <hr className="my-4" />
-          <ItemAlternative post={app} />
+          <ItemAlternative post={post} />
           <hr className="my-4" />
-          <ItemFeature post={app} />
+          <ItemFeature post={post} />
           <hr className="my-4" />
           <div className="flex justify-end">
-            <ButtonEditPage app={app} />
+            <ButtonEditPage app={post} />
           </div>
           <div className="prose dark:prose-invert max-w-[2000px]">
             <Suspense>
-              <CustomMDX source={app.raw} />
+              <CustomMDX source={post.raw} />
             </Suspense>
           </div>
           <div className="flex justify-center my-4">
-            <ButtonEditPage app={app} />
+            <ButtonEditPage app={post} />
           </div>
           <hr className="my-4" />
         </div>

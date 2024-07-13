@@ -42,7 +42,7 @@ const DetailsList = ({ apps }: { apps: App[] }) => {
             </div>
           </div>
           <div className="mt-1 py-2 px-2 bg-muted/50 flex justify-between">
-            <VisitNumber post={app} text="visit" />
+            <VisitNumber app={app} text="visit" />
             <span className="text-sm">{pricing?.join("|")}</span>
           </div>
         </div>

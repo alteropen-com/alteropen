@@ -1,7 +1,11 @@
 {
-  "extends": ["next/core-web-vitals", "plugin:eslint-plugin-next-on-pages/recommended"],
+  "extends": [
+    "next/core-web-vitals",
+    "plugin:eslint-plugin-next-on-pages/recommended"
+  ],
   "plugins": ["eslint-plugin-next-on-pages"],
   "rules": {
-    "@next/next/no-img-element": "off"
+    "@next/next/no-img-element": "off",
+    "no-console": "error"
   }
 }

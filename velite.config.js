@@ -78,5 +78,43 @@ export default defineConfig({
           .optional(),
       }),
     },
+    alternatives: {
+      name: "Alternative", // collection type name
+      pattern: "alternative/**/*.mdx", // content files glob pattern
+      schema: s.object({
+        // required
+        id: s.number(),
+        slug: s.string().max(99),
+        path: s.path(),
+        name: s.string().max(50),
+        title: s.string().max(120),
+        image: s.object({
+          url: s.string().max(999),
+          alt: s.string().max(120).optional(),
+        }),
+        // optional
+        description: s.string().max(999).optional(),
+        published: s.boolean().default(true),
+        tasks: s.array(s.string()).optional(),
+        features: s.array(s.string()).optional(),
+        images: s
+          .array(
+            s.object({
+              url: s.string().max(999),
+              alt: s.string().max(99).optional(),
+            })
+          )
+          .optional(),
+        url: s.string().optional(),
+        pricing: s
+          .array(s.enum(["Free", "Freemium", "Subscription", "OpenSource"]))
+          .optional(),
+        visit: s.array(s.number()).default([0]),
+        ios: s.string().optional(),
+        android: s.string().optional(),
+        raw: s.raw(),
+        toc: s.toc(),
+      }),
+    },
   },
 })

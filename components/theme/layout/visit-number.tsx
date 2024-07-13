@@ -2,15 +2,15 @@ import { App } from "@/.velite"
 import { formatNumber } from "@/lib/utils"
 
 const VisitNumber = ({
-  post,
+  app,
   text = "visit in last month",
 }: {
-  post?: App
+  app?: App
   text?: string
 }) => {
-  if (!post) return null
+  if (!app) return null
 
-  const lastMonth = post.visit[0]
+  const lastMonth = app.visit[0]
 
   if (lastMonth > 0)
     return (
