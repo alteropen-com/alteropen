@@ -16,6 +16,7 @@ export default function ItemAlternative({ post }: { post: App }) {
       visit: app.visit,
       url: `/app/${app.slug}`,
     }))
+    .sort((a, b) => b.visit[0] - a.visit[0])
 
   const postAlternative = post.alternative
     ?.filter((item) => !alternativeApp?.find((app) => item.id === app.id))
