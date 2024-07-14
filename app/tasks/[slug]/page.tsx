@@ -28,12 +28,12 @@ const filterApps = (slug: string) => {
 
 const pageTitle = (slug: string): string => {
   if (slug === "all")
-    return "ALTERnative OPENSource List for Solo Developers and startups"
+    return "Alternative OpenSource List for Solo Developers and startups in 2024"
   return `${
     filterApps(slug).length
-  }  Best Alternative for  ${capitalizeFirstLetter(
+  }  Top Alternative to ${capitalizeFirstLetter(
     slug.split("-").join(" ")
-  )} Apps / Tasks`
+  )} Apps (Free/ OpenSource or Deal) in 2024`
 }
 
 export async function generateMetadata({
@@ -41,7 +41,7 @@ export async function generateMetadata({
 }: PageProps): Promise<Metadata> {
   const { slug } = params
   const title = pageTitle(slug)
-  const description = `Top Alternatives for ${slug} with video review and how-to. Pricing and more.`
+  const description = `Top Alternatives to ${slug} with video review and how-to. Pricing and more.`
 
   const href = `/tasks/${slug}`
   const imageUrl = siteConfig.image
@@ -69,7 +69,7 @@ export async function generateMetadata({
     twitter: {
       card: "summary_large_image",
       title: title,
-      description: title,
+      description,
       images: [imageUrl],
     },
   }

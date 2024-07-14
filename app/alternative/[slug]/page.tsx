@@ -1,6 +1,7 @@
 import { alternatives, apps } from "#site/content"
 import { CustomMDX } from "@/components/mdx/MdxRemote"
 import ButtonEditPage from "@/components/theme/layout/button-edit-page"
+import ButtonFollow from "@/components/theme/layout/button-save"
 import ButtonVisitSite from "@/components/theme/layout/button-visit-site"
 import DetailImage from "@/components/theme/layout/detail-image"
 import DetailToc from "@/components/theme/layout/detail-toc"
@@ -15,6 +16,7 @@ import {
   BreadcrumbList,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
+import { Card } from "@/components/ui/card"
 import { siteConfig } from "@/config/site"
 import { encodeTitleToSlug } from "@/lib/utils"
 import { Metadata } from "next"
@@ -59,18 +61,14 @@ export async function generateMetadata({
     item.alternative?.find((ia) => ia.id === app.id)
   )
 
-  const pageTitle =
-    (name || title) +
-    " Alternative." +
-    (alternateApps.length > 0 ? " Top " + alternateApps.length : "") +
-    " Similar App. (Free or Paid). Review. HowTo. Pricing. " +
-    siteConfig.title
-
-  const pageDescription = title + ". " + description
+  const pageTitle = `
+    ${name || title} AlternativeTo. ${
+    alternateApps.length > 0 ? " Top " + alternateApps.length : ""
+  } (Free/ OpenSource or Deal) in 2024. Review. HowTo. Pricing.`
 
   return {
     title: pageTitle,
-    description: pageDescription,
+    description: description,
     authors: { name: siteConfig.author },
     alternates: {
       canonical: href,
@@ -78,7 +76,7 @@ export async function generateMetadata({
     openGraph: {
       siteName: siteConfig.name,
       title: pageTitle,
-      description: pageDescription,
+      description: description,
       type: "article",
       url: href,
       images: [
@@ -91,7 +89,7 @@ export async function generateMetadata({
     twitter: {
       card: "summary_large_image",
       title: pageTitle,
-      description: pageDescription,
+      description: description,
       images: [imageUrl],
     },
   }
@@ -173,13 +171,15 @@ export default async function PostPage({ params }: PostPageProps) {
 
             {/* Action Buttons Section */}
             <div className="w-full flex-shrink-0 sm:w-[240px] 2xl:w-[300px]">
-              {/* <Card className="px-4 py-3">
-                <p className="text-sm text-center my-2">Save this for later</p>
-                <ButtonSave id={post.id} />
+              <Card className="px-4 py-3">
                 <p className="text-sm text-center my-2">
-                  Unlocks personalized recommendations just for you!
+                  Follow this for later
                 </p>
-              </Card> */}
+                <ButtonFollow id={post.id} />
+                <p className="text-sm text-center my-2">
+                  Unlocks personalized deals just for you!
+                </p>
+              </Card>
               <div className="px-4 py-3 mt-4 space-y-2">
                 <div>Tasks:</div>
                 {post.tasks?.map((t) => (

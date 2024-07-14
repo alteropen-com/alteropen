@@ -1,7 +1,7 @@
 import { apps } from "#site/content"
 import { CustomMDX } from "@/components/mdx/MdxRemote"
 import ButtonEditPage from "@/components/theme/layout/button-edit-page"
-import ButtonSave from "@/components/theme/layout/button-save"
+import ButtonFollow from "@/components/theme/layout/button-save"
 import ButtonVisitSite from "@/components/theme/layout/button-visit-site"
 import DetailImage from "@/components/theme/layout/detail-image"
 import DetailToc from "@/components/theme/layout/detail-toc"
@@ -58,11 +58,11 @@ export async function generateMetadata({
   const imageUrl = image.url
 
   const pageTitle = `
-    ${name || title} Review. Top ${
+    ${name || title} Review. Price. Top ${
     app.alternative && app.alternative.length > 0
       ? " " + app.alternative.length
       : ""
-  } Alternative App. HowTo. Pricing. | ${siteConfig.title}`
+  } Alternative App (Free/ OpenSource or Deal) in 2024.`
   const pageDescription = title + ". " + description
 
   return {
@@ -173,10 +173,12 @@ export default async function PostPage({ params }: PostPageProps) {
             {/* Action Buttons Section */}
             <div className="w-full flex-shrink-0 sm:w-[240px] 2xl:w-[300px]">
               <Card className="px-4 py-3">
-                <p className="text-sm text-center my-2">Save this for later</p>
-                <ButtonSave id={app.id} />
                 <p className="text-sm text-center my-2">
-                  Unlocks personalized recommendations just for you!
+                  Follow this for later
+                </p>
+                <ButtonFollow id={app.id} />
+                <p className="text-sm text-center my-2">
+                  Unlocks personalized deals just for you!
                 </p>
               </Card>
               <div className="px-4 py-3 mt-4 space-y-2">

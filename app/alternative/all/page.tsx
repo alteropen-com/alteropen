@@ -13,8 +13,9 @@ interface PageProps {
   searchParams: { sortBy?: string }
 }
 
-const title = "Top ALTERnative App List"
-const description = `Top Alternatives Similar App. (Free or Paid). Review. HowTo. Pricing`
+const title =
+  "Top AlternativeTo (Free/ OpenSource or Deal) App List in 2024. Review. HowTo. Pricing."
+const description = `Top Alternatives, Similar App List in 2024. (Free/ OpenSource or Deal). Review. HowTo. Pricing.`
 
 export async function generateMetadata(): Promise<Metadata> {
   const href = `/alternative/all`
@@ -43,7 +44,7 @@ export async function generateMetadata(): Promise<Metadata> {
     twitter: {
       card: "summary_large_image",
       title: title,
-      description: title,
+      description,
       images: [imageUrl],
     },
   }

@@ -5,7 +5,7 @@ import { supabaseBrowser } from "@/lib/supabase/browser"
 import { useQueryClient } from "@tanstack/react-query"
 import { useRouter } from "next/navigation"
 
-const ButtonSave = ({ id }: { id: number }) => {
+const ButtonFollow = ({ id }: { id: number }) => {
   const { isFetching, data: userProduct } = useUserProduct()
   const queryClient = useQueryClient()
   const router = useRouter()
@@ -55,10 +55,10 @@ const ButtonSave = ({ id }: { id: number }) => {
           : "bg-yellow-400 text-gray-900 hover:bg-yellow-300"
       }`}
       >
-        {isFetching ? "" : isSaved ? "Saved" : "Save Now"}
+        {isFetching ? "" : isSaved ? "Followed" : "Follow Now"}
       </button>
     </>
   )
 }
 
-export default ButtonSave
+export default ButtonFollow
