@@ -56,7 +56,7 @@ export default function Page({ searchParams }: PageProps) {
     .sort((a, b) => {
       switch (sortBy) {
         case "top":
-          return a?.visit > b?.visit ? -1 : 1
+          return a?.visit[0] > b?.visit[0] ? -1 : 1
         case "lasted":
         default:
           return a.id > b.id ? -1 : 1
