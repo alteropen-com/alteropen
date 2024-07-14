@@ -6,9 +6,6 @@ import { siteConfig } from "@/config/site"
 import { capitalizeFirstLetter, encodeTitleToSlug } from "@/lib/utils"
 import { Metadata } from "next"
 
-export const runtime = "edge"
-export const dynamicParams = false
-
 interface PageProps {
   params: {
     slug: string

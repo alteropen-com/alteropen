@@ -6,9 +6,6 @@ import { siteConfig } from "@/config/site"
 import { Metadata } from "next"
 import Link from "next/link"
 
-export const runtime = "edge"
-export const dynamicParams = false
-
 interface PageProps {
   searchParams: { sortBy?: string }
 }

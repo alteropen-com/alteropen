@@ -25,9 +25,6 @@ import { notFound } from "next/navigation"
 import { Suspense } from "react"
 import "./styles.css"
 
-export const runtime = "edge"
-export const dynamicParams = false
-
 interface PostPageProps {
   params: {
     slug: string
