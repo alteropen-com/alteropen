@@ -26,13 +26,12 @@ export function MainNav() {
         <Menu className="h-5 w-5 text-white" />
         <span className="sr-only">Toggle Menu</span>
       </Button>
-      <Button
-        variant="link"
-        onClick={openMenu}
+      <Link
+        href="/"
         className="mr-6 px-0 flex items-center space-x-2 hover:no-underline"
       >
         <span className="font-bold text-white">{siteConfig.name}</span>
-      </Button>
+      </Link>
       <SheetContent side="top">
         <SheetLink
           onOpenChange={setOpen}
