@@ -55,12 +55,12 @@ export async function generateMetadata({
   const imageUrl = image.url
 
   const pageTitle = `
-    ${name || title} Review. Price. Top ${
+    ${name || title} Review and Good Deal in 2024. `
+  const pageDescription = `HowTo. Pricing. Top ${
     app.alternative && app.alternative.length > 0
       ? " " + app.alternative.length
       : ""
-  } Alternative App (Free/ OpenSource or Deal) in 2024.`
-  const pageDescription = title + ". " + description
+  } Alternative App (Free/ OpenSource...) in 2024.`
 
   return {
     title: pageTitle,

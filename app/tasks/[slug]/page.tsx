@@ -25,12 +25,12 @@ const filterApps = (slug: string) => {
 
 const pageTitle = (slug: string): string => {
   if (slug === "all")
-    return "Alternative OpenSource List for Solo Developers and startups in 2024"
+    return "AlternativeTo and Deal List for Solo Developers and Startups in 2024"
   return `${
     filterApps(slug).length
-  }  Top Alternative to ${capitalizeFirstLetter(
+  }  Top Alternative for ${capitalizeFirstLetter(
     slug.split("-").join(" ")
-  )} Apps (Free/ OpenSource or Deal) in 2024`
+  )} (Free/ OpenSource...) Apps  and Deals in 2024`
 }
 
 export async function generateMetadata({
@@ -38,7 +38,7 @@ export async function generateMetadata({
 }: PageProps): Promise<Metadata> {
   const { slug } = params
   const title = pageTitle(slug)
-  const description = `Top Alternatives to ${slug} with video review and how-to. Pricing and more.`
+  const description = `Top Alternatives for ${slug} with Review, HowTo. Pricing and more.`
 
   const href = `/tasks/${slug}`
   const imageUrl = siteConfig.image

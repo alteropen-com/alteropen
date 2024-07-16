@@ -11,8 +11,8 @@ interface PageProps {
 }
 
 const title =
-  "Top AlternativeTo (Free/ OpenSource or Deal) App List in 2024. Review. HowTo. Pricing."
-const description = `Top Alternatives, Similar App List in 2024. (Free/ OpenSource or Deal). Review. HowTo. Pricing.`
+  "Top AlternativeTo (Free/ OpenSource...) in 2024. App List. Review. HowTo. Pricing."
+const description = `Best Similar App List with Good Deal. Review. HowTo. Pricing.`
 
 export async function generateMetadata(): Promise<Metadata> {
   const href = `/alternative/all`
