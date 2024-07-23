@@ -10,7 +10,7 @@ export default function Comment() {
       <Giscus
         id="comments"
         repo="alteropen-com/alteropen"
-        repoId="R_kgDOMVlEcA="
+        repoId="R_kgDOMVlEcA"
         category="Announcements"
         categoryId="DIC_kwDOMVlEcM4CgxnM"
         mapping="pathname"
