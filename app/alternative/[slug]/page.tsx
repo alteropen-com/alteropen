@@ -50,7 +50,7 @@ export async function generateMetadata({
     return {}
   }
 
-  const { name, title, slug, image } = app
+  const { name, title, slug, image, deals } = app
 
   const href = `/alternative/${slug}`
 
@@ -63,9 +63,11 @@ export async function generateMetadata({
   const pageTitle = `
     ${name || title} ${
     alternateApps.length > 0 ? " Top " + alternateApps.length : ""
-  } AlternativeTo (Free/OpenSource...) in 2024.`
+  } AlternativeTo (Free/OpenSource...) ${
+    deals && deals.length > 0 ? `+${deals.length} Deals` : ""
+  } in 2024. `
 
-  const description = `Best Similar, Replacement App with Good Deal for ${
+  const description = `Best Similar, Replacement App with Top Deal for ${
     name || title
   }. Review. HowTo. Pricing.`
 
