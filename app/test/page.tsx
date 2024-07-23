@@ -1,10 +1,11 @@
-import { posts } from "#site/content"
-import { CustomMDX } from "@/components/mdx/MdxRemote"
+// import { posts } from "#site/content"
+// import { CustomMDX } from "@/components/mdx/MdxRemote"
 
 export default async function RemoteMdxPage() {
   return (
     <div>
-      {posts.map((post, i) => (
+      Impact-Site-Verification: 7ec312b9-2da8-4520-9274-b7ed18c99f41
+      {/* {posts.map((post, i) => (
         <div key={i}>
           <h1 className="text-3xl my-5">{post.title}</h1>
           <CustomMDX
@@ -12,7 +13,7 @@ export default async function RemoteMdxPage() {
           />
           <hr />
         </div>
-      ))}
+      ))} */}
     </div>
   )
 }
