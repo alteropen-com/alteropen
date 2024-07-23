@@ -1,5 +1,6 @@
 import { apps } from "#site/content"
 import { CustomMDX } from "@/components/mdx/MdxRemote"
+import ButtonDealsApp from "@/components/theme/layout/button-deals-app"
 import ButtonEditPage from "@/components/theme/layout/button-edit-page"
 import ButtonFollow from "@/components/theme/layout/button-save"
 import ButtonVisitSite from "@/components/theme/layout/button-visit-site"
@@ -17,7 +18,6 @@ import {
   BreadcrumbList,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
-import { Card } from "@/components/ui/card"
 import { siteConfig } from "@/config/site"
 import { encodeTitleToSlug } from "@/lib/utils"
 import { Metadata } from "next"
@@ -170,15 +170,8 @@ export default async function PostPage({ params }: PostPageProps) {
 
             {/* Action Buttons Section */}
             <div className="w-full flex-shrink-0 sm:w-[240px] 2xl:w-[300px]">
-              <Card className="px-4 py-3">
-                <p className="text-sm text-center my-2">
-                  Follow this for later
-                </p>
-                <ButtonFollow id={app.id} />
-                <p className="text-sm text-center my-2">
-                  Unlocks personalized deals just for you!
-                </p>
-              </Card>
+              <ButtonFollow id={app.id} />
+              <ButtonDealsApp app={app} />
               <div className="px-4 py-3 mt-4 space-y-2">
                 <div>Tasks:</div>
                 {app.tasks?.map((t) => (
