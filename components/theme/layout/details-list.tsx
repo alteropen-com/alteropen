@@ -33,7 +33,7 @@ const DetailsList = ({ apps }: { apps: App[] }) => {
             <div className="flex-1 text-center">
               <h3 className="text-lg font-bold">{name}</h3>
               <Link
-                href={`/app/${slug}`}
+                href={`/tasks/${tag}`}
                 className="relative z-1 underline capitalize"
               >
                 {tag}

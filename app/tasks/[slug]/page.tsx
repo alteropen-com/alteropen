@@ -29,7 +29,7 @@ const pageTitle = (slug: string): string => {
   return `${
     filterApps(slug).length
   }  Top Alternative for ${capitalizeFirstLetter(
-    slug.split("-").join(" ")
+    decodeURIComponent(slug.split("-").join(" "))
   )} (Free/ OpenSource...) Apps  and Deals in 2024`
 }
 
