@@ -1,6 +1,7 @@
 "use client"
 
 import useUserProduct from "@/components/api/hook/useUserProduct"
+import { Card } from "@/components/ui/card"
 import { supabaseBrowser } from "@/lib/supabase/browser"
 import { useQueryClient } from "@tanstack/react-query"
 import { useRouter } from "next/navigation"
@@ -42,7 +43,8 @@ const ButtonFollow = ({ id }: { id: number }) => {
   }
 
   return (
-    <>
+    <Card className="px-4 py-3">
+      <p className="text-sm text-center my-2">Follow this for later</p>
       <button
         onClick={handleSave}
         disabled={isFetching}
@@ -57,7 +59,10 @@ const ButtonFollow = ({ id }: { id: number }) => {
       >
         {isFetching ? "" : isSaved ? "Followed" : "Follow Now"}
       </button>
-    </>
+      <p className="text-sm text-center my-2">
+        Get notification with personalized deals just for you!
+      </p>
+    </Card>
   )
 }
 

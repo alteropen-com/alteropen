@@ -114,6 +114,15 @@ export default defineConfig({
           )
           .optional(),
         visit: s.array(s.number()).default([0]),
+        deals: s
+          .array(
+            s.object({
+              url: s.string().max(999),
+              name: s.string().max(99).optional(),
+              price: s.string().max(99).optional(),
+            })
+          )
+          .optional(),
         ios: s.string().optional(),
         android: s.string().optional(),
         raw: s.raw(),

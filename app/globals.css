@@ -57,3 +57,37 @@
     @apply bg-background text-foreground;
   }
 }
+
+.gradient-button {
+  background: -webkit-linear-gradient(45deg, #680aca, #ff897e);
+  background: linear-gradient(
+    60deg,
+    #f79533,
+    #f37055,
+    #ef4e7b,
+    #a166ab,
+    #5073b8,
+    #1098ad,
+    #07b39b,
+    #6fba82
+  );
+  color: white; /* Ensure text is visible */
+  border: none; /* Remove the default border */
+}
+
+.gradient-text {
+  background: -webkit-linear-gradient(45deg, #680aca, #ff897e);
+  background: linear-gradient(
+    60deg,
+    #f79533,
+    #f37055,
+    #ef4e7b,
+    #a166ab,
+    #5073b8,
+    #1098ad,
+    #07b39b,
+    #6fba82
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
