@@ -1,6 +1,7 @@
 import { alternatives, apps } from "#site/content"
 import AlternativeList from "@/components/theme/layout/alternative-list"
 import DetailsList from "@/components/theme/layout/details-list"
+import GoogleCSE from "@/components/theme/layout/google-cse"
 import NavLeft from "@/components/theme/layout/nav-left"
 import SortList from "@/components/theme/layout/sort-list"
 import { siteConfig } from "@/config/site"
@@ -111,6 +112,7 @@ export default function Page({ params, searchParams }: PageProps) {
     <div className="container py-6 flex">
       <NavLeft />
       <div className="flex flex-col flex-1">
+        <GoogleCSE />
         <div className="flex flex-col flex-1">
           <div className="flex flex-wrap">
             <h2 className="font-bold flex-1 text-xl lg:text-2xl capitalize">

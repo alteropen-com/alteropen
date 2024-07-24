@@ -1,6 +1,7 @@
 import { alternatives, apps } from "#site/content"
 import AlternativeList from "@/components/theme/layout/alternative-list"
 import DetailsList from "@/components/theme/layout/details-list"
+import GoogleCSE from "@/components/theme/layout/google-cse"
 import { Button } from "@/components/ui/button"
 import { siteConfig } from "@/config/site"
 import { Metadata } from "next"
@@ -57,6 +58,7 @@ export default function Page() {
   return (
     <div className="container py-6 flex">
       <div className="flex flex-col flex-1">
+        <GoogleCSE />
         <div className="flex flex-col flex-1">
           <div className="flex justify-start items-center space-x-6">
             <h2 className="font-bold text-xl lg:text-2xl capitalize">
