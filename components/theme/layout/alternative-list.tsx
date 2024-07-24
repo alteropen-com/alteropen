@@ -1,6 +1,7 @@
 import { Alternative } from "@/.velite"
 import { Card } from "@/components/ui/card"
 import { siteConfig } from "@/config/site"
+import { encodeTitleToSlug } from "@/lib/utils"
 import Link from "next/link"
 import VisitNumber from "./visit-number"
 
@@ -33,7 +34,7 @@ const AlternativeList = ({ apps }: { apps: Alternative[] }) => {
             <div className="flex-1 text-center">
               <h3 className="text-lg font-bold">{name}</h3>
               <Link
-                href={`/tasks/${tag}`}
+                href={`/tasks/${encodeTitleToSlug(tag)}`}
                 className="relative z-1 underline capitalize"
               >
                 {tag}
