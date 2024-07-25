@@ -1,7 +1,6 @@
 import { alternatives, apps } from "#site/content"
 import AlternativeList from "@/components/theme/layout/alternative-list"
 import DetailsList from "@/components/theme/layout/details-list"
-import GoogleCSE from "@/components/theme/layout/google-cse"
 import NavLeft from "@/components/theme/layout/nav-left"
 import SortList from "@/components/theme/layout/sort-list"
 import { siteConfig } from "@/config/site"
@@ -112,18 +111,19 @@ export default function Page({ params, searchParams }: PageProps) {
     <div className="container py-6 flex">
       <NavLeft />
       <div className="flex flex-col flex-1">
-        <GoogleCSE />
-        <div className="flex flex-col flex-1">
-          <div className="flex flex-wrap">
-            <h2 className="font-bold flex-1 text-xl lg:text-2xl capitalize">
-              {pageTitle(slug)}
-            </h2>
+        {displayApps?.length > 0 && (
+          <div className="flex flex-col flex-1">
+            <div className="flex flex-wrap">
+              <h2 className="font-bold flex-1 text-xl lg:text-2xl capitalize">
+                {pageTitle(slug)}
+              </h2>
+            </div>
+            <SortList sortBy={sortBy} />
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3  xl:grid-cols-4 2xl:grid-cols-5 gap-4 lg:gap-y-8 mt-4">
+              <DetailsList apps={displayApps} />
+            </div>
           </div>
-          <SortList sortBy={sortBy} />
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3  xl:grid-cols-4 2xl:grid-cols-5 gap-4 lg:gap-y-8 mt-4">
-            {displayApps?.length > 0 && <DetailsList apps={displayApps} />}
-          </div>
-        </div>
+        )}
         {displayAlternatives?.length > 0 && (
           <div className="flex flex-col flex-1">
             <hr className="my-8" />

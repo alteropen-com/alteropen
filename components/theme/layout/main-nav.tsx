@@ -8,6 +8,7 @@ import Link, { LinkProps } from "next/link"
 import { useRouter } from "next/navigation"
 import { useState } from "react"
 import { FaGithub } from "react-icons/fa"
+import UserSearch from "./user-search"
 
 export function MainNav() {
   const [open, setOpen] = useState(false)
@@ -28,10 +29,11 @@ export function MainNav() {
       </Button>
       <Link
         href="/"
-        className="mr-6 px-0 flex items-center space-x-2 hover:no-underline"
+        className="mr-6 px-0 hidden sm:flex items-center space-x-2 hover:no-underline"
       >
         <span className="font-bold text-white">{siteConfig.name}</span>
       </Link>
+      <UserSearch />
       <SheetContent side="top">
         <SheetLink
           onOpenChange={setOpen}

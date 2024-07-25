@@ -40,8 +40,12 @@ export default function HeaderLogin() {
           className="m-1 p-1 px-2 text-white flex flex-col items-center sm:space-x-1 hover:no-underline hover:bg-gray-600"
         >
           <Link href="?login=true">
-            <span className="text-sm">Sign in (100% free)</span>
-            <span className="text-[12px]">To Save Your Alternative</span>
+            <span className="text-sm hidden sm:block">Sign in (100% free)</span>
+            <span className="text-[12px] hidden sm:block">
+              To Save Your Alternative
+            </span>
+            <span className="text-sm sm:hidden">Sign in</span>
+            <span className="text-[12px] sm:hidden">(100% free)</span>
           </Link>
         </Button>
       )}
