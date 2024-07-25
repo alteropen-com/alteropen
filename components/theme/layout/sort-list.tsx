@@ -1,5 +1,6 @@
-import { apps } from "@/.velite"
+import { alternatives, apps } from "@/.velite"
 import { Button } from "@/components/ui/button"
+import { ScrollArea } from "@/components/ui/scroll-area"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import { SORT_TYPES } from "@/config/const"
 import { getAllTags, sortTagsByCount } from "@/lib/helper"
@@ -8,7 +9,7 @@ import { MdChevronRight } from "react-icons/md"
 import Tags from "./tags"
 
 export default function SortList({ sortBy }: { sortBy?: string }) {
-  const { tasks } = getAllTags(apps)
+  const { tasks } = getAllTags([...apps, ...alternatives])
   const sortedTasks = sortTagsByCount(tasks)
 
   return (
@@ -21,10 +22,12 @@ export default function SortList({ sortBy }: { sortBy?: string }) {
             </Button>
           </SheetTrigger>
           <SheetContent side="right">
-            <div className="text-sm lg:text-xl">Filter by:</div>
-            <div className="my-4">
-              <Tags tags={sortedTasks} tasks={tasks} />
-            </div>
+            <ScrollArea className="h-[95vh]">
+              <div className="text-sm lg:text-xl">Filter by:</div>
+              <div className="my-4">
+                <Tags tags={sortedTasks} tasks={tasks} />
+              </div>
+            </ScrollArea>
           </SheetContent>
         </Sheet>
       </div>

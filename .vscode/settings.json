@@ -3,5 +3,5 @@
   "editor.codeActionsOnSave": {
     "source.organizeImports": "explicit"
   },
-  "cSpell.words": ["rehype"]
+  "cSpell.words": ["Giscus", "rehype"]
 }

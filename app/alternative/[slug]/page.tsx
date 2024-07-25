@@ -4,6 +4,7 @@ import ButtonDeals from "@/components/theme/layout/button-deals"
 import ButtonEditPage from "@/components/theme/layout/button-edit-page"
 import ButtonFollow from "@/components/theme/layout/button-save"
 import ButtonVisitSite from "@/components/theme/layout/button-visit-site"
+import Comment from "@/components/theme/layout/comment"
 import DetailImage from "@/components/theme/layout/detail-image"
 import DetailToc from "@/components/theme/layout/detail-toc"
 import ItemAlternative from "@/components/theme/layout/item-alternative"
@@ -50,7 +51,7 @@ export async function generateMetadata({
     return {}
   }
 
-  const { name, title, slug, image } = app
+  const { name, title, slug, image, deals } = app
 
   const href = `/alternative/${slug}`
 
@@ -63,9 +64,11 @@ export async function generateMetadata({
   const pageTitle = `
     ${name || title} ${
     alternateApps.length > 0 ? " Top " + alternateApps.length : ""
-  } AlternativeTo (Free/OpenSource...) in 2024.`
+  } AlternativeTo (Free/OpenSource...) ${
+    deals && deals.length > 0 ? `+${deals.length} Deals` : ""
+  } in 2024. `
 
-  const description = `Best Similar, Replacement App with Good Deal for ${
+  const description = `Best Similar, Replacement App with Top Deal for ${
     name || title
   }. Review. HowTo. Pricing.`
 
@@ -201,6 +204,9 @@ export default async function PostPage({ params }: PostPageProps) {
             <ButtonEditPage app={post} />
           </div>
           <hr className="my-4" />
+        </div>
+        <div className="w-full max-w-[1468px]">
+          <Comment />
         </div>
       </div>
     </article>

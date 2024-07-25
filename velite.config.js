@@ -1,7 +1,9 @@
+/* eslint-disable no-console */
+import { writeFile } from "node:fs/promises"
+import path from "path"
 import { defineConfig, s } from "velite"
-
-// `s` is extended from Zod with some custom schemas,
-// you can also import re-exported `z` from `velite` if you don't need these extension schemas.
+import { getAllTags, sortTagsByCount } from "./lib/helper"
+import { encodeTitleToSlug } from "./lib/utils"
 
 export default defineConfig({
   collections: {
@@ -56,6 +58,15 @@ export default defineConfig({
           )
           .optional(),
         visit: s.array(s.number()).default([0]),
+        deals: s
+          .array(
+            s.object({
+              url: s.string().max(999),
+              name: s.string().max(99).optional(),
+              price: s.string().max(99).optional(),
+            })
+          )
+          .optional(),
         ios: s.string().optional(),
         android: s.string().optional(),
         raw: s.raw(),
@@ -129,5 +140,44 @@ export default defineConfig({
         toc: s.toc(),
       }),
     },
+  },
+  complete: async (data, ctx) => {
+    const filePath = path.join(ctx.config.output.assets, "search-index.json")
+
+    const { apps, alternatives } = data
+
+    const { tasks } = getAllTags([...apps, ...alternatives])
+    // TODO: add more info to showing
+    // TODO: add features
+    const sortedTasks = sortTagsByCount(tasks)
+
+    const content = [
+      ...apps.map((item) => {
+        return {
+          slug: `/app/${item.slug}`,
+          name: item.name,
+        }
+      }),
+      ...alternatives.map((item) => {
+        return {
+          slug: `/alternative/${item.slug}`,
+          name: item.name,
+        }
+      }),
+      ...sortedTasks.map((item) => {
+        return {
+          slug: `/tasks/${encodeTitleToSlug(item)}`,
+          name: item,
+        }
+      }),
+    ]
+    const fileContent = JSON.stringify(content, null, 2)
+
+    try {
+      await writeFile(filePath, fileContent)
+      console.log("File created successfully at:", filePath)
+    } catch (error) {
+      console.error("Error creating file:", error)
+    }
   },
 })

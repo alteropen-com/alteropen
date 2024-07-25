@@ -1,10 +1,10 @@
-import { apps } from "@/.velite"
+import { alternatives, apps } from "@/.velite"
 import { getAllTags, sortTagsByCount } from "@/lib/helper"
 import Link from "next/link"
 import Tags from "./tags"
 
 export default function NavLeft() {
-  const { tasks } = getAllTags(apps)
+  const { tasks } = getAllTags([...apps, ...alternatives])
   const sortedTasks = sortTagsByCount(tasks)
 
   return (

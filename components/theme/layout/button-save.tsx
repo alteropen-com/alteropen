@@ -25,7 +25,7 @@ const ButtonFollow = ({ id }: { id: number }) => {
     if (!isSaved) {
       const { error } = await supabase
         .from("user_product")
-        .upsert({ profile_id: user.session.user.id, product_id: id })
+        .insert({ profile_id: user.session.user.id, product_id: id })
       if (error) {
         // show error
       }
