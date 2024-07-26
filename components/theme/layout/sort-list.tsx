@@ -8,9 +8,23 @@ import Link from "next/link"
 import { MdChevronRight } from "react-icons/md"
 import Tags from "./tags"
 
-export default function SortList({ sortBy }: { sortBy?: string }) {
+export default function SortList({
+  sortBy = SORT_TYPES[0].value,
+  onlyDeal = "false",
+}: {
+  sortBy?: string
+  onlyDeal?: string
+}) {
   const { tasks } = getAllTags([...apps, ...alternatives])
   const sortedTasks = sortTagsByCount(tasks)
+
+  const createHref = (newSortBy?: string, newOnlyDeal?: string) => {
+    const params = new URLSearchParams()
+    if (newSortBy && newSortBy !== SORT_TYPES[0].value)
+      params.set("sortBy", newSortBy)
+    if (newOnlyDeal === "true") params.set("onlyDeal", "true")
+    return `?${params.toString()}`
+  }
 
   return (
     <>
@@ -32,20 +46,27 @@ export default function SortList({ sortBy }: { sortBy?: string }) {
         </Sheet>
       </div>
       <div className="space-x-2 sm:space-x-3 lg:space-x-4 mt-1 sm:mt-2 flex">
-        {SORT_TYPES.map((type, index) => (
+        {SORT_TYPES.map((type) => (
           <Button
             key={type.value}
-            variant={
-              (sortBy === undefined && index === 0) || sortBy === type.value
-                ? "default"
-                : "secondary"
-            }
+            variant={sortBy === type.value ? "default" : "secondary"}
             className="rounded-full min-w-[100px]"
             asChild
           >
-            <Link href={`?sortBy=${type.value}`}>{type.name}</Link>
+            <Link href={createHref(type.value, onlyDeal)}>{type.name}</Link>
           </Button>
         ))}
+        <Button
+          variant={onlyDeal === "true" ? "default" : "secondary"}
+          className="rounded-full min-w-[100px]"
+          asChild
+        >
+          <Link
+            href={createHref(sortBy, onlyDeal === "true" ? "false" : "true")}
+          >
+            Deals
+          </Link>
+        </Button>
       </div>
     </>
   )

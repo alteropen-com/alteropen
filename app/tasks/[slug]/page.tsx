@@ -11,7 +11,7 @@ interface PageProps {
   params: {
     slug: string
   }
-  searchParams: { sortBy?: string }
+  searchParams: { sortBy?: string; onlyDeal?: string }
 }
 
 const filterApps = (slug: string) => {
@@ -85,27 +85,41 @@ export async function generateMetadata({
 
 export default function Page({ params, searchParams }: PageProps) {
   const { slug } = params
-  const { sortBy } = searchParams
+  const { sortBy, onlyDeal } = searchParams
 
-  const displayApps = filterApps(slug).sort((a, b) => {
-    switch (sortBy) {
-      case "top":
-        return a?.visit[0] > b?.visit[0] ? -1 : 1
-      case "lasted":
-      default:
-        return a.id > b.id ? -1 : 1
-    }
-  })
+  const displayApps = filterApps(slug)
+    .sort((a, b) => {
+      switch (sortBy) {
+        case "top":
+          return a?.visit[0] > b?.visit[0] ? -1 : 1
+        case "lasted":
+        default:
+          return a.id > b.id ? -1 : 1
+      }
+    })
+    .filter((app) => {
+      if (onlyDeal === "true") {
+        return app.deals && app.deals?.length > 0
+      }
+      return true
+    })
 
-  const displayAlternatives = filterAlternatives(slug).sort((a, b) => {
-    switch (sortBy) {
-      case "top":
-        return a?.visit[0] > b?.visit[0] ? -1 : 1
-      case "lasted":
-      default:
-        return a.id > b.id ? -1 : 1
-    }
-  })
+  const displayAlternatives = filterAlternatives(slug)
+    .sort((a, b) => {
+      switch (sortBy) {
+        case "top":
+          return a?.visit[0] > b?.visit[0] ? -1 : 1
+        case "lasted":
+        default:
+          return a.id > b.id ? -1 : 1
+      }
+    })
+    .filter((app) => {
+      if (onlyDeal === "true") {
+        return app.deals && app.deals?.length > 0
+      }
+      return true
+    })
 
   return (
     <div className="container py-6 flex">
@@ -118,7 +132,7 @@ export default function Page({ params, searchParams }: PageProps) {
                 {pageTitle(slug)}
               </h2>
             </div>
-            <SortList sortBy={sortBy} />
+            <SortList sortBy={sortBy} onlyDeal={onlyDeal} />
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3  xl:grid-cols-4 2xl:grid-cols-5 gap-4 lg:gap-y-8 mt-4">
               <DetailsList apps={displayApps} />
             </div>
@@ -130,7 +144,7 @@ export default function Page({ params, searchParams }: PageProps) {
             <h2 className="font-bold text-xl lg:text-2xl capitalize">
               Best {displayAlternatives?.length} Alternative
             </h2>
-            <SortList sortBy={sortBy} />
+            <SortList sortBy={sortBy} onlyDeal={onlyDeal} />
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3  xl:grid-cols-4 2xl:grid-cols-5 gap-4 lg:gap-y-8 mt-4">
               <AlternativeList apps={displayAlternatives} />
             </div>

@@ -44,7 +44,7 @@ const ButtonFollow = ({ id }: { id: number }) => {
 
   return (
     <Card className="px-4 py-3">
-      <p className="text-sm text-center my-2">Follow this for later</p>
+      <p className="text-sm text-center my-2">Don`t miss a great app!</p>
       <button
         onClick={handleSave}
         disabled={isFetching}

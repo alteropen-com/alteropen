@@ -1,4 +1,5 @@
 import { Alternative } from "@/.velite"
+import { Badge } from "@/components/ui/badge"
 import { Card } from "@/components/ui/card"
 import { siteConfig } from "@/config/site"
 import { encodeTitleToSlug } from "@/lib/utils"
@@ -7,7 +8,7 @@ import VisitNumber from "./visit-number"
 
 const AlternativeList = ({ apps }: { apps: Alternative[] }) => {
   return apps.map((app) => {
-    const { id, slug, title, description, name, pricing, tasks } = app
+    const { id, slug, title, description, name, pricing, tasks, deals } = app
 
     const image = app.image.url || siteConfig.image
 
@@ -25,13 +26,22 @@ const AlternativeList = ({ apps }: { apps: Alternative[] }) => {
             className="w-full rounded-lg mb-2"
             alt={`${title}`}
             style={{
-              aspectRatio: "50/50",
+              aspectRatio: "60/40",
               objectFit: "cover",
               objectPosition: "top",
             }}
           />
           <div className="mt-1 px-2 pb-1 flex flex-col flex-1">
             <div className="flex-1 text-center">
+              {deals && (
+                <div className="relative">
+                  <div className="absolute top-[-42px] right-0">
+                    <Badge variant="default">
+                      {deals.length} Deal{deals.length > 1 ? "s" : ""}
+                    </Badge>
+                  </div>
+                </div>
+              )}
               <h3 className="text-lg font-bold">{name}</h3>
               <Link
                 href={`/tasks/${encodeTitleToSlug(tag)}`}

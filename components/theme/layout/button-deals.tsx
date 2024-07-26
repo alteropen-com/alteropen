@@ -22,8 +22,8 @@ export default function ButtonDeals({ app }: { app: Alternative }) {
         </p>
         <a
           href={href}
-          target="_black"
-          className="not-prose border-2 px-4 py-2 rounded-full font-bold  ease-in-out w-full transition-all duration-500 h-12 flex items-center justify-center bg-yellow-400 text-gray-900 hover:bg-yellow-300"
+          target="_blank"
+          className="not-prose border-2 px-4 py-2 rounded-full font-bold ease-in-out w-full transition-all duration-500 h-12 flex items-center justify-center bg-yellow-400 text-gray-900 hover:bg-yellow-300"
         >
           Get Deal
         </a>
