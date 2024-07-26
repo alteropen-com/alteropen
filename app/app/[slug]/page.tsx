@@ -169,7 +169,7 @@ export default async function PostPage({ params }: PostPageProps) {
             </div>
 
             {/* Action Buttons Section */}
-            <div className="w-full flex-shrink-0 sm:w-[240px] 2xl:w-[300px]">
+            <div className="w-full flex-shrink-0 space-y-3 sm:w-[240px] 2xl:w-[300px]">
               <ButtonFollow id={app.id} />
               <ButtonDealsApp app={app} />
               <div className="px-4 py-3 mt-4 space-y-2">

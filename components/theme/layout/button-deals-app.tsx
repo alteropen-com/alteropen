@@ -23,6 +23,7 @@ export default function ButtonDealsApp({ app }: { app: App }) {
         <a
           href={href}
           target="_black"
+          rel="noreferrer noopener"
           className="not-prose border-2 px-4 py-2 rounded-full font-bold  ease-in-out w-full transition-all duration-500 h-12 flex items-center justify-center bg-yellow-400 text-gray-900 hover:bg-yellow-300"
         >
           Get Deal
