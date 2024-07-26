@@ -49,14 +49,16 @@ export async function generateMetadata({
     return {}
   }
 
-  const { name, title, slug, description, image } = app
+  const { name, title, slug, description, image, deals } = app
 
   const href = `/app/${slug}`
 
   const imageUrl = image.url
 
   const pageTitle = `
-    ${name || title} Review and Good Deal in 2024. `
+    ${name || title} Review, Price and ${
+    deals && deals.length > 0 ? deals.length : "Good"
+  } Deal in 2024. `
   const pageDescription = `HowTo. Pricing. Top ${
     app.alternative && app.alternative.length > 0
       ? " " + app.alternative.length
