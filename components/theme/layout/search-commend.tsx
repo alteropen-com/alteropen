@@ -1,7 +1,7 @@
 "use client"
 
 import { type DialogProps } from "@radix-ui/react-dialog"
-import { useRouter } from "next/navigation"
+import { useRouter, useSearchParams } from "next/navigation"
 import * as React from "react"
 
 import useSearch from "@/components/api/hook/useSearch"
@@ -22,10 +22,30 @@ type Item = {
 }
 
 export function CommandMenu({ ...props }: DialogProps) {
-  const [open, setOpen] = React.useState(false)
+  const router = useRouter()
+  const searchParams = useSearchParams()
+
   const [shouldFetch, setShouldFetch] = React.useState(false)
 
   const { isFetching, data: data } = useSearch(shouldFetch)
+
+  const isOpen = searchParams.get("isSearch") === "true"
+
+  React.useEffect(() => {
+    if (isOpen) {
+      setShouldFetch(true)
+    }
+  }, [isOpen])
+
+  const toggleSearchDialog = React.useCallback(() => {
+    const newSearchParams = new URLSearchParams(searchParams)
+    if (isOpen) {
+      newSearchParams.delete("isSearch")
+    } else {
+      newSearchParams.set("isSearch", "true")
+    }
+    router.push(`?${newSearchParams.toString()}`)
+  }, [isOpen, router, searchParams])
 
   React.useEffect(() => {
     const down = (e: KeyboardEvent) => {
@@ -40,19 +60,21 @@ export function CommandMenu({ ...props }: DialogProps) {
         }
 
         e.preventDefault()
-        setOpen((open) => !open)
-        setShouldFetch(true)
+        toggleSearchDialog()
       }
     }
 
     document.addEventListener("keydown", down)
     return () => document.removeEventListener("keydown", down)
-  }, [])
+  }, [toggleSearchDialog])
 
-  const runCommand = React.useCallback((command: () => unknown) => {
-    setOpen(false)
-    command()
-  }, [])
+  const runCommand = React.useCallback(
+    (command: () => unknown) => {
+      toggleSearchDialog()
+      command()
+    },
+    [toggleSearchDialog]
+  )
 
   const startAutocomplete = () => {
     if (!shouldFetch) setShouldFetch(true)
@@ -68,7 +90,7 @@ export function CommandMenu({ ...props }: DialogProps) {
         onMouseOver={startAutocomplete}
         onClick={() => {
           startAutocomplete()
-          setOpen(true)
+          toggleSearchDialog()
         }}
         {...props}
       >
@@ -78,7 +100,7 @@ export function CommandMenu({ ...props }: DialogProps) {
           <span className="text-xs">⌘</span>K
         </kbd>
       </Button>
-      <CommandDialog open={open} onOpenChange={setOpen}>
+      <CommandDialog open={isOpen} onOpenChange={toggleSearchDialog}>
         <CommandInput placeholder="Search..." className="text-[18px]" />
         <CommandList className="max-h-[calc(100vh-300px)]">
           <CommandEmpty>No results found.</CommandEmpty>
@@ -99,7 +121,6 @@ export function CommandMenu({ ...props }: DialogProps) {
             slugUrl="/app/"
             runCommand={runCommand}
           />
-
           <ItemView
             data={data}
             type="Alternatives"

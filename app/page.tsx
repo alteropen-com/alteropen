@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button"
 import { siteConfig } from "@/config/site"
 import { Metadata } from "next"
 import Link from "next/link"
+import { FaGithub } from "react-icons/fa6"
 
 const title =
   "Top AlternativeTo (Free/ OpenSource or Deal) App List in 2024. Review. HowTo. Pricing."
@@ -60,6 +61,40 @@ export default function Page() {
   return (
     <div className="container py-6 flex">
       <div className="flex flex-col flex-1">
+        <div className="mx-auto max-w-2xl lg:col-span-6 lg:flex lg:items-center justify-center text-center">
+          <div className="relative z-10 lg:h-auto pt-[90px] lg:pt-[90px] lg:min-h-[300px] flex flex-col items-center justify-center sm:mx-auto md:w-3/4 lg:mx-0 lg:w-full gap-4 lg:gap-8">
+            <div className="flex flex-col items-center">
+              <h1 className="text-foreground text-4xl sm:text-5xl sm:leading-none lg:text-7xl">
+                <span className="block text-[#F4FFFA00] bg-clip-text bg-gradient-to-b from-foreground to-foreground-light">
+                  Build Alternative
+                </span>
+                <span className="text-primary bg-clip-text bg-gradient-to-br  block md:ml-0">
+                  Sell in public
+                </span>
+              </h1>
+              <p className="pt-2 text-foreground my-3 text-sm sm:mt-5 lg:mb-0 sm:text-base lg:text-lg">
+                Alteropen is an open source Appsumo alternative.
+              </p>
+            </div>
+            <div className="flex items-center gap-2">
+              <Button variant="outline" asChild>
+                <Link href="?isSearch=true">Search Alternative </Link>
+              </Button>
+              <Button asChild>
+                <Link href="/tasks">Sort by Tasks</Link>
+              </Button>
+              <Button variant="outline" size="icon" asChild>
+                <Link
+                  href={siteConfig.links.github}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <FaGithub className="h-4 w-4" />
+                </Link>
+              </Button>
+            </div>
+          </div>
+        </div>
         <div className="flex flex-col flex-1">
           <div className="flex justify-start items-center space-x-6">
             <h2 className="font-bold text-xl lg:text-2xl capitalize">
