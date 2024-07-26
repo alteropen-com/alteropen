@@ -41,6 +41,7 @@ export function CommandMenu({ ...props }: DialogProps) {
 
         e.preventDefault()
         setOpen((open) => !open)
+        setShouldFetch(true)
       }
     }
 
