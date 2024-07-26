@@ -7,9 +7,8 @@ import { Metadata } from "next"
 import Link from "next/link"
 import { FaGithub } from "react-icons/fa6"
 
-const title =
-  "Top AlternativeTo (Free/ OpenSource or Deal) App List in 2024. Review. HowTo. Pricing."
-const description = `Top Alternatives, Similar App List in 2024. (Free/ OpenSource or Deal). Review. HowTo. Pricing.`
+const title = "Alteropen is an open source Appsumo alternative."
+const description = `Top Alternatives, Similar App (Free/ OpenSource or Deal) List in 2024 with Lifetime Deal. Review. HowTo. Pricing.`
 
 export async function generateMetadata(): Promise<Metadata> {
   const href = `/`
@@ -64,17 +63,17 @@ export default function Page() {
         <div className="mx-auto max-w-2xl lg:col-span-6 lg:flex lg:items-center justify-center text-center">
           <div className="relative z-10 lg:h-auto pt-[90px] lg:pt-[90px] lg:min-h-[300px] flex flex-col items-center justify-center sm:mx-auto md:w-3/4 lg:mx-0 lg:w-full gap-4 lg:gap-8">
             <div className="flex flex-col items-center">
-              <h1 className="text-foreground text-4xl sm:text-5xl sm:leading-none lg:text-7xl">
+              <p className="text-foreground text-4xl sm:text-5xl sm:leading-none lg:text-7xl">
                 <span className="block text-[#F4FFFA00] bg-clip-text bg-gradient-to-b from-foreground to-foreground-light">
                   Build Alternative
                 </span>
                 <span className="text-primary bg-clip-text bg-gradient-to-br  block md:ml-0">
                   Sell in public
                 </span>
-              </h1>
-              <p className="pt-2 text-foreground my-3 text-sm sm:mt-5 lg:mb-0 sm:text-base lg:text-lg">
-                Alteropen is an open source Appsumo alternative.
               </p>
+              <h1 className="pt-2 text-foreground my-3 text-sm sm:mt-5 lg:mb-0 sm:text-base lg:text-lg">
+                Alteropen is an open source Appsumo alternative.
+              </h1>
             </div>
             <div className="flex items-center gap-2">
               <Button variant="outline" asChild>
