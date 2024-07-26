@@ -152,18 +152,24 @@ export default defineConfig({
     const sortedTasks = sortTagsByCount(tasks)
 
     const content = [
-      ...apps.map((item) => {
-        return {
-          slug: `/app/${item.slug}`,
-          name: item.name,
-        }
-      }),
-      ...alternatives.map((item) => {
-        return {
-          slug: `/alternative/${item.slug}`,
-          name: item.name,
-        }
-      }),
+      ...apps
+        .filter((app) => app.published)
+        .sort((a, b) => (a.id > b.id ? -1 : 1))
+        .map((item) => {
+          return {
+            slug: `/app/${item.slug}`,
+            name: item.name,
+          }
+        }),
+      ...alternatives
+        .filter((app) => app.published)
+        .sort((a, b) => (a.id > b.id ? -1 : 1))
+        .map((item) => {
+          return {
+            slug: `/alternative/${item.slug}`,
+            name: item.name,
+          }
+        }),
       ...sortedTasks.map((item) => {
         return {
           slug: `/tasks/${encodeTitleToSlug(item)}`,

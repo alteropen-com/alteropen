@@ -24,7 +24,7 @@ export default function HeaderLogin() {
   }
 
   return (
-    <div className="flex flex-1 items-center justify-end space-x-2">
+    <div className="flex items-center justify-end space-x-2">
       {user?.id !== "" ? (
         <Button
           variant="link"
