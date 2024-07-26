@@ -46,6 +46,27 @@ export default function RootLayout({
             </div>
           </QueryProvider>
         </ThemeProvider>
+        <footer className="pb-4 pt-10 flex justify-center">
+          <a
+            href="https://dashboard.simpleanalytics.com/alteropen.com?utm_source=alteropen.com&utm_content=badge&referral=bovop"
+            referrerPolicy="origin"
+            target="_blank"
+          >
+            <picture>
+              <source
+                srcSet="https://simpleanalyticsbadges.com/alteropen.com"
+                media="(prefers-color-scheme: light)"
+              />
+              <img
+                src="https://simpleanalyticsbadges.com/alteropen.com"
+                loading="lazy"
+                referrerPolicy="no-referrer"
+                crossOrigin="anonymous"
+                alt="Simple Analytics"
+              />
+            </picture>
+          </a>
+        </footer>
       </body>
     </html>
   )
