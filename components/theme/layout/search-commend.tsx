@@ -1,7 +1,6 @@
 "use client"
 
 import { type DialogProps } from "@radix-ui/react-dialog"
-import { useTheme } from "next-themes"
 import { useRouter } from "next/navigation"
 import * as React from "react"
 
@@ -14,10 +13,8 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
-  CommandSeparator,
 } from "@/components/ui/command"
 import { cn } from "@/lib/utils"
-import { AppWindow, LaptopIcon, MoonIcon, SunIcon } from "lucide-react"
 
 type Item = {
   name: string
@@ -26,7 +23,6 @@ type Item = {
 
 export function CommandMenu({ ...props }: DialogProps) {
   const [open, setOpen] = React.useState(false)
-  const { setTheme } = useTheme()
   const [shouldFetch, setShouldFetch] = React.useState(false)
 
   const { isFetching, data: data } = useSearch(shouldFetch)
@@ -82,7 +78,7 @@ export function CommandMenu({ ...props }: DialogProps) {
         </kbd>
       </Button>
       <CommandDialog open={open} onOpenChange={setOpen}>
-        <CommandInput placeholder="Search..." />
+        <CommandInput placeholder="Search..." className="text-[18px]" />
         <CommandList className="max-h-[calc(100vh-300px)]">
           <CommandEmpty>No results found.</CommandEmpty>
           {isFetching && (
@@ -90,46 +86,25 @@ export function CommandMenu({ ...props }: DialogProps) {
               <span className="px-2">Loading...</span>
             </CommandItem>
           )}
-          {data && (
-            <ItemView
-              data={data}
-              textHeading="Apps"
-              slugUrl="app/"
-              runCommand={runCommand}
-            />
-          )}
-          {data && (
-            <ItemView
-              data={data}
-              textHeading="Alternatives"
-              slugUrl="alternative/"
-              runCommand={runCommand}
-            />
-          )}
-          {data && (
-            <ItemView
-              data={data}
-              textHeading="Tasks"
-              slugUrl="tasks/"
-              runCommand={runCommand}
-            />
-          )}
+          <ItemView
+            data={data}
+            type="Tasks"
+            slugUrl="/tasks/"
+            runCommand={runCommand}
+          />
+          <ItemView
+            data={data}
+            type="Apps"
+            slugUrl="/app/"
+            runCommand={runCommand}
+          />
 
-          <CommandSeparator />
-          <CommandGroup heading="Theme">
-            <CommandItem onSelect={() => runCommand(() => setTheme("light"))}>
-              <SunIcon className="mr-2 h-4 w-4" />
-              Light
-            </CommandItem>
-            <CommandItem onSelect={() => runCommand(() => setTheme("dark"))}>
-              <MoonIcon className="mr-2 h-4 w-4" />
-              Dark
-            </CommandItem>
-            <CommandItem onSelect={() => runCommand(() => setTheme("system"))}>
-              <LaptopIcon className="mr-2 h-4 w-4" />
-              System
-            </CommandItem>
-          </CommandGroup>
+          <ItemView
+            data={data}
+            type="Alternatives"
+            slugUrl="/alternative/"
+            runCommand={runCommand}
+          />
         </CommandList>
       </CommandDialog>
     </>
@@ -138,39 +113,39 @@ export function CommandMenu({ ...props }: DialogProps) {
 
 const ItemView = ({
   data,
-  textHeading,
+  type,
   slugUrl,
   runCommand,
 }: {
-  data: Item[]
-  textHeading: string
+  data: Item[] | undefined
+  type: "Apps" | "Tasks" | "Alternatives"
   slugUrl: string
   runCommand: (command: () => unknown) => void
 }) => {
   const router = useRouter()
+
+  if (!data) return null
 
   const matchItem = data.filter((item) => item.slug.includes(slugUrl))
 
   if (matchItem.length === 0) {
     return null
   }
+  const icon = type === "Tasks" ? "📝" : type === "Apps" ? "📱" : "🔁"
 
   return (
-    <CommandGroup heading={textHeading}>
-      {matchItem
-        .map((item) => (
-          <CommandItem
-            key={item.slug}
-            value={item.name}
-            onSelect={() => {
-              runCommand(() => router.push(item.slug))
-            }}
-          >
-            <AppWindow className="mr-2 h-4 w-4" />
-            {item.name}
-          </CommandItem>
-        ))
-        .slice(0, 30)}
+    <CommandGroup heading={type}>
+      {matchItem.map((item) => (
+        <CommandItem
+          key={item.slug}
+          value={item.name}
+          onSelect={() => {
+            runCommand(() => router.push(item.slug))
+          }}
+        >
+          {icon} {item.name}
+        </CommandItem>
+      ))}
     </CommandGroup>
   )
 }
