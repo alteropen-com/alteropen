@@ -43,7 +43,7 @@ const ButtonFollow = ({ id }: { id: number }) => {
   }
 
   return (
-    <Card className="px-4 py-3">
+    <Card className="px-4 py-3 bg-background border-background shadow-none">
       <p className="text-sm text-center my-2">Don`t miss a great app!</p>
       <button
         onClick={handleSave}
