@@ -4,7 +4,7 @@ export const siteConfig = {
   url: "https://alteropen.com",
   description: "Best Alternative Apps Open List",
   image:
-    "https://p140.p3.n0.cdn.zight.com/items/mXuWl2pn/05d47b6c-c028-43f8-a368-18a35d132b9c.jpg",
+    "https://p140.p3.n0.cdn.zight.com/items/mXuWlkmE/deeb4d10-2741-462c-9d88-a46e7eeda835.jpg",
   links: {
     twitter: "https://twitter.com/",
     github: "https://github.com/alteropen-com/alteropen",

@@ -65,10 +65,10 @@ export default function Page() {
             <div className="flex flex-col items-center">
               <p className="text-foreground text-4xl sm:text-5xl sm:leading-none lg:text-7xl">
                 <span className="block text-[#F4FFFA00] bg-clip-text bg-gradient-to-b from-foreground to-foreground-light">
-                  Build Alternative
+                  Build by Indie
                 </span>
                 <span className="text-primary bg-clip-text bg-gradient-to-br  block md:ml-0">
-                  Sell in public
+                  Sell to Indie
                 </span>
               </p>
               <h1 className="pt-2 text-foreground my-3 text-sm sm:mt-5 lg:mb-0 sm:text-base lg:text-lg">
