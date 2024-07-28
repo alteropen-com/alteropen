@@ -1,5 +1,6 @@
 import { alternatives, apps } from "#site/content"
 import { App } from "@/.velite"
+import { Badge } from "@/components/ui/badge"
 import { Card } from "@/components/ui/card"
 import { siteConfig } from "@/config/site"
 import Link from "next/link"
@@ -15,6 +16,7 @@ export default function ItemAlternative({ post }: { post: App }) {
       description: app.description,
       visit: app.visit,
       url: `/app/${app.slug}`,
+      deals: app.deals,
     }))
     .sort((a, b) => b.visit[0] - a.visit[0])
 
@@ -29,6 +31,7 @@ export default function ItemAlternative({ post }: { post: App }) {
           name: app.name,
           description: app.description,
           url: `/alternative/${app.slug}`,
+          deals: app.deals,
         }
       }
       return { ...item }
@@ -56,6 +59,16 @@ export default function ItemAlternative({ post }: { post: App }) {
                   <h4 className="text-primary text-xl font-semibold mb-2 flex items-center">
                     {item.name}
                   </h4>
+                  {item?.deals && (
+                    <div className="relative">
+                      <div className="absolute top-[-55px] right-[-12px]">
+                        <Badge variant="default">
+                          {item.deals.length} Deal
+                          {item.deals.length > 1 ? "s" : ""}
+                        </Badge>
+                      </div>
+                    </div>
+                  )}
                   <p className="">{app.title}</p>
                   <div className="mt-2 text-sm">
                     <VisitNumber app={app} />

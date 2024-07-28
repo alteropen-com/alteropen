@@ -126,7 +126,7 @@ export default function Page({ params, searchParams }: PageProps) {
       <NavLeft />
       <div className="flex flex-col flex-1">
         {displayApps?.length > 0 && (
-          <div className="flex flex-col flex-1">
+          <div className="flex flex-col">
             <div className="flex flex-wrap">
               <h2 className="font-bold flex-1 text-xl lg:text-2xl capitalize">
                 {pageTitle(slug)}
