@@ -1,6 +1,7 @@
 "use client"
 
 import { MDXRemote, MDXRemoteProps } from "next-mdx-remote/rsc"
+import { Tweet } from "react-tweet"
 import rehypeAutolinkHeadings from "rehype-autolink-headings"
 import rehypeSlug from "rehype-slug"
 import Test from "./Test"
@@ -15,6 +16,7 @@ const components = {
   Test: (props: any) => <Test {...props} />,
   Img: (props: any) => <Img {...props} />,
   DetailYoutube: (props: any) => <DetailYoutube {...props} />,
+  Tweet: (props: any) => <Tweet {...props} />,
 }
 
 export function CustomMDX(props: CustomMDXProps) {
