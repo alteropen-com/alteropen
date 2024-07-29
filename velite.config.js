@@ -2,6 +2,7 @@
 import { writeFile } from "node:fs/promises"
 import path from "path"
 import { defineConfig, s } from "velite"
+import { FEATURES, PRICING, TASKS } from "./config/selection"
 import { getAllTags, sortTagsByCount } from "./lib/helper"
 import { encodeTitleToSlug } from "./lib/utils"
 
@@ -41,8 +42,8 @@ export default defineConfig({
         // optional
         description: s.string().max(999).optional(),
         published: s.boolean().default(true),
-        tasks: s.array(s.string()).optional(),
-        features: s.array(s.string()).optional(),
+        tasks: s.array(s.enum(TASKS)).optional(),
+        features: s.array(s.enum(FEATURES)).optional(),
         images: s
           .array(
             s.object({
@@ -52,11 +53,7 @@ export default defineConfig({
           )
           .optional(),
         url: s.string().optional(),
-        pricing: s
-          .array(
-            s.enum(["Free", "Freemium", "Subscription", "OpenSource", "Paid"])
-          )
-          .optional(),
+        pricing: s.array(s.enum(PRICING)).optional(),
         visit: s.array(s.number()).default([0]),
         deals: s
           .array(
@@ -108,8 +105,8 @@ export default defineConfig({
         // optional
         description: s.string().max(999).optional(),
         published: s.boolean().default(true),
-        tasks: s.array(s.string()).optional(),
-        features: s.array(s.string()).optional(),
+        tasks: s.array(s.enum(TASKS)).optional(),
+        features: s.array(s.enum(FEATURES)).optional(),
         images: s
           .array(
             s.object({
@@ -119,11 +116,7 @@ export default defineConfig({
           )
           .optional(),
         url: s.string().optional(),
-        pricing: s
-          .array(
-            s.enum(["Free", "Freemium", "Subscription", "OpenSource", "Paid"])
-          )
-          .optional(),
+        pricing: s.array(s.enum(PRICING)).optional(),
         visit: s.array(s.number()).default([0]),
         deals: s
           .array(
