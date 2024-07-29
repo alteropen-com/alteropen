@@ -1,22 +1,22 @@
 "use client"
 
-import { type DialogProps } from "@radix-ui/react-dialog"
-import { useRouter, useSearchParams } from "next/navigation"
-import * as React from "react"
-
 import useSearch from "@/components/api/hook/useSearch"
 import { Button } from "@/components/ui/button"
 import {
   CommandDialog,
-  CommandEmpty,
   CommandGroup,
-  CommandInput,
   CommandItem,
   CommandList,
 } from "@/components/ui/command"
+import { Input } from "@/components/ui/input"
 import { cn } from "@/lib/utils"
+import { type DialogProps } from "@radix-ui/react-dialog"
+import FlexSearch from "flexsearch"
+import { Search } from "lucide-react"
+import { useRouter, useSearchParams } from "next/navigation"
+import { ChangeEvent, useCallback, useEffect, useState } from "react"
 
-type Item = {
+type SearchResult = {
   name: string
   slug: string
 }
@@ -25,19 +25,40 @@ export function CommandMenu({ ...props }: DialogProps) {
   const router = useRouter()
   const searchParams = useSearchParams()
 
-  const [shouldFetch, setShouldFetch] = React.useState(false)
-
+  const [shouldFetch, setShouldFetch] = useState(false)
   const { isFetching, data: data } = useSearch(shouldFetch)
+
+  const [inputValue, setInputValue] = useState("")
+  const [searchIndex, setSearchIndex] = useState<null | FlexSearch.Index>(null)
+  const [foundItems, setFoundItems] = useState<SearchResult[]>([])
 
   const isOpen = searchParams.get("isSearch") === "true"
 
-  React.useEffect(() => {
+  useEffect(() => {
+    const index = new FlexSearch.Index({
+      preset: "match",
+      tokenize: "full",
+    })
+    setSearchIndex(index)
+  }, [])
+
+  useEffect(() => {
+    if (!data || !searchIndex) {
+      return
+    }
+    data.forEach(({ name }, i) => {
+      // TODO: better search with detail search?
+      searchIndex.add(i, name.toLowerCase())
+    })
+  }, [data, searchIndex])
+
+  useEffect(() => {
     if (isOpen) {
       setShouldFetch(true)
     }
   }, [isOpen])
 
-  const toggleSearchDialog = React.useCallback(() => {
+  const toggleSearchDialog = useCallback(() => {
     const newSearchParams = new URLSearchParams(searchParams)
     if (isOpen) {
       newSearchParams.delete("isSearch")
@@ -47,7 +68,7 @@ export function CommandMenu({ ...props }: DialogProps) {
     router.push(`?${newSearchParams.toString()}`)
   }, [isOpen, router, searchParams])
 
-  React.useEffect(() => {
+  useEffect(() => {
     const down = (e: KeyboardEvent) => {
       if ((e.key === "k" && (e.metaKey || e.ctrlKey)) || e.key === "/") {
         if (
@@ -68,7 +89,7 @@ export function CommandMenu({ ...props }: DialogProps) {
     return () => document.removeEventListener("keydown", down)
   }, [toggleSearchDialog])
 
-  const runCommand = React.useCallback(
+  const runCommand = useCallback(
     (command: () => unknown) => {
       toggleSearchDialog()
       command()
@@ -78,6 +99,18 @@ export function CommandMenu({ ...props }: DialogProps) {
 
   const startAutocomplete = () => {
     if (!shouldFetch) setShouldFetch(true)
+  }
+
+  const handleOnChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value
+    setInputValue(value)
+    if (searchIndex && value.trim()) {
+      const results = searchIndex.search(value.toLowerCase())
+      const foundItems = results.map((index) => data![+index]) as SearchResult[]
+      setFoundItems(foundItems.slice(0, 20))
+    } else {
+      setFoundItems([])
+    }
   }
 
   return (
@@ -101,32 +134,65 @@ export function CommandMenu({ ...props }: DialogProps) {
         </kbd>
       </Button>
       <CommandDialog open={isOpen} onOpenChange={toggleSearchDialog}>
-        <CommandInput placeholder="Search..." className="text-[18px]" />
+        <div className="flex items-center border-b px-3">
+          <Search className="mr-2 h-4 w-4 shrink-0 opacity-50" />
+          <Input
+            className="flex h-12 w-full rounded-md bg-transparent py-3 text-sm outline-none placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50 text-[18px] border-0 focus-visible:ring-0 "
+            type="text"
+            autoFocus
+            name="q"
+            onChange={handleOnChange}
+            placeholder="Search..."
+            value={inputValue}
+            autoComplete="off"
+          />
+        </div>
+
         <CommandList className="max-h-[calc(100vh-300px)]">
-          <CommandEmpty>No results found.</CommandEmpty>
           {isFetching && (
             <CommandItem>
               <span className="px-2">Loading...</span>
             </CommandItem>
           )}
-          <ItemView
-            data={data}
-            type="Tasks"
-            slugUrl="/tasks/"
-            runCommand={runCommand}
-          />
-          <ItemView
-            data={data}
-            type="Apps"
-            slugUrl="/app/"
-            runCommand={runCommand}
-          />
-          <ItemView
-            data={data}
-            type="Alternatives"
-            slugUrl="/alternative/"
-            runCommand={runCommand}
-          />
+          {inputValue.length > 0 && foundItems.length === 0 && (
+            <CommandItem>
+              <span className="px-4">No results found</span>
+            </CommandItem>
+          )}
+
+          {inputValue.length > 0 && foundItems.length > 0 && (
+            <>
+              <ItemView
+                data={foundItems}
+                type="Tasks"
+                slugUrl="/tasks/"
+                runCommand={runCommand}
+              />
+              <ItemView
+                data={foundItems}
+                type="Apps"
+                slugUrl="/app/"
+                runCommand={runCommand}
+              />
+              <ItemView
+                data={foundItems}
+                type="Alternatives"
+                slugUrl="/alternative/"
+                runCommand={runCommand}
+              />
+            </>
+          )}
+
+          {(inputValue.length === 0 || foundItems.length === 0) && (
+            <>
+              <ItemView
+                data={data}
+                type="Tasks"
+                slugUrl="/tasks/"
+                runCommand={runCommand}
+              />
+            </>
+          )}
         </CommandList>
       </CommandDialog>
     </>
@@ -139,7 +205,7 @@ const ItemView = ({
   slugUrl,
   runCommand,
 }: {
-  data: Item[] | undefined
+  data: SearchResult[] | undefined
   type: "Apps" | "Tasks" | "Alternatives"
   slugUrl: string
   runCommand: (command: () => unknown) => void
