@@ -1,8 +1,9 @@
 import { alternatives, apps } from "#site/content"
-import AlternativeList from "@/components/theme/layout/alternative-list"
-import DetailsList from "@/components/theme/layout/details-list"
+import { badgeVariants } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { siteConfig } from "@/config/site"
+import { getAllTags, sortTagsByCount } from "@/lib/helper"
+import { encodeTitleToSlug } from "@/lib/utils"
 import { Metadata } from "next"
 import Link from "next/link"
 import { FaGithub } from "react-icons/fa6"
@@ -43,19 +44,9 @@ export async function generateMetadata(): Promise<Metadata> {
   }
 }
 
-const wrapperCol =
-  "grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-4 lg:gap-y-8 mt-4"
-
 export default function Page() {
-  const displayApps = apps
-    .filter((app) => app.published)
-    .sort((a, b) => (a.id > b.id ? -1 : 1))
-    .slice(0, 20)
-
-  const displayAlternatives = alternatives
-    .filter((app) => app.published)
-    .sort((a, b) => (a.id > b.id ? -1 : 1))
-    .slice(0, 20)
+  const { tasks } = getAllTags([...apps, ...alternatives])
+  const sortedTasks = sortTagsByCount(tasks)
 
   return (
     <div className="container py-6">
@@ -75,12 +66,12 @@ export default function Page() {
                 Alteropen is an open source Appsumo alternative.
               </h1>
             </div>
-            <div className="flex items-center gap-2">
+            <div className="flex flex-wrap justify-center items-center gap-2">
+              <Button asChild>
+                <Link href="/tasks">Filter by Tasks</Link>
+              </Button>
               <Button variant="outline" asChild>
                 <Link href="?isSearch=true">Search Alternative </Link>
-              </Button>
-              <Button asChild>
-                <Link href="/tasks">Sort by Tasks</Link>
               </Button>
               <Button variant="outline" size="icon" asChild>
                 <Link
@@ -94,34 +85,21 @@ export default function Page() {
             </div>
           </div>
         </div>
-        <div className="flex flex-col flex-1">
-          <div className="flex justify-start items-center space-x-6">
-            <h2 className="font-bold text-xl lg:text-2xl capitalize">
-              Recently App
-            </h2>
-            <Button asChild variant="link">
-              <Link href="/tasks/all">View All </Link>
-            </Button>
-          </div>
-          <div className={wrapperCol}>
-            {displayApps?.length > 0 && <DetailsList apps={displayApps} />}
-          </div>
-        </div>
 
-        <hr className="my-8" />
-
-        <div className="flex justify-start items-center space-x-6">
-          <h2 className="font-bold text-xl lg:text-2xl capitalize">
-            Recently Alternative
-          </h2>
-          <Button asChild variant="link">
-            <Link href="/alternative/all">View All </Link>
-          </Button>
-        </div>
-        <div className={wrapperCol}>
-          {displayAlternatives?.length > 0 && (
-            <AlternativeList apps={displayAlternatives} />
-          )}
+        <div className="flex-1 flex-row mx-0 sm:mx-5 my-5">
+          {sortedTasks?.map((t) => (
+            <Link
+              key={t}
+              className={badgeVariants({
+                variant: "secondary",
+                className:
+                  "no-underline rounded-md mx-2 my-2 sm:mx-3 sm:my-3 px-1 py-2 text-primary capitalize",
+              })}
+              href={`/tasks/${encodeTitleToSlug(t)}`}
+            >
+              {t} {tasks[t] ? `(${tasks[t]})` : null}
+            </Link>
+          ))}
         </div>
       </div>
     </div>
