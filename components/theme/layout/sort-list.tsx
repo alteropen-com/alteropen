@@ -2,14 +2,14 @@ import { alternatives, apps } from "@/.velite"
 import { Button } from "@/components/ui/button"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
-import { SORT_TYPES } from "@/config/const"
+import { SORT_TYPE, SORT_TYPES } from "@/config/const"
 import { getAllTags, sortTagsByCount } from "@/lib/helper"
 import Link from "next/link"
 import { MdChevronRight } from "react-icons/md"
 import Tags from "./tags"
 
 export default function SortList({
-  sortBy = SORT_TYPES[0].value,
+  sortBy = SORT_TYPE.lasted,
   onlyDeal = "false",
 }: {
   sortBy?: string

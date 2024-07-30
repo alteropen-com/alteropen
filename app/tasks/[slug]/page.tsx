@@ -3,52 +3,109 @@ import AlternativeList from "@/components/theme/layout/alternative-list"
 import DetailsList from "@/components/theme/layout/details-list"
 import NavLeft from "@/components/theme/layout/nav-left"
 import SortList from "@/components/theme/layout/sort-list"
+import { SORT_TYPE } from "@/config/const"
 import { siteConfig } from "@/config/site"
 import { capitalizeFirstLetter, encodeTitleToSlug } from "@/lib/utils"
 import { Metadata } from "next"
 
-interface PageProps {
+export interface TaskPageProps {
   params: {
     slug: string
   }
   searchParams: { sortBy?: string; onlyDeal?: string }
 }
 
-const filterApps = (slug: string) => {
-  return apps.filter((app) => {
-    if (app.published === false) return false
-    if (slug === "all") return true
-    if (!app.tasks) return false
-    const appTags = app.tasks.map((task) => encodeTitleToSlug(task))
-    return appTags.includes(slug.trim())
-  })
+const filterApps = (
+  slug: string,
+  searchParams: TaskPageProps["searchParams"]
+) => {
+  const { sortBy, onlyDeal } = searchParams
+  return apps
+    .filter((app) => {
+      if (app.published === false) return false
+      if (slug === "all") return true
+      if (!app.tasks) return false
+      const appTags = app.tasks.map((task) => encodeTitleToSlug(task))
+      return appTags.includes(slug.trim())
+    })
+    .sort((a, b) => {
+      switch (sortBy) {
+        case "top":
+          return a?.visit[0] > b?.visit[0] ? -1 : 1
+        case "lasted":
+        default:
+          return a.id > b.id ? -1 : 1
+      }
+    })
+    .filter((app) => {
+      if (onlyDeal === "true") {
+        return app.deals && app.deals?.length > 0
+      }
+      return true
+    })
 }
 
-const filterAlternatives = (slug: string) => {
-  return alternatives.filter((app) => {
-    if (app.published === false) return false
-    if (slug === "all") return true
-    if (!app.tasks) return false
-    const appTags = app.tasks.map((task) => encodeTitleToSlug(task))
-    return appTags.includes(slug.trim())
-  })
+const filterAlternatives = (
+  slug: string,
+  searchParams: TaskPageProps["searchParams"]
+) => {
+  const { sortBy, onlyDeal } = searchParams
+  return alternatives
+    .filter((app) => {
+      if (app.published === false) return false
+      if (slug === "all") return true
+      if (!app.tasks) return false
+      const appTags = app.tasks.map((task) => encodeTitleToSlug(task))
+      return appTags.includes(slug.trim())
+    })
+    .sort((a, b) => {
+      switch (sortBy) {
+        case "top":
+          return a?.visit[0] > b?.visit[0] ? -1 : 1
+        case "lasted":
+        default:
+          return a.id > b.id ? -1 : 1
+      }
+    })
+    .filter((app) => {
+      if (onlyDeal === "true") {
+        return app.deals && app.deals?.length > 0
+      }
+      return true
+    })
 }
 
-const pageTitle = (slug: string): string => {
-  if (slug === "all")
-    return "AlternativeTo and Deal List for Solo Developers and Startups in 2024"
-  return `Top ${
-    filterApps(slug).length
-  } Apps and Deals for ${capitalizeFirstLetter(
-    decodeURIComponent(slug.split("-").join(" "))
-  )} (Free/ OpenSource...) in 2024`
+const pageTitle = (
+  slug: string,
+  searchParams: TaskPageProps["searchParams"]
+): string => {
+  const { sortBy, onlyDeal } = searchParams
+
+  const sortTitle =
+    sortBy === SORT_TYPE.top
+      ? "Top"
+      : sortBy === SORT_TYPE.lasted
+      ? "Lasted"
+      : "Lasted"
+
+  const dealTitle = onlyDeal === "true" ? "with Lifetime Deals" : ""
+
+  // if (slug === "all") return "Alternative List for Indie in 2024"
+  return `${sortTitle} ${filterApps(slug, searchParams).length || ""} Apps & ${
+    filterAlternatives(slug, searchParams).length
+  } Alternative for ${
+    slug != "all"
+      ? capitalizeFirstLetter(decodeURIComponent(slug.split("-").join(" ")))
+      : "Indie"
+  } ${dealTitle}  in 2024`
 }
 
 export async function generateMetadata({
   params,
-}: PageProps): Promise<Metadata> {
+  searchParams,
+}: TaskPageProps): Promise<Metadata> {
   const { slug } = params
-  const title = pageTitle(slug)
+  const title = pageTitle(slug, searchParams)
   const description = `Top Alternatives for ${slug} with Review, HowTo. Pricing and more.`
 
   const href = `/tasks/${slug}`
@@ -59,7 +116,7 @@ export async function generateMetadata({
     description: description,
     authors: { name: siteConfig.author },
     alternates: {
-      canonical: href,
+      // canonical: href,
     },
     openGraph: {
       siteName: siteConfig.name,
@@ -83,70 +140,44 @@ export async function generateMetadata({
   }
 }
 
-export default function Page({ params, searchParams }: PageProps) {
+export default function Page({ params, searchParams }: TaskPageProps) {
   const { slug } = params
   const { sortBy, onlyDeal } = searchParams
 
-  const displayApps = filterApps(slug)
-    .sort((a, b) => {
-      switch (sortBy) {
-        case "top":
-          return a?.visit[0] > b?.visit[0] ? -1 : 1
-        case "lasted":
-        default:
-          return a.id > b.id ? -1 : 1
-      }
-    })
-    .filter((app) => {
-      if (onlyDeal === "true") {
-        return app.deals && app.deals?.length > 0
-      }
-      return true
-    })
+  const displayApps = filterApps(slug, searchParams)
 
-  const displayAlternatives = filterAlternatives(slug)
-    .sort((a, b) => {
-      switch (sortBy) {
-        case "top":
-          return a?.visit[0] > b?.visit[0] ? -1 : 1
-        case "lasted":
-        default:
-          return a.id > b.id ? -1 : 1
-      }
-    })
-    .filter((app) => {
-      if (onlyDeal === "true") {
-        return app.deals && app.deals?.length > 0
-      }
-      return true
-    })
+  const displayAlternatives = filterAlternatives(slug, searchParams)
 
   return (
     <div className="container py-6 flex">
       <NavLeft />
       <div className="flex flex-col flex-1">
+        <h2 className="font-bold text-xl lg:text-2xl">
+          {pageTitle(slug, searchParams)}
+        </h2>
+        <hr className="mt-2 mb-4 sm:mb-6" />
         {displayApps?.length > 0 && (
           <div className="flex flex-col">
             <div className="flex flex-wrap">
-              <h2 className="font-bold flex-1 text-xl lg:text-2xl capitalize">
-                {pageTitle(slug)}
-              </h2>
+              <h3 className="font-bold flex-1 text-lg lg:text-xl">
+                Best {displayApps?.length} Alternative
+              </h3>
             </div>
             <SortList sortBy={sortBy} onlyDeal={onlyDeal} />
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3  xl:grid-cols-4 2xl:grid-cols-5 gap-4 lg:gap-y-8 mt-4">
-              <DetailsList apps={displayApps} />
+              <DetailsList apps={displayApps.slice(0, 40)} />
             </div>
           </div>
         )}
         {displayAlternatives?.length > 0 && (
           <div className="flex flex-col flex-1">
             <hr className="my-8" />
-            <h2 className="font-bold text-xl lg:text-2xl capitalize">
+            <h3 className="font-bold text-lg lg:text-xl">
               Best {displayAlternatives?.length} Alternative
-            </h2>
+            </h3>
             <SortList sortBy={sortBy} onlyDeal={onlyDeal} />
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3  xl:grid-cols-4 2xl:grid-cols-5 gap-4 lg:gap-y-8 mt-4">
-              <AlternativeList apps={displayAlternatives} />
+              <AlternativeList apps={displayAlternatives.slice(0, 40)} />
             </div>
           </div>
         )}
