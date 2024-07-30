@@ -1,6 +1,7 @@
 import { alternatives, apps } from "#site/content"
 import AlternativeList from "@/components/theme/layout/alternative-list"
 import DetailsList from "@/components/theme/layout/details-list"
+import FeaturePopover from "@/components/theme/layout/feature-popover"
 import NavLeft from "@/components/theme/layout/nav-left"
 import SortList from "@/components/theme/layout/sort-list"
 import { SORT_TYPE } from "@/config/const"
@@ -12,20 +13,32 @@ export interface TaskPageProps {
   params: {
     slug: string
   }
-  searchParams: { sortBy?: string; onlyDeal?: string }
+  searchParams: { sortBy?: string; onlyDeal?: string; feature?: string }
 }
 
 const filterApps = (
   slug: string,
   searchParams: TaskPageProps["searchParams"]
 ) => {
-  const { sortBy, onlyDeal } = searchParams
+  const { sortBy, onlyDeal, feature } = searchParams
+
+  let featureQuery = feature?.split(",") || []
+
   return apps
     .filter((app) => {
       if (app.published === false) return false
+      if (
+        featureQuery.length > 0 &&
+        (!app.features ||
+          (app.features && !app.features.some((f) => featureQuery.includes(f))))
+      ) {
+        return false
+      }
+
       if (slug === "all") return true
       if (!app.tasks) return false
       const appTags = app.tasks.map((task) => encodeTitleToSlug(task))
+
       return appTags.includes(slug.trim())
     })
     .sort((a, b) => {
@@ -49,12 +62,23 @@ const filterAlternatives = (
   slug: string,
   searchParams: TaskPageProps["searchParams"]
 ) => {
-  const { sortBy, onlyDeal } = searchParams
+  const { sortBy, onlyDeal, feature } = searchParams
+  let featureQuery = feature?.split(",") || []
+
   return alternatives
     .filter((app) => {
       if (app.published === false) return false
+      if (
+        featureQuery.length > 0 &&
+        (!app.features ||
+          !featureQuery.every((f) => app?.features?.includes(f)))
+      ) {
+        return false
+      }
+
       if (slug === "all") return true
       if (!app.tasks) return false
+
       const appTags = app.tasks.map((task) => encodeTitleToSlug(task))
       return appTags.includes(slug.trim())
     })
@@ -79,7 +103,7 @@ const pageTitle = (
   slug: string,
   searchParams: TaskPageProps["searchParams"]
 ): string => {
-  const { sortBy, onlyDeal } = searchParams
+  const { sortBy, onlyDeal, feature } = searchParams
 
   const sortTitle =
     sortBy === SORT_TYPE.top
@@ -90,14 +114,33 @@ const pageTitle = (
 
   const dealTitle = onlyDeal === "true" ? "with Lifetime Deals" : ""
 
-  // if (slug === "all") return "Alternative List for Indie in 2024"
-  return `${sortTitle} ${filterApps(slug, searchParams).length || ""} Apps & ${
-    filterAlternatives(slug, searchParams).length
-  } Alternative for ${
-    slug != "all"
-      ? capitalizeFirstLetter(decodeURIComponent(slug.split("-").join(" ")))
-      : "Indie"
-  } ${dealTitle}  in 2024`
+  const filterAppsList = filterApps(slug, searchParams)
+  const filterAlternativesList = filterAlternatives(slug, searchParams)
+
+  const appTittle = `${sortTitle} ${
+    filterAppsList.length > 0 ? filterAppsList.length + " App" : ""
+  } ${
+    filterAppsList.length > 0 || filterAlternativesList.length > 0 ? " &" : ""
+  } ${
+    filterAlternativesList.length > 0
+      ? filterAlternativesList.length + " Alternative"
+      : ""
+  } `
+  const featureTitle = `${
+    feature ? "for " + feature.replaceAll(",", " ").toUpperCase() : ""
+  }`
+  const tasksTitle = `${capitalizeFirstLetter(
+    decodeURIComponent(slug.split("-").join(" "))
+  )}`
+
+  const yearTitle = new Date().getFullYear()
+
+  if (slug === "all")
+    return `${appTittle} ${
+      featureTitle || " for Indie/Saas"
+    } ${dealTitle} in ${yearTitle}`
+
+  return `${appTittle} ${featureTitle} in ${tasksTitle} ${dealTitle} ${yearTitle}`
 }
 
 export async function generateMetadata({
@@ -155,7 +198,16 @@ export default function Page({ params, searchParams }: TaskPageProps) {
         <h2 className="font-bold text-xl lg:text-2xl">
           {pageTitle(slug, searchParams)}
         </h2>
-        <hr className="mt-2 mb-4 sm:mb-6" />
+        <SortList sortBy={sortBy} onlyDeal={onlyDeal} />
+        <div className="flex items-center space-x-2">
+          <FeaturePopover
+            searchParams={searchParams}
+            appFilter={[...displayApps, ...displayAlternatives]}
+          />
+        </div>
+
+        <hr className="mb-2 sm:mb-4" />
+
         {displayApps?.length > 0 && (
           <div className="flex flex-col">
             <div className="flex flex-wrap">
@@ -163,7 +215,6 @@ export default function Page({ params, searchParams }: TaskPageProps) {
                 Best {displayApps?.length} Alternative
               </h3>
             </div>
-            <SortList sortBy={sortBy} onlyDeal={onlyDeal} />
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3  xl:grid-cols-4 2xl:grid-cols-5 gap-4 lg:gap-y-8 mt-4">
               <DetailsList apps={displayApps.slice(0, 40)} />
             </div>
@@ -175,7 +226,6 @@ export default function Page({ params, searchParams }: TaskPageProps) {
             <h3 className="font-bold text-lg lg:text-xl">
               Best {displayAlternatives?.length} Alternative
             </h3>
-            <SortList sortBy={sortBy} onlyDeal={onlyDeal} />
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3  xl:grid-cols-4 2xl:grid-cols-5 gap-4 lg:gap-y-8 mt-4">
               <AlternativeList apps={displayAlternatives.slice(0, 40)} />
             </div>
