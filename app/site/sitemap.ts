@@ -1,5 +1,7 @@
 import { alternatives, apps } from "#site/content"
 import { siteConfig } from "@/config/site"
+import { getAllTags, sortTagsByCount } from "@/lib/helper"
+import { encodeTitleToSlug } from "@/lib/utils"
 import { MetadataRoute } from "next"
 
 export default function sitemap(): MetadataRoute.Sitemap {
@@ -27,5 +29,16 @@ export default function sitemap(): MetadataRoute.Sitemap {
     }
   }) as MetadataRoute.Sitemap
 
-  return [...appsSiteMap, ...alternativesSiteMap]
+  const { tasks } = getAllTags([...apps, ...alternatives])
+  const sortedTasks = sortTagsByCount(tasks)
+
+  const tasksSiteMap = sortedTasks.map((task) => {
+    return {
+      url: `${siteConfig.url}/tasks/${encodeTitleToSlug(task)}`,
+      changeFrequency: "daily",
+      priority: 0.6,
+    }
+  }) as MetadataRoute.Sitemap
+
+  return [...tasksSiteMap, ...appsSiteMap, ...alternativesSiteMap]
 }
