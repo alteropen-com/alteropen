@@ -183,6 +183,7 @@ export const FEATURES = [
   "children",
 
   // Technology and Data
+  "openSource",
   "data",
   "detection",
   "cybersecurity",
