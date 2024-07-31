@@ -1,6 +1,6 @@
 "use client"
 import { Alternative } from "@/.velite"
-import { TaskPageProps } from "@/app/tasks/[slug]/page"
+import { SearchParams } from "@/app/tasks/[slug]/page"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import {
@@ -29,14 +29,14 @@ export default function FeaturePopover({
   searchParams,
   appFilter,
 }: {
-  searchParams: TaskPageProps["searchParams"]
+  searchParams: SearchParams
   appFilter: Alternative[]
 }) {
   const router = useRouter()
 
   const [showAll, setShowAll] = useState(false)
 
-  const params = new URLSearchParams(searchParams)
+  const params = new URLSearchParams(searchParams as Record<string, string>)
   let featureQuery = params.get("feature")?.split(",") || []
 
   const { features } = getAllTags(appFilter)

@@ -1,7 +1,7 @@
 "use client"
 
 import { Alternative } from "@/.velite"
-import { TaskPageProps } from "@/app/tasks/[slug]/page"
+import { SearchParams } from "@/app/tasks/[slug]/page"
 import { Button } from "@/components/ui/button"
 import { getAllTags, sortTagsByCount } from "@/lib/helper"
 import { useRouter } from "next/navigation"
@@ -10,12 +10,12 @@ export default function FeatureList({
   searchParams,
   appFilter,
 }: {
-  searchParams: TaskPageProps["searchParams"]
+  searchParams: SearchParams
   appFilter: Alternative[]
 }) {
   const router = useRouter()
 
-  const params = new URLSearchParams(searchParams)
+  const params = new URLSearchParams(searchParams as Record<string, string>)
   let featureQuery = params.get("feature")?.split(",") || []
 
   const { features } = getAllTags(appFilter)

@@ -9,9 +9,11 @@ import { MdChevronRight } from "react-icons/md"
 import Tags from "./tags"
 
 export default function SortList({
+  slug,
   sortBy = SORT_TYPE.lasted,
   onlyDeal = "false",
 }: {
+  slug: string
   sortBy?: string
   onlyDeal?: string
 }) {
@@ -39,7 +41,7 @@ export default function SortList({
             <ScrollArea className="h-[95vh]">
               <div className="text-sm lg:text-xl">Filter by:</div>
               <div className="my-4">
-                <Tags tags={sortedTasks} tasks={tasks} />
+                <Tags tags={sortedTasks} tasks={tasks} slug={slug} />
               </div>
             </ScrollArea>
           </SheetContent>

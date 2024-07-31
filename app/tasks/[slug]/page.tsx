@@ -9,17 +9,19 @@ import { siteConfig } from "@/config/site"
 import { capitalizeFirstLetter, encodeTitleToSlug } from "@/lib/utils"
 import { Metadata } from "next"
 
+export interface SearchParams {
+  sortBy?: string
+  onlyDeal?: string
+  feature?: string
+}
 export interface TaskPageProps {
   params: {
     slug: string
   }
-  searchParams: { sortBy?: string; onlyDeal?: string; feature?: string }
+  searchParams: SearchParams
 }
 
-const filterApps = (
-  slug: string,
-  searchParams: TaskPageProps["searchParams"]
-) => {
+const filterApps = (slug: string, searchParams: SearchParams) => {
   const { sortBy, onlyDeal, feature } = searchParams
 
   let featureQuery = feature?.split(",") || []
@@ -58,10 +60,7 @@ const filterApps = (
     })
 }
 
-const filterAlternatives = (
-  slug: string,
-  searchParams: TaskPageProps["searchParams"]
-) => {
+const filterAlternatives = (slug: string, searchParams: SearchParams) => {
   const { sortBy, onlyDeal, feature } = searchParams
   let featureQuery = feature?.split(",") || []
 
@@ -99,10 +98,7 @@ const filterAlternatives = (
     })
 }
 
-const pageTitle = (
-  slug: string,
-  searchParams: TaskPageProps["searchParams"]
-): string => {
+const pageTitle = (slug: string, searchParams: SearchParams): string => {
   const { sortBy, onlyDeal, feature } = searchParams
 
   const sortTitle =
@@ -193,12 +189,12 @@ export default function Page({ params, searchParams }: TaskPageProps) {
 
   return (
     <div className="container py-6 flex">
-      <NavLeft />
+      <NavLeft slug={slug} />
       <div className="flex flex-col flex-1">
         <h2 className="font-bold text-xl lg:text-2xl">
           {pageTitle(slug, searchParams)}
         </h2>
-        <SortList sortBy={sortBy} onlyDeal={onlyDeal} />
+        <SortList sortBy={sortBy} onlyDeal={onlyDeal} slug={slug} />
         <div className="flex items-center space-x-2">
           <FeaturePopover
             searchParams={searchParams}

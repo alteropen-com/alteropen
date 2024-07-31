@@ -8,16 +8,19 @@ interface TagProps {
   current?: boolean
   variant?: "default" | "secondary" | "destructive" | "outline"
   count?: number
+  slug?: string
 }
-export default function TagItem({ tag, variant, count, type }: TagProps) {
+export default function TagItem({ tag, variant, count, type, slug }: TagProps) {
   if (!tag) return null
+
+  const isActive = slug === encodeTitleToSlug(tag)
 
   switch (type) {
     case "tasks":
       return (
         <Link
           className={badgeVariants({
-            variant: variant ?? "outline",
+            variant: isActive ? "default" : variant ? variant : "outline",
             className:
               "no-underline rounded-md px-2 py-1 text-primary capitalize",
           })}

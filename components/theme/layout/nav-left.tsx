@@ -4,7 +4,7 @@ import { getAllTags, sortTagsByCount } from "@/lib/helper"
 import Link from "next/link"
 import Tags from "./tags"
 
-export default function NavLeft() {
+export default function NavLeft({ slug }: { slug: string }) {
   const { tasks } = getAllTags([...apps, ...alternatives])
   const sortedTasks = sortTagsByCount(tasks)
 
@@ -17,14 +17,14 @@ export default function NavLeft() {
         <Link
           href="/app"
           className={badgeVariants({
-            variant: "secondary",
+            variant: slug === "all" ? "default" : "secondary",
             className:
               "no-underline rounded-md px-2 py-1 text-primary capitalize",
           })}
         >
           All Tasks
         </Link>
-        <Tags tags={sortedTasks} tasks={tasks} />
+        <Tags tags={sortedTasks} tasks={tasks} slug={slug} />
       </div>
     </div>
   )
