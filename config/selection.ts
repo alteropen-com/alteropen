@@ -59,7 +59,6 @@ export const FEATURES = [
   "development",
   "prompt",
   "LLM",
-  "analysis", // check
   "analytics",
 
   // Content Creation and Management
