@@ -46,7 +46,7 @@ export default function RootLayout({
             </div>
           </QueryProvider>
         </ThemeProvider>
-        <footer className="pb-4 pt-10 flex flex-col justify-center items-center space-y-2">
+        <footer className="px-4 pb-4 pt-10 flex flex-col justify-center items-center space-y-2">
           <div>
             <a
               href="https://dashboard.simpleanalytics.com/alteropen.com?utm_source=alteropen.com&utm_content=badge&referral=bovop"
@@ -68,7 +68,7 @@ export default function RootLayout({
               </picture>
             </a>
           </div>
-          <div>
+          <div className="text-center">
             {" "}
             By using this website, you agree to our{" "}
             <a href="/term" className="text-blue-500 no-underline">
