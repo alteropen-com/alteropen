@@ -46,26 +46,43 @@ export default function RootLayout({
             </div>
           </QueryProvider>
         </ThemeProvider>
-        <footer className="pb-4 pt-10 flex justify-center">
-          <a
-            href="https://dashboard.simpleanalytics.com/alteropen.com?utm_source=alteropen.com&utm_content=badge&referral=bovop"
-            referrerPolicy="origin"
-            target="_blank"
-          >
-            <picture>
-              <source
-                srcSet="https://simpleanalyticsbadges.com/alteropen.com"
-                media="(prefers-color-scheme: light)"
-              />
-              <img
-                src="https://simpleanalyticsbadges.com/alteropen.com"
-                loading="lazy"
-                referrerPolicy="no-referrer"
-                crossOrigin="anonymous"
-                alt="Simple Analytics"
-              />
-            </picture>
-          </a>
+        <footer className="pb-4 pt-10 flex flex-col justify-center items-center space-y-2">
+          <div>
+            <a
+              href="https://dashboard.simpleanalytics.com/alteropen.com?utm_source=alteropen.com&utm_content=badge&referral=bovop"
+              referrerPolicy="origin"
+              target="_blank"
+            >
+              <picture>
+                <source
+                  srcSet="https://simpleanalyticsbadges.com/alteropen.com"
+                  media="(prefers-color-scheme: light)"
+                />
+                <img
+                  src="https://simpleanalyticsbadges.com/alteropen.com"
+                  loading="lazy"
+                  referrerPolicy="no-referrer"
+                  crossOrigin="anonymous"
+                  alt="Simple Analytics"
+                />
+              </picture>
+            </a>
+          </div>
+          <div>
+            {" "}
+            By using this website, you agree to our{" "}
+            <a href="/term" className="text-blue-500 no-underline">
+              Terms
+            </a>
+            ,{" "}
+            <a href="/refund" className="text-blue-500 no-underline">
+              Refund
+            </a>{" "}
+            and{" "}
+            <a href="/privacy" className="text-blue-500 no-underline">
+              Privacy
+            </a>
+          </div>
         </footer>
       </body>
     </html>
