@@ -30,7 +30,7 @@ const filterApps = (
       if (
         featureQuery.length > 0 &&
         (!app.features ||
-          (app.features && !app.features.some((f) => featureQuery.includes(f))))
+          !featureQuery.every((f) => app?.features?.includes(f)))
       ) {
         return false
       }
