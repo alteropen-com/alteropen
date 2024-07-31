@@ -1,5 +1,5 @@
 import { App } from "@/.velite"
-import TagItem from "./tag-item"
+import FeatureItem from "./feature-item"
 
 export default function ItemFeature({ post }: { post: App }) {
   if (!post.features) return null
@@ -8,7 +8,7 @@ export default function ItemFeature({ post }: { post: App }) {
       <p className="font-bold my-2">Feature</p>
       <div className="flex gap-2 flex-wrap">
         {post.features.map((t) => (
-          <TagItem tag={t} key={t} type="features" variant="outline" />
+          <FeatureItem tag={t} key={t} variant="outline" />
         ))}
       </div>
     </>

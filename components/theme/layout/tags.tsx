@@ -17,7 +17,6 @@ export function Tags({
           key={t}
           count={tasks[t]}
           variant={"secondary"}
-          type="tasks"
           slug={slug}
         />
       ))}

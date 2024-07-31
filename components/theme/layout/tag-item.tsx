@@ -4,39 +4,25 @@ import Link from "next/link"
 
 interface TagProps {
   tag: string
-  type: "tasks" | "features"
   current?: boolean
   variant?: "default" | "secondary" | "destructive" | "outline"
   count?: number
   slug?: string
 }
-export default function TagItem({ tag, variant, count, type, slug }: TagProps) {
+export default function TagItem({ tag, variant, count, slug }: TagProps) {
   if (!tag) return null
 
   const isActive = slug === encodeTitleToSlug(tag)
 
-  switch (type) {
-    case "tasks":
-      return (
-        <Link
-          className={badgeVariants({
-            variant: isActive ? "default" : variant ? variant : "outline",
-            className:
-              "no-underline rounded-md px-2 py-1 text-primary capitalize",
-          })}
-          href={`/${type}/${encodeTitleToSlug(tag)}`}
-        >
-          {tag} {count ? `(${count})` : null}
-        </Link>
-      )
-    case "features":
-      return (
-        <span className="border-b rounded-md px-1">
-          {tag} {count ? `(${count})` : null}
-        </span>
-      )
-
-    default:
-      break
-  }
+  return (
+    <Link
+      className={badgeVariants({
+        variant: isActive ? "default" : variant ? variant : "outline",
+        className: "no-underline rounded-md px-2 py-1 text-primary capitalize",
+      })}
+      href={`/tasks/${encodeTitleToSlug(tag)}`}
+    >
+      {tag} {count ? `(${count})` : null}
+    </Link>
+  )
 }

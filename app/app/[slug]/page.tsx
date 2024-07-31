@@ -177,7 +177,7 @@ export default async function PostPage({ params }: PostPageProps) {
               <div className="px-4 py-3 mt-4 space-y-2">
                 <div>Tasks:</div>
                 {app.tasks?.map((t) => (
-                  <TagItem tag={t} key={t} type="tasks" />
+                  <TagItem tag={t} key={t} />
                 ))}
               </div>
             </div>

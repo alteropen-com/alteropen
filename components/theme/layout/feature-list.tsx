@@ -20,9 +20,14 @@ export default function FeatureList({
 
   const { features } = getAllTags(appFilter)
 
-  const sortedFeatures = sortTagsByCount(features).filter((f) =>
-    appFilter.some((app) => app.features?.includes(f))
-  )
+  const isFeatureActive = (feature: string) => {
+    const activeFeatures = searchParams.feature?.split(",") || []
+    return activeFeatures.includes(feature)
+  }
+
+  const sortedFeatures = sortTagsByCount(features)
+    .filter((f) => appFilter.some((app) => app.features?.includes(f)))
+    .sort((a, b) => (isFeatureActive(a) ? -1 : 1))
 
   const handleClick = (featureToToggle: string) => {
     if (featureQuery.includes(featureToToggle)) {
@@ -41,11 +46,6 @@ export default function FeatureList({
 
     const newUrl = `${window.location.pathname}?${params.toString()}`
     router.push(newUrl)
-  }
-
-  const isFeatureActive = (feature: string) => {
-    const activeFeatures = searchParams.feature?.split(",") || []
-    return activeFeatures.includes(feature)
   }
 
   return (
