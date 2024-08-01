@@ -9,6 +9,7 @@ import DetailImage from "@/components/theme/layout/detail-image"
 import DetailToc from "@/components/theme/layout/detail-toc"
 import ItemAlternative from "@/components/theme/layout/item-alternative"
 import ItemFeature from "@/components/theme/layout/item-feature"
+import PopularSearch from "@/components/theme/layout/popular-search"
 import TagItem from "@/components/theme/layout/tag-item"
 import VisitNumber from "@/components/theme/layout/visit-number"
 import {
@@ -206,6 +207,7 @@ export default async function PostPage({ params }: PostPageProps) {
           <hr className="my-4" />
         </div>
         <div className="w-full max-w-[1468px]">
+          <PopularSearch search={post.popularSearch} />
           <Comment />
         </div>
       </div>

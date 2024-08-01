@@ -55,6 +55,7 @@ export default defineConfig({
         url: s.string().optional(),
         pricing: s.array(s.enum(PRICING)).optional(),
         visit: s.array(s.number()).default([0]),
+        popularSearch: s.array(s.string()).optional(),
         deals: s
           .array(
             s.object({
@@ -118,6 +119,7 @@ export default defineConfig({
         url: s.string().optional(),
         pricing: s.array(s.enum(PRICING)).optional(),
         visit: s.array(s.number()).default([0]),
+        popularSearch: s.array(s.string()).optional(),
         deals: s
           .array(
             s.object({
