@@ -19,7 +19,7 @@ export default function SortList({
   const { tasks } = getAllTags([...apps, ...alternatives])
   const sortedTasks = sortTagsByCount(tasks)
 
-  const { sortBy, onlyDeal, openSource } = searchParams
+  const { sortBy, onlyDeal, openSource, free } = searchParams
 
   const createHref = (
     newParam: Record<string, string | undefined>,
@@ -107,6 +107,20 @@ export default function SortList({
             )}
           >
             OpenSource
+          </Link>
+        </Button>
+        <Button
+          variant={free === "true" ? "default" : "outline"}
+          className="rounded-md min-w-[100px]"
+          asChild
+        >
+          <Link
+            href={createHref(
+              { free: free === "true" ? undefined : "true" },
+              searchParams
+            )}
+          >
+            Free
           </Link>
         </Button>
       </div>

@@ -15,6 +15,7 @@ export interface SearchParams {
   onlyDeal?: string
   feature?: string
   openSource?: string
+  free?: string
 }
 export interface TaskPageProps {
   params: {
@@ -24,7 +25,7 @@ export interface TaskPageProps {
 }
 
 const filterApps = (slug: string, searchParams: SearchParams) => {
-  const { sortBy, onlyDeal, feature, openSource } = searchParams
+  const { sortBy, onlyDeal, feature, openSource, free } = searchParams
 
   let featureQuery = feature?.split(",") || []
 
@@ -43,6 +44,9 @@ const filterApps = (slug: string, searchParams: SearchParams) => {
         openSource === "true" &&
         !app.pricing?.includes(PRICING_ITEM.OpenSource)
       )
+        return false
+
+      if (free === "true" && !app.pricing?.includes(PRICING_ITEM.Free))
         return false
 
       if (slug === "all") return true
@@ -69,7 +73,7 @@ const filterApps = (slug: string, searchParams: SearchParams) => {
 }
 
 const filterAlternatives = (slug: string, searchParams: SearchParams) => {
-  const { sortBy, onlyDeal, feature, openSource } = searchParams
+  const { sortBy, onlyDeal, feature, openSource, free } = searchParams
   let featureQuery = feature?.split(",") || []
 
   return alternatives
@@ -87,6 +91,9 @@ const filterAlternatives = (slug: string, searchParams: SearchParams) => {
         openSource === "true" &&
         !app.pricing?.includes(PRICING_ITEM["OpenSource"])
       )
+        return false
+
+      if (free === "true" && !app.pricing?.includes(PRICING_ITEM["Free"]))
         return false
 
       if (slug === "all") return true
@@ -113,7 +120,7 @@ const filterAlternatives = (slug: string, searchParams: SearchParams) => {
 }
 
 const pageTitle = (slug: string, searchParams: SearchParams): string => {
-  const { sortBy, onlyDeal, feature, openSource } = searchParams
+  const { sortBy, onlyDeal, feature, openSource, free } = searchParams
 
   const sortTitle =
     sortBy === SORT_TYPE.top
@@ -144,15 +151,16 @@ const pageTitle = (slug: string, searchParams: SearchParams): string => {
   )}`
 
   const openSourceTitle = openSource === "true" ? "OpenSource" : ""
+  const freeTitle = free === "true" ? "Free" : ""
 
   const yearTitle = new Date().getFullYear()
 
   if (slug === "all")
-    return `${appTittle} ${openSourceTitle} ${
+    return `${appTittle} ${openSourceTitle} ${freeTitle} ${
       featureTitle || " for Indie/Saas"
     } ${dealTitle} in ${yearTitle}`
 
-  return `${appTittle} ${openSourceTitle} ${featureTitle} in ${tasksTitle} ${dealTitle} ${yearTitle}`
+  return `${appTittle} ${openSourceTitle} ${freeTitle} ${featureTitle} in ${tasksTitle} ${dealTitle} ${yearTitle}`
 }
 
 export async function generateMetadata({
