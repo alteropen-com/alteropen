@@ -1,4 +1,5 @@
 import { alternatives, apps } from "@/.velite"
+import { SearchParams } from "@/app/tasks/[slug]/page"
 import { Button } from "@/components/ui/button"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
@@ -10,21 +11,30 @@ import Tags from "./tags"
 
 export default function SortList({
   slug,
-  sortBy = SORT_TYPE.lasted,
-  onlyDeal = "false",
+  searchParams,
 }: {
   slug: string
-  sortBy?: string
-  onlyDeal?: string
+  searchParams: SearchParams
 }) {
   const { tasks } = getAllTags([...apps, ...alternatives])
   const sortedTasks = sortTagsByCount(tasks)
 
-  const createHref = (newSortBy?: string, newOnlyDeal?: string) => {
-    const params = new URLSearchParams()
-    if (newSortBy && newSortBy !== SORT_TYPES[0].value)
-      params.set("sortBy", newSortBy)
-    if (newOnlyDeal === "true") params.set("onlyDeal", "true")
+  const { sortBy, onlyDeal, openSource } = searchParams
+
+  const createHref = (
+    newParam: Record<string, string | undefined>,
+    searchParams: SearchParams
+  ) => {
+    const params = new URLSearchParams(
+      searchParams as unknown as Record<string, string>
+    )
+    Object.entries(newParam).forEach(([key, value]) => {
+      if (value === undefined) {
+        params.delete(key)
+      } else {
+        params.set(key, value)
+      }
+    })
     return `?${params.toString()}`
   }
 
@@ -47,26 +57,56 @@ export default function SortList({
           </SheetContent>
         </Sheet>
       </div>
-      <div className="space-x-2 sm:space-x-3 lg:space-x-4 mt-1 sm:mt-2 flex">
+      <div className="space-x-2 sm:space-x-3 lg:space-x-4 mt-1 sm:mt-2 flex h-12 max-w-[95vw] overflow-x-auto overflow-y-hidden">
         {SORT_TYPES.map((type) => (
           <Button
             key={type.value}
-            variant={sortBy === type.value ? "default" : "secondary"}
+            variant={
+              !sortBy && type.value === SORT_TYPE.latest
+                ? "default"
+                : sortBy === type.value
+                ? "default"
+                : "secondary"
+            }
             className="rounded-full min-w-[100px]"
             asChild
           >
-            <Link href={createHref(type.value, onlyDeal)}>{type.name}</Link>
+            <Link
+              href={createHref(
+                { sortBy: sortBy === type.value ? undefined : type.value },
+                searchParams
+              )}
+            >
+              {type.name}
+            </Link>
           </Button>
         ))}
         <Button
-          variant={onlyDeal === "true" ? "default" : "secondary"}
-          className="rounded-full min-w-[100px]"
+          variant={onlyDeal === "true" ? "default" : "outline"}
+          className="rounded-md min-w-[100px]"
           asChild
         >
           <Link
-            href={createHref(sortBy, onlyDeal === "true" ? "false" : "true")}
+            href={createHref(
+              { onlyDeal: onlyDeal === "true" ? undefined : "true" },
+              searchParams
+            )}
           >
             Deals
+          </Link>
+        </Button>
+        <Button
+          variant={openSource === "true" ? "default" : "outline"}
+          className="rounded-md min-w-[100px]"
+          asChild
+        >
+          <Link
+            href={createHref(
+              { openSource: openSource === "true" ? undefined : "true" },
+              searchParams
+            )}
+          >
+            OpenSource
           </Link>
         </Button>
       </div>

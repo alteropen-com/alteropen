@@ -1,12 +1,13 @@
 export const SORT_TYPES = [
-  { value: "lasted", name: "Latest" },
+  { value: "latest", name: "Latest" },
   { value: "top", name: "Top Visit" },
-]
+] as const
 
-// SORT_TYPES to key and name object
+type SortType = (typeof SORT_TYPES)[number]["value"]
+
 export const SORT_TYPE = SORT_TYPES.reduce((acc, curr) => {
   acc[curr.value] = curr.value
   return acc
-}, {} as Record<string, string>)
+}, {} as Record<SortType, SortType>)
 
 export const MAX_TITLE_LENGTH = 60

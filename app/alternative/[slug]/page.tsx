@@ -69,7 +69,7 @@ export async function generateMetadata({
     deals && deals.length > 0 ? `+${deals.length} Deals` : ""
   } in 2024. `
 
-  const description = `Best Similar, Replacement App with Top Deal for ${
+  const description = `Best Similar App with Top Deal, Coupon, Discount, Promotion for ${
     name || title
   }. Review. HowTo. Pricing.`
 

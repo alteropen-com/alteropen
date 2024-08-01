@@ -5,6 +5,7 @@ import FeaturePopover from "@/components/theme/layout/feature-popover"
 import NavLeft from "@/components/theme/layout/nav-left"
 import SortList from "@/components/theme/layout/sort-list"
 import { SORT_TYPE } from "@/config/const"
+import { PRICING_ITEM } from "@/config/selection"
 import { siteConfig } from "@/config/site"
 import { capitalizeFirstLetter, encodeTitleToSlug } from "@/lib/utils"
 import { Metadata } from "next"
@@ -13,6 +14,7 @@ export interface SearchParams {
   sortBy?: string
   onlyDeal?: string
   feature?: string
+  openSource?: string
 }
 export interface TaskPageProps {
   params: {
@@ -22,7 +24,7 @@ export interface TaskPageProps {
 }
 
 const filterApps = (slug: string, searchParams: SearchParams) => {
-  const { sortBy, onlyDeal, feature } = searchParams
+  const { sortBy, onlyDeal, feature, openSource } = searchParams
 
   let featureQuery = feature?.split(",") || []
 
@@ -36,6 +38,12 @@ const filterApps = (slug: string, searchParams: SearchParams) => {
       ) {
         return false
       }
+
+      if (
+        openSource === "true" &&
+        !app.pricing?.includes(PRICING_ITEM.OpenSource)
+      )
+        return false
 
       if (slug === "all") return true
       if (!app.tasks) return false
@@ -61,7 +69,7 @@ const filterApps = (slug: string, searchParams: SearchParams) => {
 }
 
 const filterAlternatives = (slug: string, searchParams: SearchParams) => {
-  const { sortBy, onlyDeal, feature } = searchParams
+  const { sortBy, onlyDeal, feature, openSource } = searchParams
   let featureQuery = feature?.split(",") || []
 
   return alternatives
@@ -74,6 +82,12 @@ const filterAlternatives = (slug: string, searchParams: SearchParams) => {
       ) {
         return false
       }
+
+      if (
+        openSource === "true" &&
+        !app.pricing?.includes(PRICING_ITEM["OpenSource"])
+      )
+        return false
 
       if (slug === "all") return true
       if (!app.tasks) return false
@@ -99,12 +113,12 @@ const filterAlternatives = (slug: string, searchParams: SearchParams) => {
 }
 
 const pageTitle = (slug: string, searchParams: SearchParams): string => {
-  const { sortBy, onlyDeal, feature } = searchParams
+  const { sortBy, onlyDeal, feature, openSource } = searchParams
 
   const sortTitle =
     sortBy === SORT_TYPE.top
       ? "Top"
-      : sortBy === SORT_TYPE.lasted
+      : sortBy === SORT_TYPE.latest
       ? "Lasted"
       : "Lasted"
 
@@ -129,14 +143,16 @@ const pageTitle = (slug: string, searchParams: SearchParams): string => {
     decodeURIComponent(slug.split("-").join(" "))
   )}`
 
+  const openSourceTitle = openSource === "true" ? "OpenSource" : ""
+
   const yearTitle = new Date().getFullYear()
 
   if (slug === "all")
-    return `${appTittle} ${
+    return `${appTittle} ${openSourceTitle} ${
       featureTitle || " for Indie/Saas"
     } ${dealTitle} in ${yearTitle}`
 
-  return `${appTittle} ${featureTitle} in ${tasksTitle} ${dealTitle} ${yearTitle}`
+  return `${appTittle} ${openSourceTitle} ${featureTitle} in ${tasksTitle} ${dealTitle} ${yearTitle}`
 }
 
 export async function generateMetadata({
@@ -194,7 +210,7 @@ export default function Page({ params, searchParams }: TaskPageProps) {
         <h2 className="font-bold text-xl lg:text-2xl">
           {pageTitle(slug, searchParams)}
         </h2>
-        <SortList sortBy={sortBy} onlyDeal={onlyDeal} slug={slug} />
+        <SortList slug={slug} searchParams={searchParams} />
         <div className="flex items-center space-x-2">
           <FeaturePopover
             searchParams={searchParams}

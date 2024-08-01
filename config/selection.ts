@@ -4,7 +4,14 @@ export const PRICING = [
   "Subscription",
   "OpenSource",
   "Paid",
-]
+] as const
+
+export type PricingType = (typeof PRICING)[number]
+
+export const PRICING_ITEM = PRICING.reduce((acc, curr) => {
+  acc[curr] = curr
+  return acc
+}, {} as Record<PricingType, PricingType>)
 
 export const TASKS = [
   "Accounting",
@@ -188,7 +195,6 @@ export const FEATURES = [
   "children",
 
   // Technology and Data
-  "openSource",
   "data",
   "detection",
   "cybersecurity",
