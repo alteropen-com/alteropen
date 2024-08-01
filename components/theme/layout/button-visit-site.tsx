@@ -15,6 +15,10 @@ const ButtonVisitSite = ({
   className?: string
   app?: App
 }) => {
+  const url = href || app?.url
+
+  if (!url) return null
+
   return (
     <a
       className={`${
@@ -22,7 +26,7 @@ const ButtonVisitSite = ({
           ? className
           : "text-md text-primary no-underline hover:underline"
       } flex items-center`}
-      href={(href || app?.url) + `?ref=${siteConfig.ref}`}
+      href={url + `${url.includes("?") ? "&" : "?"}ref=${siteConfig.ref}`}
       target={target}
       rel="noopener noreferrer"
     >
