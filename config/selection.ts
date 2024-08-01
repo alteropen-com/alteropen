@@ -40,11 +40,13 @@ export const TASKS = [
   "Photo",
   "Productivity",
   "Project management",
+  "Remote collaboration",
   "Sales management",
   "SEO",
   "SMS",
   "Social media",
   "Video",
+  "Visual design",
   "Web builders",
   "Wellness",
 ]

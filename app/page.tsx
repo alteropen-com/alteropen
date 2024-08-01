@@ -68,7 +68,7 @@ export default function Page() {
             </div>
             <div className="flex flex-wrap justify-center items-center gap-2">
               <Button asChild>
-                <Link href="/tasks">Filter by Tasks</Link>
+                <Link href="/tasks">All Tasks</Link>
               </Button>
               <Button variant="outline" asChild>
                 <Link href="?isSearch=true">Search Alternative </Link>
