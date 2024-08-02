@@ -37,7 +37,7 @@ const DialogContent = React.forwardRef<
     <DialogOverlay />
     <DialogPrimitive.Title className="sr-only">Search</DialogPrimitive.Title>
     <DialogPrimitive.Description className="sr-only">
-      Search Alternative
+      Search
     </DialogPrimitive.Description>
     <DialogPrimitive.Content
       ref={ref}

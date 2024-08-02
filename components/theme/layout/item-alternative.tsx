@@ -18,7 +18,6 @@ export default function ItemAlternative({ post }: { post: App }) {
       url: `/app/${app.slug}`,
       deals: app.deals,
     }))
-    .sort((a, b) => b.visit[0] - a.visit[0])
 
   const alternativeAlternative = alternatives
     .filter((app) => app.alternative?.find((item) => item.id === post.id))
@@ -30,20 +29,39 @@ export default function ItemAlternative({ post }: { post: App }) {
       url: `/alternative/${app.slug}`,
       deals: app.deals,
     }))
-    .sort((a, b) => b.visit[0] - a.visit[0])
 
   const postAlternative = post.alternative
-    ?.filter((item) => !alternativeApp?.find((app) => item.id === app.id))
+    ?.filter(
+      (item) =>
+        ![...alternativeApp, ...alternativeApp]?.find(
+          (app) => item.id === app.id
+        )
+    )
     .map((item) => {
       if (item.id) {
-        const app = alternatives.find((app) => app.id === item.id)
-        if (!app) return {}
+        const alter = alternatives.find((app) => app.id === item.id)
+        if (alter)
+          return {
+            id: alter.id,
+            name: alter.name,
+            description: alter.description,
+            url: `/alternative/${alter.slug}`,
+            deals: alter.deals,
+            visit: alter.visit,
+          }
+        const app = apps.find((app) => app.id === item.id)
+        if (app)
+          return {
+            id: app.id,
+            name: app.name,
+            description: app.description,
+            url: `/app/${app.slug}`,
+            deals: app.deals,
+            visit: app.visit,
+          }
         return {
-          id: app.id,
-          name: app.name,
-          description: app.description,
-          url: `/alternative/${app.slug}`,
-          deals: app.deals,
+          name: "",
+          visit: [0],
         }
       }
       return { ...item }
@@ -51,9 +69,13 @@ export default function ItemAlternative({ post }: { post: App }) {
 
   // Remove duplicates by id
   const alternative = [
-    ...alternativeApp,
-    ...alternativeAlternative,
     ...(postAlternative || []),
+    ...[...alternativeApp, ...alternativeAlternative].sort((a, b) => {
+      const sortA = a.visit && a.visit?.length > 0 ? a.visit[0] : 0
+      const sortB = b.visit && b.visit?.length > 0 ? b.visit[0] : 0
+
+      return sortB - sortA
+    }),
   ]
 
   return (
