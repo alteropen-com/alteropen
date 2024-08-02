@@ -71,20 +71,12 @@ export default defineConfig({
         toc: s.toc(),
         alternative: s
           .array(
-            s
-              .object({
-                id: s.number().optional(),
-                name: s.string().optional(),
-                description: s.string().optional(),
-                url: s.string().optional(),
-              })
-              .refine(
-                (data) => data.id !== undefined || data.name !== undefined,
-                {
-                  message: "Either id or name must be provided",
-                  path: ["id", "name"], // path to the field(s) causing the error
-                }
-              )
+            s.object({
+              id: s.number().optional(),
+              name: s.string(),
+              description: s.string().optional(),
+              url: s.string().optional(),
+            })
           )
           .optional(),
       }),
@@ -120,6 +112,16 @@ export default defineConfig({
         pricing: s.array(s.enum(PRICING)).optional(),
         visit: s.array(s.number()).default([0]),
         popularSearch: s.array(s.string()).optional(),
+        alternative: s
+          .array(
+            s.object({
+              id: s.number().optional(),
+              name: s.string(),
+              description: s.string().optional(),
+              url: s.string().optional(),
+            })
+          )
+          .optional(),
         deals: s
           .array(
             s.object({

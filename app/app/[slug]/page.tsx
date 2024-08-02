@@ -152,22 +152,21 @@ export default async function PostPage({ params }: PostPageProps) {
                 <span className="text-sm font-bold uppercase">
                   {app.pricing?.join(" | ")}
                 </span>
-
-                {app?.alternative && (
-                  <Link
-                    className="text-md text-primary no-underline hover:underline"
-                    href="#alternativeTo"
-                  >
-                    Best Alternatives
-                  </Link>
-                )}
               </div>
 
               {app.description ? (
-                <p className="text-lg mt-0 text-muted-foreground">
+                <p className="text-lg mt-0 mb-4 text-muted-foreground">
                   {app.description}
                 </p>
               ) : null}
+              {app?.alternative && (
+                <Link
+                  className="text-md text-primary no-underline hover:underline"
+                  href="#alternativeTo"
+                >
+                  Best Alternatives
+                </Link>
+              )}
               <DetailToc toc={app.toc} />
             </div>
 

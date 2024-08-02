@@ -160,7 +160,11 @@ export default async function PostPage({ params }: PostPageProps) {
                   {post.pricing?.join(" | ")}
                 </span>
               </div>
-
+              {post.description ? (
+                <p className="text-lg mt-0 mb-4 text-muted-foreground">
+                  {post.description}
+                </p>
+              ) : null}
               <Link
                 className="text-md text-primary no-underline hover:underline"
                 href="#alternativeTo"
@@ -168,11 +172,6 @@ export default async function PostPage({ params }: PostPageProps) {
                 Best Alternatives
               </Link>
 
-              {post.description ? (
-                <p className="text-lg mt-0 text-muted-foreground">
-                  {post.description}
-                </p>
-              ) : null}
               <DetailToc toc={post.toc} />
             </div>
 

@@ -20,6 +20,18 @@ export default function ItemAlternative({ post }: { post: App }) {
     }))
     .sort((a, b) => b.visit[0] - a.visit[0])
 
+  const alternativeAlternative = alternatives
+    .filter((app) => app.alternative?.find((item) => item.id === post.id))
+    .map((app) => ({
+      id: app.id,
+      name: app.name,
+      description: app.description,
+      visit: app.visit,
+      url: `/alternative/${app.slug}`,
+      deals: app.deals,
+    }))
+    .sort((a, b) => b.visit[0] - a.visit[0])
+
   const postAlternative = post.alternative
     ?.filter((item) => !alternativeApp?.find((app) => item.id === app.id))
     .map((item) => {
@@ -37,7 +49,12 @@ export default function ItemAlternative({ post }: { post: App }) {
       return { ...item }
     })
 
-  const alternative = [...(postAlternative || []), ...alternativeApp]
+  // Remove duplicates by id
+  const alternative = [
+    ...alternativeApp,
+    ...alternativeAlternative,
+    ...(postAlternative || []),
+  ]
 
   return (
     <>
@@ -52,7 +69,7 @@ export default function ItemAlternative({ post }: { post: App }) {
             if (!app) return ""
             return (
               <Card
-                key={i}
+                key={item.id}
                 className="p-6 rounded-lg max-w-xs border border-primary/60 hover:bg-primary/10"
               >
                 <Link className="no-underline" href={item.url || ""}>
@@ -83,7 +100,7 @@ export default function ItemAlternative({ post }: { post: App }) {
 
           if (item.name)
             return (
-              <Card key={i} className="p-6 rounded-lg max-w-xs">
+              <Card key={item.name} className="p-6 rounded-lg max-w-xs">
                 <h4 className="text-xl font-semibold mb-2">
                   {item.url ? (
                     <a
