@@ -61,7 +61,6 @@ export const TASKS = [
   "Wellness",
 ]
 export const FEATURES = [
-  "",
   // AI and Automation
   "ai",
   "automation",
@@ -84,7 +83,7 @@ export const FEATURES = [
   "document",
   "essay",
   "book",
-  "script",
+  "scheduling",
   "storytelling",
   "summaries",
   "note",
@@ -148,14 +147,7 @@ export const FEATURES = [
   "email",
   "social media",
   "chatting",
-  "linkedin",
-  "facebook",
-  "instagram",
-  "twitter",
-  "reddit",
-  "slack",
-  "youtube",
-  "tiktok",
+  "cms",
   "call",
   "podcast",
   "translation",
@@ -223,7 +215,7 @@ export const FEATURES = [
   "search",
 
   // other
-  "tracker",
+  "tracking",
   "builder",
   "sketch",
   "background",
