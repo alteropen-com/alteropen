@@ -60,7 +60,7 @@ const ButtonFollow = ({ id }: { id: number }) => {
         {isFetching ? "" : isSaved ? "Followed" : "Follow Now"}
       </button>
       <p className="text-sm text-center my-2">
-        Get notification when it is available!
+        and we try the best to make it available for you.
       </p>
     </Card>
   )

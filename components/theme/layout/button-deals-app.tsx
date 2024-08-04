@@ -14,7 +14,7 @@ export default function ButtonDealsApp({ app }: { app: App }) {
           deal.name?.toLowerCase() === "appsumo"
             ? deal.url + `?ref=${siteConfig.ref}`
             : deal.url.includes("?")
-            ? deal.url
+            ? deal.url + `&ref=${siteConfig.ref}`
             : deal.url + `?ref=${siteConfig.ref}`
         return (
           <Card className="px-4 py-3" key={index}>
