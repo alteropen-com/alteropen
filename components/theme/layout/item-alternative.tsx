@@ -5,6 +5,7 @@ import { Card } from "@/components/ui/card"
 import { siteConfig } from "@/config/site"
 import Link from "next/link"
 import { RxOpenInNewWindow } from "react-icons/rx"
+import Properties from "./properties-list"
 import VisitNumber from "./visit-number"
 
 export default function ItemAlternative({ post }: { post: App }) {
@@ -83,7 +84,7 @@ export default function ItemAlternative({ post }: { post: App }) {
       <h2 className="text-xl font-bold my-2" id="alternativeTo">
         Top {`${post.name.toUpperCase()} alternative to`}
       </h2>
-      <div className="flex gap-2 flex-wrap">
+      <div className="flex gap-2 flex-wrap justify-center sm:justify-start">
         {alternative?.map((item, i) => {
           if (item.id) {
             let app = alternatives.find((app) => app.id === item.id)
@@ -92,7 +93,7 @@ export default function ItemAlternative({ post }: { post: App }) {
             return (
               <Card
                 key={item.id}
-                className="p-6 rounded-lg max-w-xs border border-primary/60 hover:bg-primary/10"
+                className="px-6 pt-6 pb-2 rounded-lg max-w-xs border border-primary/60 hover:bg-primary/10"
               >
                 <Link className="no-underline" href={item.url || ""}>
                   <h4 className="text-primary text-xl font-semibold mb-2 flex items-center">
@@ -108,12 +109,15 @@ export default function ItemAlternative({ post }: { post: App }) {
                       </div>
                     </div>
                   )}
-                  <p className="">{app.title}</p>
+                  <p className="h-[4.5rem] line-clamp-3">{app.title}</p>
                   <div className="mt-2 text-sm">
                     <VisitNumber app={app} />
                     <p className="text-muted-foreground">
                       {app.pricing?.join(" | ")}
                     </p>
+                  </div>
+                  <div className="mt-2 text-sm">
+                    <Properties properties={app.properties} showLinks={false} />
                   </div>
                 </Link>
               </Card>
