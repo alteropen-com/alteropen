@@ -1,5 +1,5 @@
 import { App } from "@/.velite"
-import { formatNumber } from "@/lib/utils"
+import { capitalizeFirstLetter, formatNumber } from "@/lib/utils"
 
 const VisitNumber = ({
   app,
@@ -19,6 +19,22 @@ const VisitNumber = ({
         <span className="text-sm ml-1">{text}</span>
       </span>
     )
+
+  const firstProperty =
+    app.properties &&
+    Object.entries(app.properties).length > 0 &&
+    Object.entries(app.properties)[0]
+
+  if (firstProperty) {
+    return (
+      <span className="text-sm font-bold">
+        {capitalizeFirstLetter(firstProperty[0].replace(/_/g, " "))}{" "}
+        {typeof firstProperty[1] === "number"
+          ? formatNumber(firstProperty[1])
+          : firstProperty[1]}
+      </span>
+    )
+  }
 }
 
 export default VisitNumber

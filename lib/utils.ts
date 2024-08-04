@@ -42,3 +42,29 @@ export const parseImage = (img: string) => {
     alt: parts[1] ? parts[1].trim() : "",
   }
 }
+
+export const isValidDate = (dateString: string | number) => {
+  const date = new Date(dateString)
+  return !isNaN(date.getTime())
+}
+
+export const formatDateAgo = (dateString: string | number) => {
+  const date = new Date(dateString)
+  const now = new Date()
+  const diffTime = Math.abs(now.getTime() - date.getTime())
+  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24))
+
+  if (diffDays === 0) {
+    return "Today"
+  } else if (diffDays === 1) {
+    return "1 day ago"
+  } else if (diffDays < 30) {
+    return `${diffDays} days ago`
+  } else if (diffDays < 365) {
+    const diffMonths = Math.ceil(diffDays / 30)
+    return `${diffMonths} month${diffMonths > 1 ? "s" : ""} ago`
+  } else {
+    const diffYears = Math.ceil(diffDays / 365)
+    return `${diffYears} year${diffYears > 1 ? "s" : ""} ago`
+  }
+}

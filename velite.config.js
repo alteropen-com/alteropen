@@ -34,10 +34,10 @@ export default defineConfig({
         slug: s.string().max(99),
         path: s.path(),
         name: s.string().max(50),
-        title: s.string().max(120),
+        title: s.string().max(200),
         image: s.object({
           url: s.string().max(999),
-          alt: s.string().max(120).optional(),
+          alt: s.string().max(200).optional(),
         }),
         // optional
         description: s.string().max(999).optional(),
@@ -56,15 +56,7 @@ export default defineConfig({
         pricing: s.array(s.enum(PRICING)).optional(),
         visit: s.array(s.number()).default([0]),
         popularSearch: s.array(s.string()).optional(),
-        deals: s
-          .array(
-            s.object({
-              url: s.string().max(999),
-              name: s.string().max(99).optional(),
-              price: s.string().max(99).optional(),
-            })
-          )
-          .optional(),
+
         ios: s.string().optional(),
         android: s.string().optional(),
         raw: s.raw(),
@@ -79,6 +71,16 @@ export default defineConfig({
             })
           )
           .optional(),
+        deals: s
+          .array(
+            s.object({
+              url: s.string().max(999),
+              name: s.string().max(99).optional(),
+              price: s.string().max(99).optional(),
+            })
+          )
+          .optional(),
+        properties: s.record(s.union([s.string(), s.number()])).optional(),
       }),
     },
     alternatives: {
@@ -90,10 +92,10 @@ export default defineConfig({
         slug: s.string().max(99),
         path: s.path(),
         name: s.string().max(50),
-        title: s.string().max(120),
+        title: s.string().max(200),
         image: s.object({
           url: s.string().max(999),
-          alt: s.string().max(120).optional(),
+          alt: s.string().max(200).optional(),
         }),
         // optional
         description: s.string().max(999).optional(),
@@ -131,6 +133,7 @@ export default defineConfig({
             })
           )
           .optional(),
+        properties: s.record(s.union([s.string(), s.number()])).optional(),
         ios: s.string().optional(),
         android: s.string().optional(),
         raw: s.raw(),
