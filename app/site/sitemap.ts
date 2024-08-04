@@ -14,6 +14,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       url: `${siteConfig.url}/app/${app.slug}`,
       changeFrequency: "weekly",
       priority: 0.6,
+      lastModified: app.lastModified,
     }
   }) as MetadataRoute.Sitemap
 
@@ -26,6 +27,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       url: `${siteConfig.url}/alternative/${app.slug}`,
       changeFrequency: "weekly",
       priority: 0.8,
+      lastModified: app.lastModified,
     }
   }) as MetadataRoute.Sitemap
 

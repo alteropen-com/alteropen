@@ -12,6 +12,7 @@ import ItemFeature from "@/components/theme/layout/item-feature"
 import PopularSearch from "@/components/theme/layout/popular-search"
 import Properties from "@/components/theme/layout/properties-list"
 import TagItem from "@/components/theme/layout/tag-item"
+import TimeUpdated from "@/components/theme/layout/time-updated"
 import VisitNumber from "@/components/theme/layout/visit-number"
 import {
   Breadcrumb,
@@ -79,6 +80,8 @@ export async function generateMetadata({
       title: pageTitle,
       description: pageDescription,
       type: "article",
+      publishedTime: new Date(app.id * 1000).toISOString(),
+      modifiedTime: app.lastModified,
       url: href,
       images: [
         {
@@ -176,12 +179,15 @@ export default async function PostPage({ params }: PostPageProps) {
             <div className="w-full flex-shrink-0 space-y-3 sm:w-[240px] 2xl:w-[300px]">
               <ButtonFollow id={app.id} />
               <ButtonDealsApp app={app} />
-              <div className="px-4 py-3 mt-4 space-y-2">
-                <div>Tasks:</div>
+              <div className="px-4 py-3 mt-4 space-y-2 sm:space-x-2">
+                <div className="font-bold">Tasks:</div>
                 {app.tasks?.map((t) => (
                   <TagItem tag={t} key={t} />
                 ))}
               </div>
+              <p className="px-4 mt-1">
+                <TimeUpdated lastModified={app.lastModified} />
+              </p>
             </div>
           </div>
           <hr className="my-4" />

@@ -70,7 +70,7 @@ export function CommandMenu({ ...props }: DialogProps) {
 
   useEffect(() => {
     const down = (e: KeyboardEvent) => {
-      if ((e.key === "p" && (e.metaKey || e.ctrlKey)) || e.key === "/") {
+      if ((e.key === "k" && (e.metaKey || e.ctrlKey)) || e.key === "/") {
         if (
           (e.target instanceof HTMLElement && e.target.isContentEditable) ||
           e.target instanceof HTMLInputElement ||
@@ -130,7 +130,7 @@ export function CommandMenu({ ...props }: DialogProps) {
         <span className="hidden lg:inline-flex">Search ...</span>
         <span className="inline-flex lg:hidden">Search...</span>
         <kbd className="pointer-events-none absolute right-[0.3rem] top-[0.4rem] hidden h-6 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium opacity-100 sm:flex">
-          <span className="text-xs">⌘</span>P
+          <span className="text-xs">⌘</span>K
         </kbd>
       </Button>
       <CommandDialog open={isOpen} onOpenChange={toggleSearchDialog}>

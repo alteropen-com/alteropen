@@ -11,6 +11,7 @@ import ItemAlternative from "@/components/theme/layout/item-alternative"
 import ItemFeature from "@/components/theme/layout/item-feature"
 import PopularSearch from "@/components/theme/layout/popular-search"
 import TagItem from "@/components/theme/layout/tag-item"
+import TimeUpdated from "@/components/theme/layout/time-updated"
 import VisitNumber from "@/components/theme/layout/visit-number"
 import {
   Breadcrumb,
@@ -180,11 +181,14 @@ export default async function PostPage({ params }: PostPageProps) {
               <ButtonFollow id={post.id} />
               <ButtonDeals app={post} />
               <div className="px-4 py-3 space-x-2 space-y-2">
-                <div>Tasks:</div>
+                <div className="font-bold">Tasks:</div>
                 {post.tasks?.map((t) => (
                   <TagItem tag={t} key={t} />
                 ))}
               </div>
+              <p className="px-4 mt-1">
+                <TimeUpdated lastModified={post.lastModified} />
+              </p>
             </div>
           </div>
           <hr className="my-4" />

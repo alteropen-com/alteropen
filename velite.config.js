@@ -1,10 +1,27 @@
 /* eslint-disable no-console */
-import { writeFile } from "node:fs/promises"
+import { stat, writeFile } from "node:fs/promises"
 import path from "path"
 import { defineConfig, s } from "velite"
 import { FEATURES, PRICING, TASKS } from "./config/selection"
 import { getAllTags, sortTagsByCount } from "./lib/helper"
 import { encodeTitleToSlug } from "./lib/utils"
+
+const timestamp = () =>
+  s
+    .custom((i) => i === undefined || typeof i === "string")
+    .transform(async (value, { meta, addIssue }) => {
+      if (value != null) {
+        addIssue({
+          fatal: false,
+          code: "custom",
+          message:
+            "`s.timestamp()` schema will resolve the file modified timestamp",
+        })
+      }
+
+      const stats = await stat(meta.path)
+      return stats.mtime.toISOString()
+    })
 
 export default defineConfig({
   collections: {
@@ -39,6 +56,7 @@ export default defineConfig({
           url: s.string().max(999),
           alt: s.string().max(200).optional(),
         }),
+        lastModified: timestamp(),
         // optional
         description: s.string().max(999).optional(),
         published: s.boolean().default(true),
@@ -97,6 +115,7 @@ export default defineConfig({
           url: s.string().max(999),
           alt: s.string().max(200).optional(),
         }),
+        lastModified: timestamp(),
         // optional
         description: s.string().max(999).optional(),
         published: s.boolean().default(true),
