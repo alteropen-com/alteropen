@@ -39,6 +39,8 @@ const Properties = ({ properties }: PropertiesProps) => {
             <span className="w-2/3">
               {typeof value === "number"
                 ? formatNumber(value)
+                : key === "Language"
+                ? value.split(";").slice(0, 2).join(";")
                 : isValidDate(value)
                 ? formatDateAgo(value)
                 : value}
