@@ -5,7 +5,7 @@ export async function generateMetadata(): Promise<Metadata> {
   return {
     title: "TERMS AND CONDITIONS",
     robots: {
-      index: false,
+      // index: false,
       follow: false,
     },
   }

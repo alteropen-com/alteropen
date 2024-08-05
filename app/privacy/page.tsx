@@ -5,7 +5,7 @@ export async function generateMetadata(): Promise<Metadata> {
     title: "Privacy Policy",
     // no index
     robots: {
-      index: false,
+      // index: false,
       follow: false,
     },
   }
