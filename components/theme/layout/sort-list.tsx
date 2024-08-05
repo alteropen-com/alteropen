@@ -28,6 +28,10 @@ export default function SortList({
     const params = new URLSearchParams(
       searchParams as unknown as Record<string, string>
     )
+    if (newParam.sortBy === SORT_TYPE.latest) {
+      params.delete("sortBy")
+      return `?${params.toString()}`
+    }
     Object.entries(newParam).forEach(([key, value]) => {
       if (value === undefined) {
         params.delete(key)
