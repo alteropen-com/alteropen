@@ -76,6 +76,7 @@ export default function SortList({
                 { sortBy: sortBy === type.value ? undefined : type.value },
                 searchParams
               )}
+              rel="nofollow"
             >
               {type.name}
             </Link>
@@ -91,6 +92,7 @@ export default function SortList({
               { onlyDeal: onlyDeal === "true" ? undefined : "true" },
               searchParams
             )}
+            rel="nofollow"
           >
             Deals
           </Link>
@@ -105,6 +107,7 @@ export default function SortList({
               { openSource: openSource === "true" ? undefined : "true" },
               searchParams
             )}
+            rel="nofollow"
           >
             OpenSource
           </Link>
@@ -119,6 +122,7 @@ export default function SortList({
               { free: free === "true" ? undefined : "true" },
               searchParams
             )}
+            rel="nofollow"
           >
             Free
           </Link>

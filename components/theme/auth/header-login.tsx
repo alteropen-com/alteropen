@@ -39,7 +39,7 @@ export default function HeaderLogin() {
           asChild
           className="m-1 p-1 px-2 text-white flex flex-col items-center sm:space-x-1 hover:no-underline hover:bg-gray-600"
         >
-          <Link href="?login=true">
+          <Link href="?login=true" rel="nofollow">
             <span className="text-sm hidden sm:block">Sign in (100% free)</span>
             <span className="text-[12px] hidden sm:block">
               To Save Your Alternative

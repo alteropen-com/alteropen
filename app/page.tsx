@@ -77,7 +77,7 @@ export default function Page() {
                 <Link
                   href={siteConfig.links.github}
                   target="_blank"
-                  rel="noopener noreferrer"
+                  rel="nofollow"
                 >
                   <FaGithub className="h-4 w-4" />
                 </Link>

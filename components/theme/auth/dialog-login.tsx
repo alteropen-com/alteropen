@@ -63,15 +63,27 @@ export function DialogLogin() {
         </div>
         <p className=" text-sm mt-4 text-center text-gray-400 dark:text-gray-500">
           By continuing, you agree to our{" "}
-          <a href="/term" className="text-blue-500 no-underline">
+          <a
+            href="/term"
+            className="text-blue-500 no-underline"
+            // rel="nofollow"
+          >
             Terms
           </a>
           ,{" "}
-          <a href="/refund" className="text-blue-500 no-underline">
+          <a
+            href="/refund"
+            className="text-blue-500 no-underline"
+            // rel="nofollow"
+          >
             Refund
           </a>{" "}
           and{" "}
-          <a href="/privacy" className="text-blue-500 no-underline">
+          <a
+            href="/privacy"
+            className="text-blue-500 no-underline"
+            // rel="nofollow"
+          >
             Privacy
           </a>
           .
