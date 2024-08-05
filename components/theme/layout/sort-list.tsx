@@ -28,6 +28,7 @@ export default function SortList({
     const params = new URLSearchParams(
       searchParams as unknown as Record<string, string>
     )
+    params.delete("slug")
     if (newParam.sortBy === SORT_TYPE.latest) {
       params.delete("sortBy")
       return `?${params.toString()}`
