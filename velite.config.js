@@ -95,6 +95,8 @@ export default defineConfig({
               url: s.string().max(999),
               name: s.string().max(99).optional(),
               price: s.string().max(99).optional(),
+              "Availability Starts": s.string().optional(),
+              "Availability Ends": s.string().optional(),
             })
           )
           .optional(),
@@ -149,6 +151,8 @@ export default defineConfig({
               url: s.string().max(999),
               name: s.string().max(99).optional(),
               price: s.string().max(99).optional(),
+              "Availability Starts": s.string().optional(),
+              "Availability Ends": s.string().optional(),
             })
           )
           .optional(),

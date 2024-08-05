@@ -1,6 +1,7 @@
 import { Alternative } from "@/.velite"
 import { Card } from "@/components/ui/card"
 import { siteConfig } from "@/config/site"
+import { formatDateAgo } from "@/lib/utils"
 
 export default function ButtonDeals({ app }: { app: Alternative }) {
   const { deals } = app
@@ -32,6 +33,12 @@ export default function ButtonDeals({ app }: { app: Alternative }) {
             >
               Get Deal
             </a>
+            {deal?.["Availability Ends"] && (
+              <p className="pt-2 text-sm italic text-center">
+                {/* Starts {formatDateAgo(deal?.["Availability Starts"])} -  */}
+                Ends {formatDateAgo(deal?.["Availability Ends"])} or sooner
+              </p>
+            )}
           </Card>
         )
       })}

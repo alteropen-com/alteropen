@@ -1,6 +1,6 @@
 import { apps } from "#site/content"
 import { CustomMDX } from "@/components/mdx/MdxRemote"
-import ButtonDealsApp from "@/components/theme/layout/button-deals-app"
+import ButtonDeals from "@/components/theme/layout/button-deals"
 import ButtonEditPage from "@/components/theme/layout/button-edit-page"
 import ButtonFollow from "@/components/theme/layout/button-save"
 import ButtonVisitSite from "@/components/theme/layout/button-visit-site"
@@ -178,7 +178,7 @@ export default async function PostPage({ params }: PostPageProps) {
             {/* Action Buttons Section */}
             <div className="w-full flex-shrink-0 space-y-3 sm:w-[240px] 2xl:w-[300px]">
               <ButtonFollow id={app.id} />
-              <ButtonDealsApp app={app} />
+              <ButtonDeals app={app} />
               <div className="px-4 py-3 mt-4 space-y-2 sm:space-x-2">
                 <div className="font-bold">Tasks:</div>
                 {app.tasks?.map((t) => (
