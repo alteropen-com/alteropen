@@ -10,7 +10,9 @@ const DetailsList = ({ apps }: { apps: App[] }) => {
   return apps.map((app) => {
     const { id, slug, title, description, name, pricing, deals } = app
 
-    const image = app.image.url || siteConfig.image
+    const image = app.image.url.includes("api.star-history.com/svg")
+      ? "https://iili.io/d5QLo21.md.png"
+      : app.image.url || siteConfig.image
 
     const tag = app.tasks?.[0] || ""
 
