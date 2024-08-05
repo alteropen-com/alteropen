@@ -84,7 +84,7 @@ export default function ItemAlternative({ post }: { post: App }) {
       <h2 className="text-xl font-bold my-2" id="alternativeTo">
         Top {`${post.name.toUpperCase()} alternative to`}
       </h2>
-      <div className="flex gap-2 flex-wrap justify-center sm:justify-start">
+      <div className="grid gap-3 lg:gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {alternative?.map((item, i) => {
           if (item.id) {
             let app = alternatives.find((app) => app.id === item.id)
@@ -93,7 +93,7 @@ export default function ItemAlternative({ post }: { post: App }) {
             return (
               <Card
                 key={item.id}
-                className="px-6 pt-6 pb-2 rounded-lg max-w-xs border border-primary/60 hover:bg-primary/10"
+                className="px-6 pt-6 pb-2 rounded-lg border border-primary/60 hover:bg-primary/10"
               >
                 <Link className="no-underline" href={item.url || ""}>
                   <h4 className="text-primary text-xl font-semibold mb-2 flex items-center">
@@ -126,13 +126,13 @@ export default function ItemAlternative({ post }: { post: App }) {
 
           if (item.name)
             return (
-              <Card key={item.name} className="p-6 rounded-lg max-w-xs">
+              <Card key={item.name} className="p-6 rounded-lg">
                 <h4 className="text-xl font-semibold mb-2">
                   {item.url ? (
                     <a
                       className="text-primary no-underline hover:underline flex items-center"
                       href={item.url + `?ref=${siteConfig.ref}`}
-                      target="_black"
+                      target="_blank"
                       rel="noopener noreferrer"
                     >
                       {item.name} <RxOpenInNewWindow className="ml-1" />

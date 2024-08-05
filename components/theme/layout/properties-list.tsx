@@ -27,14 +27,14 @@ const Properties = ({ properties, showLinks = true }: PropertiesProps) => {
           return null
         return (
           <div key={key} className="flex mb-2 items-center">
-            <span className="w-1/3">
+            <span className="w-[220px]">
               {capitalizeFirstLetter(key.replace(/_/g, " "))}
             </span>
             {typeof value !== "number" && value.includes("https:") ? (
               <Button
                 variant="link"
                 asChild
-                className={`w-2/3 justify-start px-0 py-0 `}
+                className={`w-full justify-start px-0 py-0 `}
               >
                 <Link
                   href={value + `?ref=${siteConfig.ref}`}
@@ -45,7 +45,7 @@ const Properties = ({ properties, showLinks = true }: PropertiesProps) => {
                 </Link>
               </Button>
             ) : (
-              <span className="w-2/3">
+              <span className="w-full">
                 {typeof value === "number"
                   ? formatNumber(value)
                   : key === "Language"
