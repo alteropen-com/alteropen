@@ -16,6 +16,7 @@ export interface SearchParams {
   feature?: string
   openSource?: string
   free?: string
+  login?: string
 }
 export interface TaskPageProps {
   params: {
@@ -181,6 +182,9 @@ export async function generateMetadata({
     alternates: {
       // canonical: href,
     },
+    robots: {
+      index: searchParams?.login === "true" ? false : true,
+    },
     openGraph: {
       siteName: siteConfig.name,
       title: title,
@@ -232,7 +236,7 @@ export default function Page({ params, searchParams }: TaskPageProps) {
           <div className="flex flex-col">
             <div className="flex flex-wrap">
               <h3 className="font-bold flex-1 text-lg lg:text-xl">
-                Best {displayApps?.length} Alternative
+                Best {displayApps?.length} App
               </h3>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3  xl:grid-cols-4 2xl:grid-cols-5 gap-4 lg:gap-y-8 mt-4">
