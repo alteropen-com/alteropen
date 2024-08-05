@@ -201,7 +201,7 @@ export const FEATURES = [
   // Technology and Data
   "data",
   "detection",
-  "cybersecurity",
+  "security",
   "scrapping",
   "formula",
   "spreadsheet",
