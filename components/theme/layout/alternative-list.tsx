@@ -33,12 +33,10 @@ const AlternativeList = ({ apps }: { apps: Alternative[] }) => {
           />
           <div className="mt-1 px-2 pb-1 flex flex-col flex-1">
             <div className="flex-1 text-center">
-              {deals && (
+              {deals && deals.length > 0 && (
                 <div className="relative">
                   <div className="absolute top-[-42px] right-0">
-                    <Badge variant="default">
-                      {deals.length} Deal{deals.length > 1 ? "s" : ""}
-                    </Badge>
+                    <Badge variant="default">{deals[0].price}</Badge>
                   </div>
                 </div>
               )}

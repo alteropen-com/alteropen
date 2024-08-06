@@ -35,12 +35,10 @@ const DetailsList = ({ apps }: { apps: App[] }) => {
           />
           <div className="mt-1 px-2 pb-1 flex flex-col flex-1">
             <div className="flex-1 text-center">
-              {deals && (
+              {deals && deals.length > 0 && (
                 <div className="relative">
                   <div className="absolute top-[-42px] right-0">
-                    <Badge variant="destructive">
-                      {deals.length} Deal{deals.length > 1 ? "s" : ""}
-                    </Badge>
+                    <Badge variant="destructive">{deals[0].price}</Badge>
                   </div>
                 </div>
               )}

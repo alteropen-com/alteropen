@@ -95,13 +95,10 @@ export default function ItemAlternative({ post }: { post: App }) {
                       }}
                     />
                   )}
-                  {item?.deals && (
+                  {item.deals && item.deals.length > 0 && (
                     <div className="relative">
-                      <div className="absolute top-[-55px] right-[-12px]">
-                        <Badge variant="destructive">
-                          {item.deals.length} Deal
-                          {item.deals.length > 1 ? "s" : ""}
-                        </Badge>
+                      <div className="absolute top-[-42px] right-0">
+                        <Badge variant="default">{item.deals[0].price}</Badge>
                       </div>
                     </div>
                   )}
