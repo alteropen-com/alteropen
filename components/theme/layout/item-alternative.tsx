@@ -12,27 +12,15 @@ export default function ItemAlternative({ post }: { post: App }) {
   const alternativeApp = apps
     .filter((app) => app.alternative?.find((item) => item.id === post.id))
     .map((app) => ({
-      id: app.id,
-      published: app.published,
-      name: app.name,
-      image: app.image,
-      description: app.description,
-      visit: app.visit,
+      ...app,
       url: `/app/${app.slug}`,
-      deals: app.deals,
     }))
 
   const alternativeAlternative = alternatives
     .filter((app) => app.alternative?.find((item) => item.id === post.id))
     .map((app) => ({
-      id: app.id,
-      published: app.published,
-      name: app.name,
-      image: app.image,
-      description: app.description,
-      visit: app.visit,
+      ...app,
       url: `/alternative/${app.slug}`,
-      deals: app.deals,
     }))
 
   const postAlternative = post.alternative
@@ -47,31 +35,16 @@ export default function ItemAlternative({ post }: { post: App }) {
         const alter = alternatives.find((app) => app.id === item.id)
         if (alter)
           return {
-            id: alter.id,
-            published: alter.published,
-            name: alter.name,
-            image: alter.image,
-            description: alter.description,
+            ...alter,
             url: `/alternative/${alter.slug}`,
-            deals: alter.deals,
-            visit: alter.visit,
           }
         const app = apps.find((app) => app.id === item.id)
         if (app)
           return {
-            id: app.id,
-            published: app.published,
-            name: app.name,
-            image: app.image,
-            description: app.description,
+            ...app,
             url: `/app/${app.slug}`,
-            deals: app.deals,
-            visit: app.visit,
           }
-        return {
-          name: "",
-          visit: [0],
-        }
+        return { ...item }
       }
       return { ...item }
     })
@@ -164,7 +137,23 @@ export default function ItemAlternative({ post }: { post: App }) {
                     <span>{item.name}</span>
                   )}
                 </h4>
+                {item.image?.url && (
+                  <img
+                    loading="lazy"
+                    src={item.image.url}
+                    className="w-full rounded-lg mb-2"
+                    alt={`${item.name}`}
+                    style={{
+                      aspectRatio: "60/40",
+                      objectFit: "cover",
+                      objectPosition: "top",
+                    }}
+                  />
+                )}
                 <p className="">{item.description}</p>
+                <div className="mt-2 text-sm">
+                  <Properties properties={item?.properties} showLinks={false} />
+                </div>
               </Card>
             )
         })}
