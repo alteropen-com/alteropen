@@ -4,7 +4,6 @@ import ButtonDeals from "@/components/theme/layout/button-deals"
 import ButtonEditPage from "@/components/theme/layout/button-edit-page"
 import ButtonFollow from "@/components/theme/layout/button-save"
 import ButtonVisitSite from "@/components/theme/layout/button-visit-site"
-import Comment from "@/components/theme/layout/comment"
 import DetailImage from "@/components/theme/layout/detail-image"
 import DetailToc from "@/components/theme/layout/detail-toc"
 import ItemAlternative from "@/components/theme/layout/item-alternative"
@@ -215,7 +214,7 @@ export default async function PostPage({ params }: PostPageProps) {
         </div>
         <div className="w-full max-w-[1468px]">
           <PopularSearch search={post.popularSearch} />
-          <Comment />
+          {/* <Comment /> */}
         </div>
       </div>
     </article>
