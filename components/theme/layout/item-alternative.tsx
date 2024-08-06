@@ -14,6 +14,7 @@ export default function ItemAlternative({ post }: { post: App }) {
     .map((app) => ({
       id: app.id,
       name: app.name,
+      image: app.image,
       description: app.description,
       visit: app.visit,
       url: `/app/${app.slug}`,
@@ -25,6 +26,7 @@ export default function ItemAlternative({ post }: { post: App }) {
     .map((app) => ({
       id: app.id,
       name: app.name,
+      image: app.image,
       description: app.description,
       visit: app.visit,
       url: `/alternative/${app.slug}`,
@@ -45,6 +47,7 @@ export default function ItemAlternative({ post }: { post: App }) {
           return {
             id: alter.id,
             name: alter.name,
+            image: alter.image,
             description: alter.description,
             url: `/alternative/${alter.slug}`,
             deals: alter.deals,
@@ -55,6 +58,7 @@ export default function ItemAlternative({ post }: { post: App }) {
           return {
             id: app.id,
             name: app.name,
+            image: app.image,
             description: app.description,
             url: `/app/${app.slug}`,
             deals: app.deals,
@@ -62,6 +66,7 @@ export default function ItemAlternative({ post }: { post: App }) {
           }
         return {
           name: "",
+          image: { url: "" },
           visit: [0],
         }
       }
@@ -91,18 +96,32 @@ export default function ItemAlternative({ post }: { post: App }) {
             if (!app) app = apps.find((app) => app.id === item.id)
             if (!app) return ""
             return (
-              <Card
+              <Link
                 key={item.id}
-                className="px-6 pt-6 pb-2 rounded-lg border border-primary/60 hover:bg-primary/10"
+                className="no-underline"
+                href={item.url || ""}
               >
-                <Link className="no-underline" href={item.url || ""}>
+                <Card className="px-6 pt-6 pb-2 rounded-lg border border-primary/60 hover:bg-primary/10">
                   <h4 className="text-primary text-xl font-semibold mb-2 flex items-center">
                     {item.name}
                   </h4>
+                  {item.image?.url && (
+                    <img
+                      loading="lazy"
+                      src={item.image.url}
+                      className="w-full rounded-lg mb-2"
+                      alt={`${item.name}`}
+                      style={{
+                        aspectRatio: "60/40",
+                        objectFit: "cover",
+                        objectPosition: "top",
+                      }}
+                    />
+                  )}
                   {item?.deals && (
                     <div className="relative">
                       <div className="absolute top-[-55px] right-[-12px]">
-                        <Badge variant="default">
+                        <Badge variant="destructive">
                           {item.deals.length} Deal
                           {item.deals.length > 1 ? "s" : ""}
                         </Badge>
@@ -119,8 +138,8 @@ export default function ItemAlternative({ post }: { post: App }) {
                   <div className="mt-2 text-sm">
                     <Properties properties={app.properties} showLinks={false} />
                   </div>
-                </Link>
-              </Card>
+                </Card>
+              </Link>
             )
           }
 
