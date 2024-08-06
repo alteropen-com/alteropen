@@ -12,25 +12,15 @@ export default function ItemAlternative({ post }: { post: App }) {
   const alternativeApp = apps
     .filter((app) => app.alternative?.find((item) => item.id === post.id))
     .map((app) => ({
-      id: app.id,
-      name: app.name,
-      image: app.image,
-      description: app.description,
-      visit: app.visit,
+      ...app,
       url: `/app/${app.slug}`,
-      deals: app.deals,
     }))
 
   const alternativeAlternative = alternatives
     .filter((app) => app.alternative?.find((item) => item.id === post.id))
     .map((app) => ({
-      id: app.id,
-      name: app.name,
-      image: app.image,
-      description: app.description,
-      visit: app.visit,
+      ...app,
       url: `/alternative/${app.slug}`,
-      deals: app.deals,
     }))
 
   const postAlternative = post.alternative
@@ -45,30 +35,16 @@ export default function ItemAlternative({ post }: { post: App }) {
         const alter = alternatives.find((app) => app.id === item.id)
         if (alter)
           return {
-            id: alter.id,
-            name: alter.name,
-            image: alter.image,
-            description: alter.description,
+            ...alter,
             url: `/alternative/${alter.slug}`,
-            deals: alter.deals,
-            visit: alter.visit,
           }
         const app = apps.find((app) => app.id === item.id)
         if (app)
           return {
-            id: app.id,
-            name: app.name,
-            image: app.image,
-            description: app.description,
+            ...app,
             url: `/app/${app.slug}`,
-            deals: app.deals,
-            visit: app.visit,
           }
-        return {
-          name: "",
-          image: { url: "" },
-          visit: [0],
-        }
+        return { ...item }
       }
       return { ...item }
     })
@@ -100,6 +76,7 @@ export default function ItemAlternative({ post }: { post: App }) {
                 key={item.id}
                 className="no-underline"
                 href={item.url || ""}
+                rel={item.published === false ? "nofollow" : ""}
               >
                 <Card className="px-6 pt-6 pb-2 rounded-lg border border-primary/60 hover:bg-primary/10">
                   <h4 className="text-primary text-xl font-semibold mb-2 flex items-center">
@@ -160,7 +137,23 @@ export default function ItemAlternative({ post }: { post: App }) {
                     <span>{item.name}</span>
                   )}
                 </h4>
+                {item.image?.url && (
+                  <img
+                    loading="lazy"
+                    src={item.image.url}
+                    className="w-full rounded-lg mb-2"
+                    alt={`${item.name}`}
+                    style={{
+                      aspectRatio: "60/40",
+                      objectFit: "cover",
+                      objectPosition: "top",
+                    }}
+                  />
+                )}
                 <p className="">{item.description}</p>
+                <div className="mt-2 text-sm">
+                  <Properties properties={item?.properties} showLinks={false} />
+                </div>
               </Card>
             )
         })}

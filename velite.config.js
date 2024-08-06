@@ -23,6 +23,73 @@ const timestamp = () =>
       return stats.mtime.toISOString()
     })
 
+const appSchema = s.object({
+  // required
+  id: s.number(),
+  slug: s.string().max(99),
+  path: s.path(),
+  name: s.string().max(50),
+  title: s.string().max(200),
+  image: s.object({
+    url: s.string().max(999),
+    alt: s.string().max(200).optional(),
+  }),
+  lastModified: timestamp(),
+  // optional
+  description: s.string().max(999).optional(),
+  published: s.boolean().default(true),
+  tasks: s.array(s.enum(TASKS)).optional(),
+  features: s.array(s.enum(FEATURES)).optional(),
+  images: s
+    .array(
+      s.object({
+        url: s.string().max(999),
+        alt: s.string().max(99).optional(),
+      })
+    )
+    .optional(),
+  url: s.string().optional(),
+  pricing: s.array(s.enum(PRICING)).optional(),
+  visit: s.array(s.number()).default([0]),
+  popularSearch: s.array(s.string()).optional(),
+
+  ios: s.string().optional(),
+  android: s.string().optional(),
+  raw: s.raw(),
+  toc: s.toc(),
+  alternative: s
+    .array(
+      s.object({
+        id: s.number().optional(),
+        name: s.string(),
+        description: s.string().optional(),
+        published: s.boolean().default(false),
+        url: s.string().optional(),
+        image: s
+          .object({
+            url: s.string().max(999),
+            alt: s.string().max(99).optional(),
+          })
+          .optional(),
+        properties: s.record(s.union([s.string(), s.number()])).optional(),
+        deals: s.array(s.object()).optional(),
+      })
+    )
+    .optional(),
+  deals: s
+    .array(
+      s.object({
+        url: s.string().max(999),
+        name: s.string().max(99).optional(),
+        price: s.string().max(99).optional(),
+        "Availability Starts": s.string().optional(),
+        "Availability Ends": s.string().optional(),
+      })
+    )
+    .optional(),
+  properties: s.record(s.union([s.string(), s.number()])).optional(),
+})
+
 export default defineConfig({
   collections: {
     posts: {
@@ -45,123 +112,12 @@ export default defineConfig({
     apps: {
       name: "App", // collection type name
       pattern: "app/**/*.mdx", // content files glob pattern
-      schema: s.object({
-        // required
-        id: s.number(),
-        slug: s.string().max(99),
-        path: s.path(),
-        name: s.string().max(50),
-        title: s.string().max(200),
-        image: s.object({
-          url: s.string().max(999),
-          alt: s.string().max(200).optional(),
-        }),
-        lastModified: timestamp(),
-        // optional
-        description: s.string().max(999).optional(),
-        published: s.boolean().default(true),
-        tasks: s.array(s.enum(TASKS)).optional(),
-        features: s.array(s.enum(FEATURES)).optional(),
-        images: s
-          .array(
-            s.object({
-              url: s.string().max(999),
-              alt: s.string().max(99).optional(),
-            })
-          )
-          .optional(),
-        url: s.string().optional(),
-        pricing: s.array(s.enum(PRICING)).optional(),
-        visit: s.array(s.number()).default([0]),
-        popularSearch: s.array(s.string()).optional(),
-
-        ios: s.string().optional(),
-        android: s.string().optional(),
-        raw: s.raw(),
-        toc: s.toc(),
-        alternative: s
-          .array(
-            s.object({
-              id: s.number().optional(),
-              name: s.string(),
-              description: s.string().optional(),
-              url: s.string().optional(),
-            })
-          )
-          .optional(),
-        deals: s
-          .array(
-            s.object({
-              url: s.string().max(999),
-              name: s.string().max(99).optional(),
-              price: s.string().max(99).optional(),
-              "Availability Starts": s.string().optional(),
-              "Availability Ends": s.string().optional(),
-            })
-          )
-          .optional(),
-        properties: s.record(s.union([s.string(), s.number()])).optional(),
-      }),
+      schema: appSchema,
     },
     alternatives: {
       name: "Alternative", // collection type name
       pattern: "alternative/**/*.mdx", // content files glob pattern
-      schema: s.object({
-        // required
-        id: s.number(),
-        slug: s.string().max(99),
-        path: s.path(),
-        name: s.string().max(50),
-        title: s.string().max(200),
-        image: s.object({
-          url: s.string().max(999),
-          alt: s.string().max(200).optional(),
-        }),
-        lastModified: timestamp(),
-        // optional
-        description: s.string().max(999).optional(),
-        published: s.boolean().default(true),
-        tasks: s.array(s.enum(TASKS)).optional(),
-        features: s.array(s.enum(FEATURES)).optional(),
-        images: s
-          .array(
-            s.object({
-              url: s.string().max(999),
-              alt: s.string().max(99).optional(),
-            })
-          )
-          .optional(),
-        url: s.string().optional(),
-        pricing: s.array(s.enum(PRICING)).optional(),
-        visit: s.array(s.number()).default([0]),
-        popularSearch: s.array(s.string()).optional(),
-        alternative: s
-          .array(
-            s.object({
-              id: s.number().optional(),
-              name: s.string(),
-              description: s.string().optional(),
-              url: s.string().optional(),
-            })
-          )
-          .optional(),
-        deals: s
-          .array(
-            s.object({
-              url: s.string().max(999),
-              name: s.string().max(99).optional(),
-              price: s.string().max(99).optional(),
-              "Availability Starts": s.string().optional(),
-              "Availability Ends": s.string().optional(),
-            })
-          )
-          .optional(),
-        properties: s.record(s.union([s.string(), s.number()])).optional(),
-        ios: s.string().optional(),
-        android: s.string().optional(),
-        raw: s.raw(),
-        toc: s.toc(),
-      }),
+      schema: appSchema,
     },
   },
   complete: async (data, ctx) => {

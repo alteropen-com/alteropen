@@ -1,5 +1,3 @@
-"use client"
-
 import { Alternative } from "@/.velite"
 import { SearchParams } from "@/app/tasks/[slug]/page"
 import { Button } from "@/components/ui/button"

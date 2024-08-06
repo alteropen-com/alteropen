@@ -1,6 +1,7 @@
 "use client"
 
 import { MDXRemote, MDXRemoteProps } from "next-mdx-remote/rsc"
+import { Suspense } from "react"
 import rehypeAutolinkHeadings from "rehype-autolink-headings"
 import rehypeSlug from "rehype-slug"
 import Twitters from "../theme/layout/twitters"
@@ -21,28 +22,30 @@ const components = {
 
 export function CustomMDX(props: CustomMDXProps) {
   return (
-    <MDXRemote
-      {...props}
-      components={{ ...components, ...(props.components || {}) }}
-      options={{
-        mdxOptions: {
-          rehypePlugins: [
-            rehypeSlug,
-            [
-              rehypeAutolinkHeadings,
-              {
-                behavior: "wrap",
-                properties: {
-                  className: ["subheading-anchor"],
-                  ariaLabel: "Link to section",
+    <Suspense fallback={<>Loading...</>}>
+      <MDXRemote
+        {...props}
+        components={{ ...components, ...(props.components || {}) }}
+        options={{
+          mdxOptions: {
+            rehypePlugins: [
+              rehypeSlug,
+              [
+                rehypeAutolinkHeadings,
+                {
+                  behavior: "wrap",
+                  properties: {
+                    className: ["subheading-anchor"],
+                    ariaLabel: "Link to section",
+                  },
                 },
-              },
+              ],
             ],
-          ],
-          remarkPlugins: [],
-          format: "mdx",
-        },
-      }}
-    />
+            remarkPlugins: [],
+            format: "mdx",
+          },
+        }}
+      />
+    </Suspense>
   )
 }
