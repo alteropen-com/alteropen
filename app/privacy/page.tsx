@@ -536,6 +536,13 @@ export default async function Page() {
         changes. Changes to this Privacy Policy are effective when they are
         posted on this page.
       </p>
+      <h3>Affiliate Disclosure</h3>
+      <p>
+        We participate in affiliate marketing programs, which means we may earn
+        a commission if you purchase products through links on our site. This
+        does not affect the price you pay and helps support our website. We only
+        recommend products we believe in and have personally used or researched.
+      </p>
       <h2>Contact Us</h2>
       <p>
         If you have any questions about this Privacy Policy, You can contact us:

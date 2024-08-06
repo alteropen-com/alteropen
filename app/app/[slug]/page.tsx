@@ -142,7 +142,9 @@ export default async function PostPage({ params }: PostPageProps) {
 
             {/* Details Section */}
             <div className="sm:px-4 flex-[2_1_40%]">
-              <h1 className="text-2xl font-semibold mb-2">{app.title}</h1>
+              <h1 className="text-2xl font-semibold mb-2">
+                {app.name} - {app.title}
+              </h1>
               <div className="mt-2 flex justify-between flex-col lg:flex-row">
                 <VisitNumber app={app} />
                 <ButtonVisitSite app={app} />

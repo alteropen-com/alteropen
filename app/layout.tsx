@@ -83,6 +83,11 @@ export default function RootLayout({
               Privacy
             </a>
           </div>
+          <div className="text-center">
+            This website contains affiliate links. If you make a purchase
+            through these links, we may earn a commission at no extra cost to
+            you.
+          </div>
         </footer>
       </body>
     </html>
