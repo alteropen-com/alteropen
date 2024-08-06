@@ -25,7 +25,6 @@ import { encodeTitleToSlug } from "@/lib/utils"
 import { Metadata } from "next"
 import Link from "next/link"
 import { notFound } from "next/navigation"
-import { Suspense } from "react"
 import "./styles.css"
 
 interface PostPageProps {
@@ -200,9 +199,7 @@ export default async function PostPage({ params }: PostPageProps) {
             <ButtonEditPage app={app} />
           </div>
           <div className="prose dark:prose-invert max-w-[2000px]">
-            <Suspense>
-              <CustomMDX source={app.raw} />
-            </Suspense>
+            <CustomMDX source={app.raw} />
           </div>
           <div className="flex justify-center my-4">
             <ButtonEditPage app={app} />
