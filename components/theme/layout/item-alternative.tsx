@@ -13,6 +13,7 @@ export default function ItemAlternative({ post }: { post: App }) {
     .filter((app) => app.alternative?.find((item) => item.id === post.id))
     .map((app) => ({
       id: app.id,
+      published: app.published,
       name: app.name,
       image: app.image,
       description: app.description,
@@ -25,6 +26,7 @@ export default function ItemAlternative({ post }: { post: App }) {
     .filter((app) => app.alternative?.find((item) => item.id === post.id))
     .map((app) => ({
       id: app.id,
+      published: app.published,
       name: app.name,
       image: app.image,
       description: app.description,
@@ -46,6 +48,7 @@ export default function ItemAlternative({ post }: { post: App }) {
         if (alter)
           return {
             id: alter.id,
+            published: alter.published,
             name: alter.name,
             image: alter.image,
             description: alter.description,
@@ -57,6 +60,7 @@ export default function ItemAlternative({ post }: { post: App }) {
         if (app)
           return {
             id: app.id,
+            published: app.published,
             name: app.name,
             image: app.image,
             description: app.description,
@@ -66,7 +70,6 @@ export default function ItemAlternative({ post }: { post: App }) {
           }
         return {
           name: "",
-          image: { url: "" },
           visit: [0],
         }
       }
@@ -100,6 +103,7 @@ export default function ItemAlternative({ post }: { post: App }) {
                 key={item.id}
                 className="no-underline"
                 href={item.url || ""}
+                rel={item.published === false ? "nofollow" : ""}
               >
                 <Card className="px-6 pt-6 pb-2 rounded-lg border border-primary/60 hover:bg-primary/10">
                   <h4 className="text-primary text-xl font-semibold mb-2 flex items-center">
