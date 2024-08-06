@@ -1,0 +1,4 @@
+User-Agent: *
+
+
+Sitemap: https://alteropen.com/site/sitemap.xml
