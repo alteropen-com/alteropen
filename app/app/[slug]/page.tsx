@@ -1,11 +1,10 @@
 import { apps } from "#site/content"
-import { CustomMDX } from "@/components/mdx/MdxRemote"
+import { CustomMDXSafe } from "@/components/mdx/MdxSafe"
 import ButtonDeals from "@/components/theme/layout/button-deals"
 import ButtonEditPage from "@/components/theme/layout/button-edit-page"
 import ButtonFollow from "@/components/theme/layout/button-save"
 import ButtonVisitSite from "@/components/theme/layout/button-visit-site"
 import DetailImage from "@/components/theme/layout/detail-image"
-import DetailToc from "@/components/theme/layout/detail-toc"
 import ItemAlternative from "@/components/theme/layout/item-alternative"
 import ItemFeature from "@/components/theme/layout/item-feature"
 import PopularSearch from "@/components/theme/layout/popular-search"
@@ -171,7 +170,8 @@ export default async function PostPage({ params }: PostPageProps) {
                   Best Alternatives
                 </Link>
               )}
-              <DetailToc toc={app.toc} />
+              {/* <DetailToc toc={app.toc} /> */}
+              <hr className="my-4" />
               <Properties properties={app.properties} />
             </div>
 
@@ -199,7 +199,7 @@ export default async function PostPage({ params }: PostPageProps) {
             <ButtonEditPage app={app} />
           </div>
           <div className="prose dark:prose-invert max-w-[2000px]">
-            <CustomMDX source={app.raw} />
+            <CustomMDXSafe code={app.raw} />
           </div>
           <div className="flex justify-center my-4">
             <ButtonEditPage app={app} />
