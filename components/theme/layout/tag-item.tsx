@@ -20,6 +20,7 @@ export default function TagItem({ tag, variant, count, slug }: TagProps) {
         variant: isActive ? "default" : variant ? variant : "outline",
         className: "no-underline rounded-md px-2 py-1 text-primary capitalize",
       })}
+      rel="nofollow"
       href={`/tasks/${encodeTitleToSlug(tag)}`}
     >
       {tag} {count ? `(${count})` : null}

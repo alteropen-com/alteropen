@@ -32,6 +32,7 @@ const DetailToc = ({ toc }: { toc: App["toc"] }) => {
       {toc.map((tocItem) => (
         <li key={tocItem.url} className="text-base" role="listitem">
           <Link
+            rel="nofollow"
             href={tocItem.url}
             className={clsx(
               TOC_STYLES,

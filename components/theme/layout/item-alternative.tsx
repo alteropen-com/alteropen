@@ -76,7 +76,7 @@ export default function ItemAlternative({ post }: { post: App }) {
                 key={item.id}
                 className="no-underline"
                 href={item.url || ""}
-                rel={item.published === false ? "nofollow" : ""}
+                rel="nofollow"
               >
                 <Card className="px-6 pt-6 pb-2 rounded-lg border border-primary/60 hover:bg-primary/10">
                   <h4 className="text-primary text-xl font-semibold mb-2 flex items-center">
@@ -126,7 +126,7 @@ export default function ItemAlternative({ post }: { post: App }) {
                       className="text-primary no-underline hover:underline flex items-center"
                       href={item.url + `?ref=${siteConfig.ref}`}
                       target="_blank"
-                      rel="noopener noreferrer"
+                      rel="nofollow"
                     >
                       {item.name} <RxOpenInNewWindow className="ml-1" />
                     </a>

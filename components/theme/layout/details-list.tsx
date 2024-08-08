@@ -18,7 +18,11 @@ const DetailsList = ({ apps }: { apps: App[] }) => {
 
     return (
       <Card className="relative h-full flex flex-col" key={id}>
-        <Link className="absolute h-full w-full" href={`/app/${slug}`}>
+        <Link
+          rel="nofollow"
+          className="absolute h-full w-full"
+          href={`/app/${slug}`}
+        >
           <span className="sr-only">{name}</span>
         </Link>
         <div className="h-full flex flex-col">
@@ -44,6 +48,7 @@ const DetailsList = ({ apps }: { apps: App[] }) => {
               )}
               <h3 className="text-lg font-bold">{name}</h3>
               <Link
+                rel="nofollow"
                 href={`/tasks/${encodeTitleToSlug(tag)}`}
                 className="relative z-1 underline capitalize"
               >

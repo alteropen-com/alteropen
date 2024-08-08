@@ -28,7 +28,7 @@ const ButtonVisitSite = ({
       } flex items-center`}
       href={url + `${url.includes("?") ? "&" : "?"}ref=${siteConfig.ref}`}
       target={target}
-      rel="noopener noreferrer"
+      rel="nofollow"
     >
       {text || app?.name} <RxOpenInNewWindow className="ml-1" />
     </a>

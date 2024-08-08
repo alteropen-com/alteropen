@@ -8,7 +8,7 @@ const ButtonEditPage = ({ app }: { app: App }) => {
       className="text-md text-primary no-underline hover:underline flex items-center"
       href={siteConfig.links.github + "/edit/main/content/" + app.path + ".mdx"}
       target="_blank"
-      rel="noopener noreferrer"
+      rel="nofollow"
     >
       Edit this page on Github <RxOpenInNewWindow className="ml-1" />
     </a>
