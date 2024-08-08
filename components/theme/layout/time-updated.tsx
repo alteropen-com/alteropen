@@ -7,7 +7,7 @@ export default function TimeUpdated({
 }) {
   return (
     <>
-      Updated:{" "}
+      Last Updated:{" "}
       <time dateTime={lastModified} itemProp="dateModified">
         {formatDateAgo(lastModified)}
       </time>

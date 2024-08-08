@@ -48,11 +48,15 @@ export const isValidDate = (dateString: string | number) => {
   return !isNaN(date.getTime())
 }
 
-export const formatDateAgo = (dateString: string | number) => {
+export const formatDateAgo = (dateString: string | number, onlyDays=false) => {
   const date = new Date(dateString)
   const now = new Date()
   const diffTime = date.getTime() - now.getTime() // Calculate the difference in time
   const diffDays = Math.ceil(Math.abs(diffTime) / (1000 * 60 * 60 * 24))
+
+  if (onlyDays) {
+    return diffDays
+  }
 
   if (diffTime === 0) {
     return "Today"
