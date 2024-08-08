@@ -184,6 +184,7 @@ export async function generateMetadata({
     },
     robots: {
       index: searchParams?.login === "true" ? false : true,
+      follow: false,
     },
     openGraph: {
       siteName: siteConfig.name,
