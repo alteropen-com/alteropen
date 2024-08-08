@@ -79,9 +79,9 @@ export default function ItemAlternative({ post }: { post: App }) {
                 rel="nofollow"
               >
                 <Card className="px-6 pt-6 pb-2 rounded-lg border border-primary/60 hover:bg-primary/10">
-                  <h4 className="text-primary text-xl font-semibold mb-2 flex items-center">
+                  <h3 className="text-primary text-xl font-semibold mb-2 flex items-center">
                     {item.name}
-                  </h4>
+                  </h3>
                   {item.image?.url && (
                     <img
                       loading="lazy"
