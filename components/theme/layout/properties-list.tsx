@@ -25,6 +25,7 @@ const Properties = ({ properties, showLinks = true }: PropertiesProps) => {
       {propertyEntries.map(([key, value], index) => {
         if (typeof value !== "number" && value.includes("https:") && !showLinks)
           return null
+        if (!showLinks && key.toLowerCase().includes("last")) return null
         return (
           <div key={key} className="flex mb-2 items-center">
             <span className="w-[220px]">
