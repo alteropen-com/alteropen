@@ -51,9 +51,7 @@ const Properties = ({ properties, showLinks = true }: PropertiesProps) => {
                   : key === "Language"
                   ? value.split(";").slice(0, 2).join(";")
                   : isValidDate(value)
-                  ? Number(formatDateAgo(value, true)) < 365
-                    ? "Recently"
-                    : formatDateAgo(value)
+                  ? formatDateAgo(value, true)
                   : value}
               </span>
             )}
