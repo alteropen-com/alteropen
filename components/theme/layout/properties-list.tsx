@@ -25,7 +25,6 @@ const Properties = ({ properties, showLinks = true }: PropertiesProps) => {
       {propertyEntries.map(([key, value], index) => {
         if (typeof value !== "number" && value.includes("https:") && !showLinks)
           return null
-        if (!showLinks && key.toLowerCase().includes("last")) return null
         return (
           <div key={key} className="flex mb-2 items-center">
             <span className="w-[220px]">
@@ -52,7 +51,7 @@ const Properties = ({ properties, showLinks = true }: PropertiesProps) => {
                   : key === "Language"
                   ? value.split(";").slice(0, 2).join(";")
                   : isValidDate(value)
-                  ? formatDateAgo(value)
+                  ? formatDateAgo(value, true)
                   : value}
               </span>
             )}

@@ -6,11 +6,11 @@ export default function TimeUpdated({
   lastModified: string
 }) {
   return (
-    <>
-      Updated:{" "}
+    <span className="text-sm text-gray-500">
+      Last Updated:{" "}
       <time dateTime={lastModified} itemProp="dateModified">
         {formatDateAgo(lastModified)}
       </time>
-    </>
+    </span>
   )
 }
