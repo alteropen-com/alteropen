@@ -210,6 +210,8 @@ export async function generateMetadata({
 export default function Page({ params, searchParams }: TaskPageProps) {
   const { slug } = params
   const { sortBy, onlyDeal } = searchParams
+  // @ts-ignore
+  if (searchParams.slug != null) delete searchParams.slug
 
   const displayApps = filterApps(slug, searchParams)
 
