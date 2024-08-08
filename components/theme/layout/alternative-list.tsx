@@ -16,7 +16,11 @@ const AlternativeList = ({ apps }: { apps: Alternative[] }) => {
 
     return (
       <Card className="relative h-full flex flex-col" key={id}>
-        <Link className="absolute h-full w-full" href={`/alternative/${slug}`}>
+        <Link
+          rel="nofollow"
+          className="absolute h-full w-full"
+          href={`/alternative/${slug}`}
+        >
           <span className="sr-only">{name}</span>
         </Link>
         <div className="h-full flex flex-col">
@@ -42,6 +46,7 @@ const AlternativeList = ({ apps }: { apps: Alternative[] }) => {
               )}
               <h3 className="text-lg font-bold">{name}</h3>
               <Link
+                rel="nofollow"
                 href={`/tasks/${encodeTitleToSlug(tag)}`}
                 className="relative z-1 underline capitalize"
               >

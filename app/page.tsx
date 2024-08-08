@@ -71,7 +71,9 @@ export default function Page() {
                 <Link href="/tasks">All Tasks</Link>
               </Button>
               <Button variant="outline" asChild>
-                <Link href="?isSearch=true">Search Alternative </Link>
+                <Link href="?isSearch=true" rel="nofollow">
+                  Search Alternative
+                </Link>
               </Button>
               <Button variant="outline" size="icon" asChild>
                 <Link

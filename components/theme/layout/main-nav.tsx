@@ -56,7 +56,7 @@ export function MainNav() {
         <div className="flex flex-col gap-3 mt-5">
           <Link
             target="_blank"
-            rel="noopener noreferrer"
+            rel="nofollow"
             href={siteConfig.links.github}
             className="flex items-center space-x-2"
           >
@@ -89,6 +89,7 @@ function SheetLink({
         router.push(href.toString())
         onOpenChange?.(false)
       }}
+      rel="nofollow"
       className={className}
       {...props}
     >

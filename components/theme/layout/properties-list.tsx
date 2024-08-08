@@ -40,7 +40,7 @@ const Properties = ({ properties, showLinks = true }: PropertiesProps) => {
                 <Link
                   href={value + `?ref=${siteConfig.ref}`}
                   target="_blank"
-                  rel="noopener noreferrer"
+                  rel="nofollow"
                 >
                   {value.replace("https://", "")}
                 </Link>

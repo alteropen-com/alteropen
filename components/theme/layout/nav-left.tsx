@@ -15,6 +15,7 @@ export default function NavLeft({ slug }: { slug: string }) {
           Filter by:
         </p>
         <Link
+          rel="nofollow"
           href="/app"
           className={badgeVariants({
             variant: slug === "all" ? "default" : "secondary",
