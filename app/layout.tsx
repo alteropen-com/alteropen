@@ -73,17 +73,16 @@ export default function RootLayout({
             By using this website, you agree to our{" "}
             <a href="/term" className="text-blue-500 no-underline">
               Terms
-            </a>
-            ,{" "}
-            <a href="/refund" className="text-blue-500 no-underline">
-              Refund
             </a>{" "}
+            {/* <a href="/refund" className="text-blue-500 no-underline">
+              Refund
+            </a>{" "} */}
             and{" "}
             <a href="/privacy" className="text-blue-500 no-underline">
               Privacy
             </a>
           </div>
-          <div className="text-center">
+          <div className="text-center text-sm">
             This website contains affiliate links. If you make a purchase
             through these links, we may earn a commission at no extra cost to
             you.

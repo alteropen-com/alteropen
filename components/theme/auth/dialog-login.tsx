@@ -69,15 +69,14 @@ export function DialogLogin() {
             // rel="nofollow"
           >
             Terms
-          </a>
-          ,{" "}
-          <a
+          </a>{" "}
+          {/* <a
             href="/refund"
             className="text-blue-500 no-underline"
             // rel="nofollow"
           >
             Refund
-          </a>{" "}
+          </a>{" "} */}
           and{" "}
           <a
             href="/privacy"
