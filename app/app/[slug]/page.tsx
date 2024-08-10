@@ -192,7 +192,7 @@ export default async function PostPage({ params }: PostPageProps) {
             </div>
           </div>
           <hr className="my-4" />
-          <ItemAlternative post={app} />
+          <ItemAlternative post={app} type="carousel" />
           <hr className="my-4" />
           <ItemFeature post={app} />
           <hr className="my-4" />
