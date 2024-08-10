@@ -65,7 +65,7 @@ export async function generateMetadata({
 
   const pageTitle = `
     ${name || title} ${
-    alternateApps.length > 0 ? " Top " + alternateApps.length : ""
+    alternateApps.length > 0 ? " Top " + alternateApps.length + "+" : ""
   } AlternativeTo (Free/OpenSource...) ${
     deals && deals.length > 0 ? `+${deals.length} Deals` : ""
   } in 2024. `
