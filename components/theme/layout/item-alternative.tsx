@@ -105,7 +105,7 @@ export default function ItemAlternative({ post }: { post: App }) {
                   <p className="h-[4.5rem] line-clamp-3">{app.title}</p>
                   <div className="mt-2 text-sm">
                     <VisitNumber app={app} />
-                    <p className="text-muted-foreground">
+                    <p className="py-2 text-muted-foreground">
                       {app.pricing?.join(" | ")}
                     </p>
                   </div>

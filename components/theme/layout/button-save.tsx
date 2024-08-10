@@ -63,8 +63,8 @@ const ButtonFollow = ({ id }: { id: number }) => {
       </button>
       <p className="text-sm text-center my-2">
         {isSaved
-          ? "and we will notify you when better deals are available."
-          : "and we try the best to make it available for you."}
+          ? "and we try the best to make it available for you."
+          : "and we will notify you when the deal is available."}
       </p>
     </Card>
   )
