@@ -1,4 +1,5 @@
 import { App } from "@/.velite"
+import { Badge } from "@/components/ui/badge"
 import { capitalizeFirstLetter, formatNumber } from "@/lib/utils"
 
 const VisitNumber = ({
@@ -15,7 +16,9 @@ const VisitNumber = ({
   if (lastMonth > 0)
     return (
       <span className="flex items-center">
-        <span className="text-sm font-bold">{formatNumber(lastMonth)}</span>
+        <Badge variant="default" className="text-sm font-bold">
+          {formatNumber(lastMonth)}
+        </Badge>
         <span className="text-sm ml-1">{text}</span>
       </span>
     )
@@ -27,12 +30,12 @@ const VisitNumber = ({
 
   if (firstProperty) {
     return (
-      <span className="text-sm font-bold">
+      <Badge variant="secondary" className="text-sm font-bold">
         {capitalizeFirstLetter(firstProperty[0].replace(/_/g, " "))}{" "}
         {typeof firstProperty[1] === "number"
           ? formatNumber(firstProperty[1])
           : firstProperty[1]}
-      </span>
+      </Badge>
     )
   }
 }
