@@ -10,6 +10,7 @@ import ItemAlternative from "@/components/theme/layout/item-alternative"
 import ItemFeature from "@/components/theme/layout/item-feature"
 import PopularSearch from "@/components/theme/layout/popular-search"
 import Properties from "@/components/theme/layout/properties-list"
+import SimilarProduct from "@/components/theme/layout/similar-product"
 import TagItem from "@/components/theme/layout/tag-item"
 import TimeUpdated from "@/components/theme/layout/time-updated"
 import VisitNumber from "@/components/theme/layout/visit-number"
@@ -191,8 +192,6 @@ export default async function PostPage({ params }: PostPageProps) {
             </div>
           </div>
           <hr className="my-4" />
-          <ItemAlternative post={app} />
-          <hr className="my-4" />
           <ItemFeature post={app} />
           <hr className="my-4" />
           <div className="flex justify-end">
@@ -209,6 +208,25 @@ export default async function PostPage({ params }: PostPageProps) {
         <div className="w-full max-w-[1468px]">
           <PopularSearch search={app.popularSearch} />
           {/* <Comment /> */}
+          <hr className="my-4" />
+        </div>
+        <div className="w-full max-w-[1468px] flex flex-wrap justify-around">
+          <div>
+            <ButtonFollow id={app.id} />
+          </div>
+          {app.deals && app.deals.length > 0 && (
+            <div>
+              <ButtonDeals app={app} />
+            </div>
+          )}
+        </div>
+        <div className="w-full max-w-[1468px]">
+          <hr className="my-4" />
+          <ItemAlternative post={app} />
+          <hr className="my-4" />
+        </div>
+        <div className="w-full max-w-[1468px]">
+          <SimilarProduct post={app} />
         </div>
       </div>
     </article>
