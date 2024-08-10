@@ -1,37 +1,23 @@
 import { App } from "@/.velite"
+import { Card } from "@/components/ui/card"
 import { siteConfig } from "@/config/site"
 import { RxOpenInNewWindow } from "react-icons/rx"
 
-const ButtonVisitSite = ({
-  href,
-  text,
-  target = "_black",
-  className,
-  app,
-}: {
-  href?: string
-  text?: string
-  target?: string
-  className?: string
-  app?: App
-}) => {
-  const url = href || app?.url
-
-  if (!url) return null
+const ButtonVisitSite = ({ app }: { app?: App }) => {
+  const url = app?.url
 
   return (
-    <a
-      className={`${
-        className
-          ? className
-          : "text-md text-primary no-underline hover:underline"
-      } flex items-center`}
-      href={url + `${url.includes("?") ? "&" : "?"}ref=${siteConfig.ref}`}
-      target={target}
-      rel="nofollow"
-    >
-      {text || app?.name} <RxOpenInNewWindow className="ml-1" />
-    </a>
+    <Card className="px-4 bg-background border-background shadow-none">
+      <p className="text-sm text-center my-1">Visit website</p>
+      <a
+        className="not-prose border-2 px-4 py-2 rounded-full font-bold  ease-in-out w-full transition-all duration-500 h-12 flex items-center justify-center bg-background"
+        href={url + `${url?.includes("?") ? "&" : "?"}ref=${siteConfig.ref}`}
+        target="_blank"
+        rel="nofollow"
+      >
+        {app?.name} <RxOpenInNewWindow className="ml-1" />
+      </a>
+    </Card>
   )
 }
 

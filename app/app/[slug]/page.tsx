@@ -144,12 +144,11 @@ export default async function PostPage({ params }: PostPageProps) {
               <h1 className="text-2xl font-semibold mb-2">
                 {app.name} - {app.title}
               </h1>
+              <hr className="my-1 hidden sm:block" />
               <div className="mt-2 flex justify-between flex-col lg:flex-row">
                 <VisitNumber app={app} />
-                <ButtonVisitSite app={app} />
               </div>
 
-              <hr className="my-1 hidden sm:block" />
               <div className="sm:hidden">
                 <DetailImage post={app} />
               </div>
@@ -178,6 +177,7 @@ export default async function PostPage({ params }: PostPageProps) {
 
             {/* Action Buttons Section */}
             <div className="w-full flex-shrink-0 space-y-3 sm:w-[240px] 2xl:w-[300px]">
+              <ButtonVisitSite app={app} />
               <ButtonFollow id={app.id} />
               <ButtonDeals app={app} />
               <div className="px-4 py-3 mt-4 space-y-2 sm:space-x-2">
