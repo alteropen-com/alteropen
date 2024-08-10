@@ -79,7 +79,7 @@ export default function ItemAlternative({ post }: { post: App }) {
                 rel="nofollow"
               >
                 <Card className="px-6 pt-6 pb-2 rounded-lg border border-primary/60 hover:bg-primary/10">
-                  <h3 className="text-primary text-xl font-semibold mb-2 flex items-center">
+                  <h3 className="text-primary text-xl font-semibold mb-2 flex items-center capitalize">
                     {item.name}
                   </h3>
                   {item.image?.url && (
@@ -120,7 +120,7 @@ export default function ItemAlternative({ post }: { post: App }) {
           if (item.name)
             return (
               <Card key={item.name} className="p-6 rounded-lg">
-                <h4 className="text-xl font-semibold mb-2">
+                <h4 className="text-xl font-semibold mb-2 capitalize">
                   {item.url ? (
                     <a
                       className="text-primary no-underline hover:underline flex items-center"
