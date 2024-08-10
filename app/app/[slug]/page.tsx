@@ -210,7 +210,18 @@ export default async function PostPage({ params }: PostPageProps) {
           {/* <Comment /> */}
           <hr className="my-4" />
         </div>
+        <div className="w-full max-w-[1468px] flex flex-wrap justify-around">
+          <div>
+            <ButtonFollow id={app.id} />
+          </div>
+          {app.deals && app.deals.length > 0 && (
+            <div>
+              <ButtonDeals app={app} />
+            </div>
+          )}
+        </div>
         <div className="w-full max-w-[1468px]">
+          <hr className="my-4" />
           <ItemAlternative post={app} />
           <hr className="my-4" />
         </div>

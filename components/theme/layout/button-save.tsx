@@ -44,7 +44,9 @@ const ButtonFollow = ({ id }: { id: number }) => {
 
   return (
     <Card className="px-4 py-3 bg-background border-background shadow-none">
-      <p className="text-sm text-center my-2">Looking for a better deal?</p>
+      <p className="text-sm text-center my-2">
+        {isSaved ? "You saved this product" : "Looking for a better deal?"}
+      </p>
       <button
         onClick={handleSave}
         disabled={isFetching}
@@ -57,10 +59,12 @@ const ButtonFollow = ({ id }: { id: number }) => {
           : "bg-yellow-400 text-gray-900 hover:bg-yellow-300"
       }`}
       >
-        {isFetching ? "" : isSaved ? "Followed" : "Follow Now"}
+        {isFetching ? "" : isSaved ? "Saved" : "Save Now"}
       </button>
       <p className="text-sm text-center my-2">
-        and we try the best to make it available for you.
+        {isSaved
+          ? "and we will notify you when better deals are available."
+          : "and we try the best to make it available for you."}
       </p>
     </Card>
   )

@@ -214,7 +214,18 @@ export default async function PostPage({ params }: PostPageProps) {
           <PopularSearch search={post.popularSearch} />
           {/* <Comment /> */}
         </div>
+        <div className="w-full max-w-[1468px] flex flex-wrap justify-around">
+          <div>
+            <ButtonFollow id={post.id} />
+          </div>
+          {post.deals && post.deals.length > 0 && (
+            <div>
+              <ButtonDeals app={post} />
+            </div>
+          )}
+        </div>
         <div className="w-full max-w-[1468px]">
+          <hr className="my-4" />
           <SimilarProduct post={post} />
         </div>
       </div>
