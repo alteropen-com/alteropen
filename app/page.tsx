@@ -117,6 +117,26 @@ const popularAlternatives = [
     title: "LucidChart Alternatives",
     href: "/alternative/lucidchart",
   },
+  {
+    title: "Power BI Alternatives",
+    href: "/alternative/power-bi",
+  },
+  {
+    title: "Make.com Alternatives",
+    href: "/alternative/make-com",
+  },
+  {
+    title: "Slack Alternatives",
+    href: "/alternative/slack",
+  },
+  {
+    title: "Heroku Alternatives",
+    href: "/alternative/heroku",
+  },
+  {
+    title: "Photoshop Alternatives",
+    href: "/alternative/photoshop",
+  },
 ]
 
 export default function Page() {
