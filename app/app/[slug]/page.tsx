@@ -192,8 +192,6 @@ export default async function PostPage({ params }: PostPageProps) {
             </div>
           </div>
           <hr className="my-4" />
-          <ItemAlternative post={app} type="carousel" />
-          <hr className="my-4" />
           <ItemFeature post={app} />
           <hr className="my-4" />
           <div className="flex justify-end">
@@ -210,6 +208,11 @@ export default async function PostPage({ params }: PostPageProps) {
         <div className="w-full max-w-[1468px]">
           <PopularSearch search={app.popularSearch} />
           {/* <Comment /> */}
+          <hr className="my-4" />
+        </div>
+        <div className="w-full max-w-[1468px]">
+          <ItemAlternative post={app} />
+          <hr className="my-4" />
         </div>
         <div className="w-full max-w-[1468px]">
           <SimilarProduct post={app} />

@@ -58,6 +58,7 @@ export default function SimilarProduct({ post }: { post: App }) {
     .filter(
       (app) =>
         app.id !== post.id &&
+        !post.alternative?.find((item) => item.id === app.id) &&
         !alternativeApp.find((item) => item.id === app.id) &&
         !alternativeAlternative.find((item) => item.id === app.id)
     )
