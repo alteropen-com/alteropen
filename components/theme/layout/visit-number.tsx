@@ -1,4 +1,4 @@
-import { App } from "@/.velite"
+import { Alternative } from "@/.velite"
 import { Badge } from "@/components/ui/badge"
 import { capitalizeFirstLetter, formatNumber } from "@/lib/utils"
 
@@ -6,7 +6,7 @@ const VisitNumber = ({
   app,
   text = "visit in last month",
 }: {
-  app?: App
+  app?: Alternative
   text?: string
 }) => {
   if (!app) return null

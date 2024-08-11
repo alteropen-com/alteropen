@@ -1,4 +1,4 @@
-import { App } from "@/.velite"
+import { Alternative } from "@/.velite"
 import { Badge } from "@/components/ui/badge"
 import { Card } from "@/components/ui/card"
 import { siteConfig } from "@/config/site"
@@ -6,7 +6,7 @@ import { encodeTitleToSlug } from "@/lib/utils"
 import Link from "next/link"
 import VisitNumber from "./visit-number"
 
-const DetailsList = ({ apps }: { apps: App[] }) => {
+const DetailsList = ({ apps }: { apps: Alternative[] }) => {
   return apps.map((app) => {
     const { id, slug, title, description, name, pricing, deals } = app
 

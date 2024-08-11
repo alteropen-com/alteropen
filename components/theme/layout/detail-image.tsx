@@ -1,6 +1,6 @@
 "use client"
 
-import { App } from "#site/content"
+import { Alternative } from "@/.velite"
 import { Loader } from "lucide-react"
 import { useEffect, useState } from "react"
 import Slider from "react-slick"
@@ -19,7 +19,7 @@ const settings = {
   // responsive: [],
 }
 
-const DetailImage = ({ post }: { post: App }) => {
+const DetailImage = ({ post }: { post: Alternative }) => {
   const [selectedImageIndex, setSelectedImageIndex] = useState(0)
   const [shouldRender, setShouldRender] = useState(false)
 

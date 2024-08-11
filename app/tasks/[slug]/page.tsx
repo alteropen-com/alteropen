@@ -1,6 +1,5 @@
-import { alternatives, apps } from "#site/content"
+import { alternatives } from "#site/content"
 import AlternativeList from "@/components/theme/layout/alternative-list"
-import DetailsList from "@/components/theme/layout/details-list"
 import FeaturePopover from "@/components/theme/layout/feature-popover"
 import NavLeft from "@/components/theme/layout/nav-left"
 import SortList from "@/components/theme/layout/sort-list"
@@ -23,54 +22,6 @@ export interface TaskPageProps {
     slug: string
   }
   searchParams: SearchParams
-}
-
-const filterApps = (slug: string, searchParams: SearchParams) => {
-  const { sortBy, onlyDeal, feature, openSource, free } = searchParams
-
-  let featureQuery = feature?.split(",") || []
-
-  return apps
-    .filter((app) => {
-      if (app.published === false) return false
-      if (
-        featureQuery.length > 0 &&
-        (!app.features ||
-          !featureQuery.every((f) => app?.features?.includes(f)))
-      ) {
-        return false
-      }
-
-      if (
-        openSource === "true" &&
-        !app.pricing?.includes(PRICING_ITEM.OpenSource)
-      )
-        return false
-
-      if (free === "true" && !app.pricing?.includes(PRICING_ITEM.Free))
-        return false
-
-      if (slug === "all") return true
-      if (!app.tasks) return false
-      const appTags = app.tasks.map((task) => encodeTitleToSlug(task))
-
-      return appTags.includes(slug.trim())
-    })
-    .sort((a, b) => {
-      switch (sortBy) {
-        case "top":
-          return a?.visit[0] > b?.visit[0] ? -1 : 1
-        case "lasted":
-        default:
-          return a.id > b.id ? -1 : 1
-      }
-    })
-    .filter((app) => {
-      if (onlyDeal === "true") {
-        return app.deals && app.deals?.length > 0
-      }
-      return true
-    })
 }
 
 const filterAlternatives = (slug: string, searchParams: SearchParams) => {
@@ -132,14 +83,9 @@ const pageTitle = (slug: string, searchParams: SearchParams): string => {
 
   const dealTitle = onlyDeal === "true" ? "with Lifetime Deals" : ""
 
-  const filterAppsList = filterApps(slug, searchParams)
   const filterAlternativesList = filterAlternatives(slug, searchParams)
 
   const appTittle = `${sortTitle} ${
-    filterAppsList.length > 0 ? filterAppsList.length + " App" : ""
-  } ${
-    filterAppsList.length > 0 || filterAlternativesList.length > 0 ? " &" : ""
-  } ${
     filterAlternativesList.length > 0
       ? filterAlternativesList.length + " Alternative"
       : ""
@@ -214,8 +160,6 @@ export default function Page({ params, searchParams }: TaskPageProps) {
   // @ts-ignore
   if (searchParams.slug != null) delete searchParams.slug
 
-  const displayApps = filterApps(slug, searchParams)
-
   const displayAlternatives = filterAlternatives(slug, searchParams)
 
   return (
@@ -229,30 +173,12 @@ export default function Page({ params, searchParams }: TaskPageProps) {
         <div className="flex items-center space-x-2">
           <FeaturePopover
             searchParams={searchParams}
-            appFilter={[...displayApps, ...displayAlternatives]}
+            appFilter={displayAlternatives}
           />
         </div>
 
-        <hr className="mb-2 sm:mb-4" />
-
-        {displayApps?.length > 0 && (
-          <div className="flex flex-col">
-            <div className="flex flex-wrap">
-              <h3 className="font-bold flex-1 text-lg lg:text-xl">
-                Best {displayApps?.length} App
-              </h3>
-            </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3  xl:grid-cols-4 2xl:grid-cols-5 gap-4 lg:gap-y-8 mt-4">
-              <DetailsList apps={displayApps.slice(0, 40)} />
-            </div>
-          </div>
-        )}
         {displayAlternatives?.length > 0 && (
           <div className="flex flex-col flex-1">
-            <hr className="my-8" />
-            <h3 className="font-bold text-lg lg:text-xl">
-              Best {displayAlternatives?.length} Alternative
-            </h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3  xl:grid-cols-4 2xl:grid-cols-5 gap-4 lg:gap-y-8 mt-4">
               <AlternativeList apps={displayAlternatives.slice(0, 40)} />
             </div>

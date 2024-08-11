@@ -1,4 +1,4 @@
-import { alternatives, apps } from "#site/content"
+import { alternatives } from "#site/content"
 import { CustomMDX } from "@/components/mdx/MdxRemote"
 import ButtonDeals from "@/components/theme/layout/button-deals"
 import ButtonEditPage from "@/components/theme/layout/button-edit-page"
@@ -59,7 +59,7 @@ export async function generateMetadata({
 
   const imageUrl = image.url
 
-  const alternateApps = apps.filter((item) =>
+  const alternateApps = alternatives.filter((item) =>
     item.alternative?.find((ia) => ia.id === app.id)
   )
 
@@ -194,8 +194,12 @@ export default async function PostPage({ params }: PostPageProps) {
               </p>
             </div>
           </div>
-          <hr className="my-4" />
-          <ItemAlternative post={post} />
+          {(!post.deals || post.deals.length === 0) && (
+            <>
+              <hr className="my-4" />
+              <ItemAlternative post={post} />
+            </>
+          )}
           <hr className="my-4" />
           <ItemFeature post={post} />
           <hr className="my-4" />
@@ -225,6 +229,12 @@ export default async function PostPage({ params }: PostPageProps) {
           )}
         </div>
         <div className="w-full max-w-[1468px]">
+          {post.deals && post.deals.length > 0 && (
+            <>
+              <hr className="my-4" />
+              <ItemAlternative post={post} />
+            </>
+          )}
           <hr className="my-4" />
           <SimilarProduct post={post} />
         </div>

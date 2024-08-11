@@ -1,4 +1,4 @@
-import { alternatives, apps } from "#site/content"
+import { alternatives } from "#site/content"
 import { Button } from "@/components/ui/button"
 import { siteConfig } from "@/config/site"
 import { getAllTags, sortTagsByCount } from "@/lib/helper"
@@ -141,7 +141,7 @@ const popularAlternatives = [
 ]
 
 export default function Page() {
-  const { tasks } = getAllTags([...apps, ...alternatives])
+  const { tasks } = getAllTags(alternatives)
   const sortedTasks = sortTagsByCount(tasks)
 
   return (

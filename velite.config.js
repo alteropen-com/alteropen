@@ -109,11 +109,6 @@ export default defineConfig({
       // more additional fields (computed fields)
       // .transform((data) => ({ ...data, permalink: `/blog/${data.slug}` })),
     },
-    apps: {
-      name: "App", // collection type name
-      pattern: "app/**/*.mdx", // content files glob pattern
-      schema: appSchema,
-    },
     alternatives: {
       name: "Alternative", // collection type name
       pattern: "alternative/**/*.mdx", // content files glob pattern
@@ -123,23 +118,14 @@ export default defineConfig({
   complete: async (data, ctx) => {
     const filePath = path.join(ctx.config.output.assets, "search-index.json")
 
-    const { apps, alternatives } = data
+    const { alternatives } = data
 
-    const { tasks } = getAllTags([...apps, ...alternatives])
+    const { tasks } = getAllTags(alternatives)
     // TODO: add more info to showing
     // TODO: add features
     const sortedTasks = sortTagsByCount(tasks)
 
     const content = [
-      ...apps
-        .filter((app) => app.published)
-        .sort((a, b) => (a.id > b.id ? -1 : 1))
-        .map((item) => {
-          return {
-            slug: `/app/${item.slug}`,
-            name: item.name,
-          }
-        }),
       ...alternatives
         .filter((app) => app.published)
         .sort((a, b) => (a.id > b.id ? -1 : 1))
