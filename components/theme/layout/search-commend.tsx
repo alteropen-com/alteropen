@@ -170,12 +170,6 @@ export function CommandMenu({ ...props }: DialogProps) {
               />
               <ItemView
                 data={foundItems}
-                type="Apps"
-                slugUrl="/app/"
-                runCommand={runCommand}
-              />
-              <ItemView
-                data={foundItems}
                 type="Alternatives"
                 slugUrl="/alternative/"
                 runCommand={runCommand}
