@@ -7,7 +7,8 @@ import { Metadata } from "next"
 import Link from "next/link"
 import { FaGithub } from "react-icons/fa6"
 
-const title = "Alteropen is an open source Appsumo alternative."
+const title =
+  "Alternative to popular SaaS products (Free/ OpenSource or with Great Deals) build by Indie, suggest by Indie"
 const description = `Top Alternatives, Similar App (Free/ OpenSource or Deal) List in 2024 with Lifetime Deal. Review. HowTo. Pricing.`
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -154,11 +155,17 @@ export default function Page() {
                   Build by Indie
                 </span>
                 <span className="text-primary bg-clip-text bg-gradient-to-br  block md:ml-0">
-                  Sell to Indie
+                  Suggest by Indie
                 </span>
               </p>
               <h1 className="pt-2 text-foreground my-3 text-sm sm:mt-5 lg:mb-0 sm:text-base lg:text-lg">
-                Alteropen is an open source Appsumo alternative.
+                <span className="text-xl sm:text-2xl">
+                  Alternative to popular SaaS products
+                </span>
+                <br />
+                <span className="italic">
+                  (Free/ OpenSource or with Great Deals)
+                </span>
               </h1>
             </div>
             <div className="flex flex-wrap justify-center items-center gap-2">
