@@ -1,5 +1,4 @@
-import { alternatives, apps } from "#site/content"
-import { App } from "@/.velite"
+import { Alternative, alternatives } from "#site/content"
 import { Badge } from "@/components/ui/badge"
 import { Card } from "@/components/ui/card"
 import { siteConfig } from "@/config/site"
@@ -8,15 +7,8 @@ import { RxOpenInNewWindow } from "react-icons/rx"
 import Properties from "./properties-list"
 import VisitNumber from "./visit-number"
 
-export default function ItemAlternative({ post }: { post: App }) {
-  const alternativeApp = apps
-    .filter((app) => app.alternative?.find((item) => item.id === post.id))
-    .map((app) => ({
-      ...app,
-      url: `/app/${app.slug}`,
-    }))
-
-  const alternativeAlternative = alternatives
+export default function ItemAlternative({ post }: { post: Alternative }) {
+  const alternativeApp = alternatives
     .filter((app) => app.alternative?.find((item) => item.id === post.id))
     .map((app) => ({
       ...app,
@@ -24,12 +16,7 @@ export default function ItemAlternative({ post }: { post: App }) {
     }))
 
   const postAlternative = post.alternative
-    ?.filter(
-      (item) =>
-        ![...alternativeApp, ...alternativeApp]?.find(
-          (app) => item.id === app.id
-        )
-    )
+    ?.filter((item) => !alternativeApp?.find((app) => item.id === app.id))
     .map((item) => {
       if (item.id) {
         const alter = alternatives.find((app) => app.id === item.id)
@@ -37,12 +24,6 @@ export default function ItemAlternative({ post }: { post: App }) {
           return {
             ...alter,
             url: `/alternative/${alter.slug}`,
-          }
-        const app = apps.find((app) => app.id === item.id)
-        if (app)
-          return {
-            ...app,
-            url: `/app/${app.slug}`,
           }
         return { ...item }
       }
@@ -52,7 +33,7 @@ export default function ItemAlternative({ post }: { post: App }) {
   // Remove duplicates by id
   const alternative = [
     ...(postAlternative || []),
-    ...[...alternativeApp, ...alternativeAlternative].sort((a, b) => {
+    ...alternativeApp.sort((a, b) => {
       const sortA = a.visit && a.visit?.length > 0 ? a.visit[0] : 0
       const sortB = b.visit && b.visit?.length > 0 ? b.visit[0] : 0
 
@@ -69,7 +50,6 @@ export default function ItemAlternative({ post }: { post: App }) {
         {alternative?.map((item, i) => {
           if (item.id) {
             let app = alternatives.find((app) => app.id === item.id)
-            if (!app) app = apps.find((app) => app.id === item.id)
             if (!app) return ""
             return (
               <Link

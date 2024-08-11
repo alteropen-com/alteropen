@@ -1,4 +1,4 @@
-import { alternatives, App, apps } from "@/.velite"
+import { Alternative, alternatives } from "@/.velite"
 import { Badge } from "@/components/ui/badge"
 import { Card } from "@/components/ui/card"
 import { siteConfig } from "@/config/site"
@@ -7,27 +7,12 @@ import { RxOpenInNewWindow } from "react-icons/rx"
 import Properties from "./properties-list"
 import VisitNumber from "./visit-number"
 
-export default function SimilarProduct({ post }: { post: App }) {
-  const alternativeApp = apps.filter((app) =>
-    app.alternative?.find((item) => item.id === post.id)
-  )
-
+export default function SimilarProduct({ post }: { post: Alternative }) {
   const alternativeAlternative = alternatives.filter((app) =>
     app.alternative?.find((item) => item.id === post.id)
   )
 
   const postIdAlternative = post.alternative?.map((item) => ({ id: item.id }))
-
-  const similarApp = apps
-    .filter((app) =>
-      app.alternative?.find((item) =>
-        postIdAlternative?.find((itemId) => itemId.id === item.id)
-      )
-    )
-    .map((app) => ({
-      ...app,
-      url: `/app/${app.slug}`,
-    }))
 
   const similarAlternative = alternatives
     .filter((app) =>
@@ -41,8 +26,8 @@ export default function SimilarProduct({ post }: { post: App }) {
     }))
 
   // Remove duplicates by id and filter out the original post
-  const alternative: App[] = [...similarApp, ...similarAlternative]
-    .reduce<App[]>((acc, current) => {
+  const alternative: Alternative[] = similarAlternative
+    .reduce<Alternative[]>((acc, current) => {
       // Check if the current item ID already exists in the accumulator
       if (!acc.find((item) => item.id === current.id)) {
         acc.push(current)
@@ -59,7 +44,7 @@ export default function SimilarProduct({ post }: { post: App }) {
       (app) =>
         app.id !== post.id &&
         !post.alternative?.find((item) => item.id === app.id) &&
-        !alternativeApp.find((item) => item.id === app.id) &&
+        // !alternativeApp.find((item) => item.id === app.id) &&
         !alternativeAlternative.find((item) => item.id === app.id)
     )
 
@@ -74,7 +59,6 @@ export default function SimilarProduct({ post }: { post: App }) {
         {alternative?.map((item, i) => {
           if (item.id) {
             let app = alternatives.find((app) => app.id === item.id)
-            if (!app) app = apps.find((app) => app.id === item.id)
             if (!app) return ""
             return (
               <Link

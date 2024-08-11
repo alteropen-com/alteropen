@@ -27,12 +27,17 @@ const nextConfig = {
       {
         source: "/app",
         destination: "/tasks/all",
-        permanent: false,
+        permanent: true,
+      },
+      {
+        source: "/app/:slug",
+        destination: "/alternative/:slug",
+        permanent: true,
       },
       {
         source: "/alternative",
         destination: "/tasks/all",
-        permanent: false,
+        permanent: true,
       },
     ]
   },
