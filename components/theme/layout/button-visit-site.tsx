@@ -1,9 +1,9 @@
-import { App } from "@/.velite"
+import { Alternative } from "@/.velite"
 import { Card } from "@/components/ui/card"
 import { siteConfig } from "@/config/site"
 import { RxOpenInNewWindow } from "react-icons/rx"
 
-const ButtonVisitSite = ({ app }: { app?: App }) => {
+const ButtonVisitSite = ({ app }: { app?: Alternative }) => {
   const url = app?.url
 
   return (
