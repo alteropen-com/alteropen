@@ -12,10 +12,10 @@ interface PropertiesProps {
   properties?: {
     [key: string]: string | number
   }
-  showLinks?: boolean
+  showDetails?: boolean
 }
 
-const Properties = ({ properties, showLinks = true }: PropertiesProps) => {
+const Properties = ({ properties, showDetails = false }: PropertiesProps) => {
   if (!properties) return null
 
   const propertyEntries = Object.entries(properties)
@@ -23,11 +23,22 @@ const Properties = ({ properties, showLinks = true }: PropertiesProps) => {
   return (
     <div className="py-2">
       {propertyEntries.map(([key, value], index) => {
-        if (typeof value !== "number" && value.includes("https:") && !showLinks)
+        if (
+          typeof value !== "number" &&
+          value.includes("https:") &&
+          !showDetails
+        )
+          return null
+        if (
+          !showDetails &&
+          ["fork", "issue", "request", "website"].some((el) =>
+            key.toLowerCase().includes(el)
+          )
+        )
           return null
         return (
           <div key={key} className="flex mb-2 items-center">
-            <span className="w-[220px]">
+            <span className="w-[186px] truncate">
               {capitalizeFirstLetter(key.replace(/_/g, " "))}
             </span>
             {typeof value !== "number" && value.includes("https:") ? (
@@ -45,11 +56,15 @@ const Properties = ({ properties, showLinks = true }: PropertiesProps) => {
                 </Link>
               </Button>
             ) : (
-              <span className="w-full">
+              <span className="w-full truncate">
                 {typeof value === "number"
                   ? formatNumber(value)
                   : key === "Language"
-                  ? value.split(";").slice(0, 2).join(";")
+                  ? value.split(";").slice(0, 2).join("; ")
+                  : key === "Category"
+                  ? value.split(";").slice(0, 1).join("; ")
+                  : key === "Features"
+                  ? value.split(";").slice(0, 2).join("; ")
                   : isValidDate(value)
                   ? formatDateAgo(value, true)
                   : value}
