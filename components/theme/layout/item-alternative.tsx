@@ -83,14 +83,14 @@ export default function ItemAlternative({ post }: { post: Alternative }) {
                     </div>
                   )}
                   <p className="h-[4.5rem] line-clamp-3">{app.title}</p>
-                  <div className="mt-2 text-sm">
-                    <VisitNumber app={app} />
-                    <p className="py-2 text-muted-foreground">
+                  <div className="mt-2 text-sm flex space-x-2 items-center justify-between">
+                    <VisitNumber app={app} text="Visits" />
+                    <span className="font-bold">
                       {app.pricing?.join(" | ")}
-                    </p>
+                    </span>
                   </div>
                   <div className="mt-2 text-sm">
-                    <Properties properties={app.properties} showLinks={false} />
+                    <Properties properties={app.properties} />
                   </div>
                 </Card>
               </Link>
@@ -129,7 +129,7 @@ export default function ItemAlternative({ post }: { post: Alternative }) {
                 )}
                 <p className="">{item.description}</p>
                 <div className="mt-2 text-sm">
-                  <Properties properties={item?.properties} showLinks={false} />
+                  <Properties properties={item?.properties} />
                 </div>
               </Card>
             )

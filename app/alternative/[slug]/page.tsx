@@ -175,7 +175,7 @@ export default async function PostPage({ params }: PostPageProps) {
               </Link>
 
               <DetailToc toc={post.toc} />
-              <Properties properties={post.properties} />
+              <Properties properties={post.properties} showDetails={true} />
             </div>
 
             {/* Action Buttons Section */}
