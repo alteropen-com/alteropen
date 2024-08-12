@@ -36,6 +36,9 @@ const Properties = ({ properties, showDetails = false }: PropertiesProps) => {
           )
         )
           return null
+
+        if (key.toLowerCase().includes("visit") && value === 0) return null
+
         return (
           <div key={key} className="flex mb-2 items-center">
             <span className="w-[186px] truncate">

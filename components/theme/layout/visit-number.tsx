@@ -11,6 +11,8 @@ const VisitNumber = ({
 }) => {
   if (!app) return null
 
+  if (app.visit.length === 0 || app.visit[0] === 0) return null
+
   const lastMonth = app.visit[0]
 
   if (lastMonth > 0)
