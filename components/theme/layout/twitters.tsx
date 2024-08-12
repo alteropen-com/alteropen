@@ -6,9 +6,11 @@ import "slick-carousel/slick/slick.css"
 const settings = {
   dots: true,
   infinite: false,
-  speed: 500,
+  // speed: 500,
   slidesToShow: 4,
   initialSlide: 0,
+  arrows: false,
+  className: "not-prose",
   responsive: [
     {
       breakpoint: 1440,
@@ -35,14 +37,12 @@ export default function Twitters({ ids }: { ids: string[] }) {
   if (ids.length === 0) return null
 
   return (
-    <div className="not-prose">
-      <Slider {...settings} slidesToShow={ids.length > 2 ? 4 : 2}>
-        {ids.map((id) => (
-          <div key={id} className="px-2">
-            <Tweet id={id} />
-          </div>
-        ))}
-      </Slider>
-    </div>
+    <Slider {...settings} slidesToShow={ids.length > 2 ? 4 : 2}>
+      {ids.map((id) => (
+        <div key={id} className="sm:pl-4">
+          <Tweet id={id} />
+        </div>
+      ))}
+    </Slider>
   )
 }
