@@ -11,6 +11,7 @@ import ItemFeature from "@/components/theme/layout/item-feature"
 import PopularSearch from "@/components/theme/layout/popular-search"
 import Properties from "@/components/theme/layout/properties-list"
 import SimilarProduct from "@/components/theme/layout/similar-product"
+import StickyNav from "@/components/theme/layout/sticky-toc"
 import TagItem from "@/components/theme/layout/tag-item"
 import TimeUpdated from "@/components/theme/layout/time-updated"
 import VisitNumber from "@/components/theme/layout/visit-number"
@@ -24,7 +25,6 @@ import {
 import { siteConfig } from "@/config/site"
 import { encodeTitleToSlug } from "@/lib/utils"
 import { Metadata } from "next"
-import Link from "next/link"
 import { notFound } from "next/navigation"
 import "./styles.css"
 
@@ -167,19 +167,22 @@ export default async function PostPage({ params }: PostPageProps) {
                   {post.description}
                 </p>
               ) : null}
-              <Link
+              <a
                 className="text-md text-primary no-underline hover:underline"
                 href="#alternativeTo"
               >
                 Best Alternatives
-              </Link>
+              </a>
 
               <DetailToc toc={post.toc} />
               <Properties properties={post.properties} showDetails={true} />
             </div>
 
             {/* Action Buttons Section */}
-            <div className="w-full flex-shrink-0 space-y-3 sm:w-[240px] 2xl:w-[300px]">
+            <div
+              id="deals"
+              className="w-full flex-shrink-0 space-y-3 sm:w-[240px] 2xl:w-[300px]"
+            >
               <ButtonVisitSite app={post} />
               <ButtonFollow id={post.id} />
               <ButtonDeals app={post} />
@@ -194,9 +197,10 @@ export default async function PostPage({ params }: PostPageProps) {
               </p>
             </div>
           </div>
+          <StickyNav post={post} />
+          <hr id="sticky-start" className="my-4" />
           {(!post.deals || post.deals.length === 0) && (
             <>
-              <hr className="my-4" />
               <ItemAlternative post={post} />
             </>
           )}

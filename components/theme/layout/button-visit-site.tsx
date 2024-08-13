@@ -3,8 +3,27 @@ import { Card } from "@/components/ui/card"
 import { siteConfig } from "@/config/site"
 import { RxOpenInNewWindow } from "react-icons/rx"
 
-const ButtonVisitSite = ({ app }: { app?: Alternative }) => {
+const ButtonVisitSite = ({
+  app,
+  onlyButton = false,
+}: {
+  app?: Alternative
+  onlyButton?: boolean
+}) => {
   const url = app?.url
+
+  if (onlyButton) {
+    return (
+      <a
+        className="not-prose border-2 px-4 py-2 rounded-full font-bold  ease-in-out w-full transition-all duration-500 h-12 flex items-center justify-center bg-background"
+        href={url + `${url?.includes("?") ? "&" : "?"}ref=${siteConfig.ref}`}
+        target="_blank"
+        rel="nofollow"
+      >
+        {app?.name} <RxOpenInNewWindow className="ml-1" />
+      </a>
+    )
+  }
 
   return (
     <Card className="px-4 bg-background border-background shadow-none">
