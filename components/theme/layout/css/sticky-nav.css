@@ -1,0 +1,37 @@
+#sticky-nav {
+  position: fixed;
+  top: -60px;
+  left: 0;
+  z-index: 100;
+  width: 100%;
+  transform: translateY(-100%); /* Start off-screen */
+  transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out,
+    top 0.3s ease-in-out;
+  opacity: 0; /* Start hidden */
+}
+
+#sticky-nav.sticky {
+  transform: translateY(0); /* Slide into view */
+  opacity: 1; /* Fade in */
+}
+
+#sticky-nav.scrolling-up {
+  top: 0px;
+}
+
+/* CSS to hide the horizontal scrollbar */
+#sticky-wrapper {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+}
+
+#sticky-wrapper::-webkit-scrollbar {
+  display: none; /* Safari and Chrome */
+}
+
+@media (min-width: 768px) {
+  #sticky-nav,
+  #sticky-nav.scrolling-up {
+    top: -60px;
+  }
+}
