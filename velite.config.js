@@ -76,6 +76,7 @@ const appSchema = s.object({
       })
     )
     .optional(),
+  recommend: s.number().default(0),
   deals: s
     .array(
       s.object({
