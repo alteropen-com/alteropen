@@ -1,9 +1,10 @@
 import { Alternative, alternatives } from "#site/content"
-import { Badge } from "@/components/ui/badge"
 import { Card } from "@/components/ui/card"
 import { siteConfig } from "@/config/site"
 import Link from "next/link"
 import { RxOpenInNewWindow } from "react-icons/rx"
+import BadgeDeals from "./badge-deal"
+import BadgeOpenSource from "./badge-opensource"
 import Properties from "./properties-list"
 import VisitNumber from "./visit-number"
 
@@ -64,7 +65,7 @@ export default function ItemAlternative({ post }: { post: Alternative }) {
                 href={item.url || ""}
                 rel="nofollow"
               >
-                <Card className="relative px-6 pt-6 pb-2 rounded-lg border border-primary/60 hover:bg-primary/10">
+                <Card className="relative px-6 pt-6 pb-2 hover:bg-primary/10">
                   <h3 className="text-primary text-xl font-semibold mb-2 flex items-center capitalize">
                     {item.name}
                   </h3>
@@ -86,21 +87,11 @@ export default function ItemAlternative({ post }: { post: Alternative }) {
                       }}
                     />
                   )}
-                  {item.deals && item.deals.length > 0 && (
-                    <div className="relative">
-                      <div className="absolute top-[-42px] right-0">
-                        <Badge variant="destructive">
-                          {item.deals[0].price}
-                        </Badge>
-                      </div>
-                    </div>
-                  )}
                   <p className="h-[4.5rem] line-clamp-3">{app.title}</p>
                   <div className="mt-2 text-sm flex space-x-2 items-center justify-between">
                     <VisitNumber app={app} text="Visits" />
-                    {app.pricing?.includes("OpenSource") && (
-                      <Badge variant="secondary">OpenSource</Badge>
-                    )}
+                    <BadgeOpenSource app={app} />
+                    <BadgeDeals app={app} />
                   </div>
                   <div className="mt-2 text-sm">
                     <Properties properties={app.properties} />
