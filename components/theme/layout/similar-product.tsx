@@ -35,6 +35,10 @@ export default function SimilarProduct({ post }: { post: Alternative }) {
       return acc
     }, [])
     .sort((a, b) => {
+      if (a.recommend !== b.recommend) {
+        return b.recommend - a.recommend
+      }
+
       const sortA = a.visit && a.visit.length > 0 ? a.visit[0] : 0
       const sortB = b.visit && b.visit.length > 0 ? b.visit[0] : 0
 
@@ -67,10 +71,15 @@ export default function SimilarProduct({ post }: { post: Alternative }) {
                 href={item.url || ""}
                 rel="nofollow"
               >
-                <Card className="px-6 pt-6 pb-2 rounded-lg border border-primary/60 hover:bg-primary/10">
+                <Card className="relative px-6 pt-6 pb-2 rounded-lg border border-primary/60 hover:bg-primary/10">
                   <h3 className="text-primary text-xl font-semibold mb-2 flex items-center">
                     {item.name}
                   </h3>
+                  {app.recommend > 0 && (
+                    <div className="absolute top-[28px] right-[-40px] bg-primary text-primary-foreground text-white text-[9px] font-bold px-2 py-1 transform rotate-[20deg] -translate-x-1/2 -translate-y-1/2 rounded-xl">
+                      Recommended
+                    </div>
+                  )}
                   {item.image?.url && (
                     <img
                       loading="lazy"
