@@ -7,6 +7,7 @@ import {
   isValidDate,
 } from "@/lib/utils"
 import Link from "next/link"
+import { RxOpenInNewWindow } from "react-icons/rx"
 
 interface PropertiesProps {
   properties?: {
@@ -55,7 +56,10 @@ const Properties = ({ properties, showDetails = false }: PropertiesProps) => {
                   target="_blank"
                   rel="nofollow"
                 >
-                  {value.replace("https://", "")}
+                  {value.includes("github.com")
+                    ? "github"
+                    : value.replace("https://", "")}
+                  <RxOpenInNewWindow className="ml-1" />
                 </Link>
               </Button>
             ) : (
