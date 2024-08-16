@@ -38,17 +38,29 @@ export default function StickyNav({ post }: { post: Alternative }) {
   const isThrottling = useRef(false) // Ref to track throttling state
 
   useEffect(() => {
-    const reviewFeaturesElement = document.getElementById("review-features")
-    const pricingElement = document.getElementById("pricing")
-    const similarElement = document.getElementById("similar")
+    const checkElements = () => {
+      const reviewFeaturesElement = document.getElementById("review-features")
+      const pricingElement = document.getElementById("pricing")
+      const similarElement = document.getElementById("similar")
 
-    setHasSections({
-      reviewFeatures: !!reviewFeaturesElement,
-      pricing: !!pricingElement,
-      similar: !!similarElement,
-    })
+      setHasSections({
+        reviewFeatures: !!reviewFeaturesElement,
+        pricing: !!pricingElement,
+        similar: !!similarElement,
+      })
 
-    setShowArrow(!!(reviewFeaturesElement && pricingElement && similarElement))
+      setShowArrow(
+        !!(reviewFeaturesElement && pricingElement && similarElement)
+      )
+    }
+
+    // Check elements after the page has fully loaded
+    if (document.readyState === "complete") {
+      checkElements()
+    } else {
+      window.addEventListener("load", checkElements)
+      return () => window.removeEventListener("load", checkElements)
+    }
   }, [])
 
   useEffect(() => {
