@@ -40,7 +40,7 @@ const AlternativeList = ({ apps }: { apps: Alternative[] }) => {
               {deals && deals.length > 0 && (
                 <div className="relative">
                   <div className="absolute top-[-42px] right-0">
-                    <Badge variant="default">{deals[0].price}</Badge>
+                    <Badge variant="destructive">{deals[0].price}</Badge>
                   </div>
                 </div>
               )}
@@ -57,7 +57,9 @@ const AlternativeList = ({ apps }: { apps: Alternative[] }) => {
           </div>
           <div className="mt-1 py-2 px-2 bg-muted/50 flex justify-between">
             <VisitNumber app={app} text="visit" />
-            <span className="text-sm">{pricing?.join("|")}</span>
+            {pricing?.includes("OpenSource") && (
+              <Badge variant="secondary">OpenSource</Badge>
+            )}
           </div>
         </div>
       </Card>

@@ -87,16 +87,18 @@ export default function SimilarProduct({ post }: { post: Alternative }) {
                   {item.deals && item.deals.length > 0 && (
                     <div className="relative">
                       <div className="absolute top-[-42px] right-0">
-                        <Badge variant="default">{item.deals[0].price}</Badge>
+                        <Badge variant="destructive">
+                          {item.deals[0].price}
+                        </Badge>
                       </div>
                     </div>
                   )}
                   <p className="h-[4.5rem] line-clamp-3">{app.title}</p>
                   <div className="mt-2 text-sm flex space-x-2 items-center justify-between">
                     <VisitNumber app={app} text="Visits" />
-                    <span className="font-bold">
-                      {app.pricing?.join(" | ")}
-                    </span>
+                    {app.pricing?.includes("OpenSource") && (
+                      <Badge variant="secondary">OpenSource</Badge>
+                    )}
                   </div>
                   <div className="mt-2 text-sm">
                     <Properties properties={app.properties} />
