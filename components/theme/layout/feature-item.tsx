@@ -16,6 +16,7 @@ export default function FeatureItem({ tag, variant, count }: Props) {
         variant: variant ? variant : "outline",
         className: "no-underline rounded-md px-2 py-1 text-primary",
       })}
+      rel="nofollow"
       href={`/tasks/all?feature=${encodeURI(tag)}`}
     >
       {tag} {count ? `(${count})` : null}

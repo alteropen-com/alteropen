@@ -1,11 +1,11 @@
-import { alternatives, apps } from "@/.velite"
+import { alternatives } from "@/.velite"
 import { badgeVariants } from "@/components/ui/badge"
 import { getAllTags, sortTagsByCount } from "@/lib/helper"
 import Link from "next/link"
 import Tags from "./tags"
 
 export default function NavLeft({ slug }: { slug: string }) {
-  const { tasks } = getAllTags([...apps, ...alternatives])
+  const { tasks } = getAllTags(alternatives)
   const sortedTasks = sortTagsByCount(tasks)
 
   return (
@@ -15,6 +15,7 @@ export default function NavLeft({ slug }: { slug: string }) {
           Filter by:
         </p>
         <Link
+          rel="nofollow"
           href="/app"
           className={badgeVariants({
             variant: slug === "all" ? "default" : "secondary",

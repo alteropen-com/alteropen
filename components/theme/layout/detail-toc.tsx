@@ -1,5 +1,5 @@
 "use client"
-import { App } from "#site/content"
+import { Alternative } from "#site/content"
 import clsx, { ClassValue } from "clsx"
 import Link from "next/link"
 // https://github.com/BinarySenseiii/personal-website/blob/49b36ed9e02338c1d2fde0dd63d2bf11fa63e35c/src/components/post/post-toc.tsx
@@ -7,8 +7,8 @@ import Link from "next/link"
 const TOC_STYLES: ClassValue =
   "el-focus-styles rounded-sm hover:underline text-muted-foreground hover:text-ring"
 
-const DetailToc = ({ toc }: { toc: App["toc"] }) => {
-  const renderTocItems = (items: App["toc"]) => {
+const DetailToc = ({ toc }: { toc: Alternative["toc"] }) => {
+  const renderTocItems = (items: Alternative["toc"]) => {
     return (
       <ul role="list" className="space-y-2 list-none mt-2 ps-4">
         {items.map((item) => (
@@ -32,6 +32,7 @@ const DetailToc = ({ toc }: { toc: App["toc"] }) => {
       {toc.map((tocItem) => (
         <li key={tocItem.url} className="text-base" role="listitem">
           <Link
+            rel="nofollow"
             href={tocItem.url}
             className={clsx(
               TOC_STYLES,

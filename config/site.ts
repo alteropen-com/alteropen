@@ -1,12 +1,12 @@
 export const siteConfig = {
   name: "AlterOpen",
-  title: "ALTERnative OPENSource",
+  title: "Alternative OpenSource",
   url: "https://alteropen.com",
   description: "Best Alternative Apps Open List",
   image:
-    "https://p140.p3.n0.cdn.zight.com/items/mXuWlkmE/deeb4d10-2741-462c-9d88-a46e7eeda835.jpg",
+    "https://iili.io/d0HlQ5v.jpg",
   links: {
-    twitter: "https://twitter.com/",
+    twitter: "https://twitter.com/alteropen",
     github: "https://github.com/alteropen-com/alteropen",
   },
   author: "Steven Alter",

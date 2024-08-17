@@ -48,7 +48,7 @@ export const isValidDate = (dateString: string | number) => {
   return !isNaN(date.getTime())
 }
 
-export const formatDateAgo = (dateString: string | number) => {
+export const formatDateAgo = (dateString: string | number, useLast= false) => {
   const date = new Date(dateString)
   const now = new Date()
   const diffTime = date.getTime() - now.getTime() // Calculate the difference in time
@@ -69,6 +69,19 @@ export const formatDateAgo = (dateString: string | number) => {
       return `in ${diffYears} year${diffYears > 1 ? "s" : ""}`
     }
   } else { // Past dates
+    if (useLast) {
+      if (diffDays === 1) {
+        return "last day"
+      } else if (diffDays < 30) {
+        return `last ${diffDays} days`
+      } else if (diffDays < 365) {
+        const diffMonths = Math.ceil(diffDays / 30)
+        return `last ${diffMonths} month${diffMonths > 1 ? "s" : ""}`
+      } else {
+        const diffYears = Math.ceil(diffDays / 365)
+        return `last ${diffYears} year${diffYears > 1 ? "s" : ""}`
+      }
+    }
     if (diffDays === 1) {
       return "1 day ago"
     } else if (diffDays < 30) {

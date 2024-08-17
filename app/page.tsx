@@ -1,5 +1,4 @@
-import { alternatives, apps } from "#site/content"
-import { badgeVariants } from "@/components/ui/badge"
+import { alternatives } from "#site/content"
 import { Button } from "@/components/ui/button"
 import { siteConfig } from "@/config/site"
 import { getAllTags, sortTagsByCount } from "@/lib/helper"
@@ -8,7 +7,8 @@ import { Metadata } from "next"
 import Link from "next/link"
 import { FaGithub } from "react-icons/fa6"
 
-const title = "Alteropen is an open source Appsumo alternative."
+const title =
+  "Alternative to popular SaaS products (Free/ OpenSource or with Great Deals) build by Indie, suggest by Indie"
 const description = `Top Alternatives, Similar App (Free/ OpenSource or Deal) List in 2024 with Lifetime Deal. Review. HowTo. Pricing.`
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -44,8 +44,104 @@ export async function generateMetadata(): Promise<Metadata> {
   }
 }
 
+const popularAlternatives = [
+  {
+    title: "Google Analytics Alternatives",
+    href: "/alternative/google-analytics",
+  },
+  {
+    title: "Firebase Alternatives",
+    href: "/alternative/firebase",
+  },
+  {
+    title: "Auth0 Alternatives",
+    href: "/alternative/auth0",
+  },
+
+  {
+    title: "Notion Alternatives",
+    href: "/alternative/notion",
+  },
+  {
+    title: "Salesforce Alternatives",
+    href: "/alternative/salesforce",
+  },
+  {
+    title: "Retool Alternatives",
+    href: "/alternative/retool",
+  },
+  {
+    title: "Trello Alternatives",
+    href: "/alternative/trello",
+  },
+  {
+    title: "Teamviewer Alternatives",
+    href: "/alternative/teamviewer",
+  },
+  {
+    title: "Webflow Alternatives",
+    href: "/alternative/webflow",
+  },
+  {
+    title: "Bitly Alternatives",
+    href: "/alternative/bitly",
+  },
+  {
+    title: "Mailchimp Alternatives",
+    href: "/alternative/mailchimp",
+  },
+  {
+    title: "Shopify Alternatives",
+    href: "/alternative/shopify",
+  },
+  {
+    title: "Datadog Alternatives",
+    href: "/alternative/datadog",
+  },
+  {
+    title: "Zendesk Alternatives",
+    href: "/alternative/zendesk",
+  },
+  {
+    title: "Zapier Alternatives",
+    href: "/alternative/zapier",
+  },
+  {
+    title: "Airtable Alternatives",
+    href: "/alternative/airtable",
+  },
+  {
+    title: "Render Alternatives",
+    href: "/alternative/render-com",
+  },
+  {
+    title: "LucidChart Alternatives",
+    href: "/alternative/lucidchart",
+  },
+  {
+    title: "Power BI Alternatives",
+    href: "/alternative/power-bi",
+  },
+  {
+    title: "Make.com Alternatives",
+    href: "/alternative/make-com",
+  },
+  {
+    title: "Slack Alternatives",
+    href: "/alternative/slack",
+  },
+  {
+    title: "Heroku Alternatives",
+    href: "/alternative/heroku",
+  },
+  {
+    title: "Photoshop Alternatives",
+    href: "/alternative/photoshop",
+  },
+]
+
 export default function Page() {
-  const { tasks } = getAllTags([...apps, ...alternatives])
+  const { tasks } = getAllTags(alternatives)
   const sortedTasks = sortTagsByCount(tasks)
 
   return (
@@ -59,19 +155,24 @@ export default function Page() {
                   Build by Indie
                 </span>
                 <span className="text-primary bg-clip-text bg-gradient-to-br  block md:ml-0">
-                  Sell to Indie
+                  Suggest by Indie
                 </span>
               </p>
               <h1 className="pt-2 text-foreground my-3 text-sm sm:mt-5 lg:mb-0 sm:text-base lg:text-lg">
-                Alteropen is an open source Appsumo alternative.
+                <span className="text-xl sm:text-2xl">
+                  Alternative to popular SaaS products
+                </span>
+                <br />
+                <span className="italic">
+                  (Free/ OpenSource or with Great Deals)
+                </span>
               </h1>
             </div>
             <div className="flex flex-wrap justify-center items-center gap-2">
-              <Button asChild>
-                <Link href="/tasks">All Tasks</Link>
-              </Button>
               <Button variant="outline" asChild>
-                <Link href="?isSearch=true">Search Alternative </Link>
+                <Link href="?isSearch=true" rel="nofollow">
+                  Search Alternative
+                </Link>
               </Button>
               <Button variant="outline" size="icon" asChild>
                 <Link
@@ -85,20 +186,32 @@ export default function Page() {
             </div>
           </div>
         </div>
-
         <div className="flex-1 flex-row mx-0 sm:mx-5 my-5">
-          {sortedTasks?.map((t) => (
-            <Link
-              key={t}
-              className={badgeVariants({
-                variant: "secondary",
-                className:
-                  "no-underline rounded-md mx-2 my-2 sm:mx-3 sm:my-3 px-1 py-2 text-primary capitalize",
-              })}
-              href={`/tasks/${encodeTitleToSlug(t)}`}
+          <h2 className="text-xl mx-2 sm:mx-3 my-2 sm:my-3 font-bold">
+            Popular Alternatives
+          </h2>
+          {popularAlternatives.map((alternative) => (
+            <Button
+              asChild
+              variant="outline"
+              key={alternative.href}
+              className="mx-2 my-2"
             >
-              {t} {tasks[t] ? `(${tasks[t]})` : null}
-            </Link>
+              <Link href={`${alternative.href}`}>{alternative.title}</Link>
+            </Button>
+          ))}
+        </div>
+        <hr />
+        <div className="flex-1 flex-row mx-0 sm:mx-5 my-5">
+          <Button asChild variant="default" className="mx-2 my-2">
+            <Link href="/tasks">All Tasks</Link>
+          </Button>
+          {sortedTasks?.map((t) => (
+            <Button key={t} asChild variant="secondary" className="mx-2 my-2">
+              <Link href={`/tasks/${encodeTitleToSlug(t)}`}>
+                {t} {tasks[t] ? `(${tasks[t]})` : null}
+              </Link>
+            </Button>
           ))}
         </div>
       </div>

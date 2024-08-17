@@ -46,7 +46,7 @@ export default function RootLayout({
             </div>
           </QueryProvider>
         </ThemeProvider>
-        <footer className="px-4 pb-4 pt-10 flex flex-col justify-center items-center space-y-2">
+        <footer className="px-4 pb-8 pt-10 flex flex-col justify-center items-center space-y-2">
           <div>
             <a
               href="https://dashboard.simpleanalytics.com/alteropen.com?utm_source=alteropen.com&utm_content=badge&referral=bovop"
@@ -73,17 +73,16 @@ export default function RootLayout({
             By using this website, you agree to our{" "}
             <a href="/term" className="text-blue-500 no-underline">
               Terms
-            </a>
-            ,{" "}
-            <a href="/refund" className="text-blue-500 no-underline">
-              Refund
             </a>{" "}
+            {/* <a href="/refund" className="text-blue-500 no-underline">
+              Refund
+            </a>{" "} */}
             and{" "}
             <a href="/privacy" className="text-blue-500 no-underline">
               Privacy
             </a>
           </div>
-          <div className="text-center">
+          <div className="text-center text-[12px]">
             This website contains affiliate links. If you make a purchase
             through these links, we may earn a commission at no extra cost to
             you.

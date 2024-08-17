@@ -1,22 +1,15 @@
-import { alternatives, apps } from "#site/content"
-import { App } from "@/.velite"
-import { Badge } from "@/components/ui/badge"
+import { Alternative, alternatives } from "#site/content"
 import { Card } from "@/components/ui/card"
 import { siteConfig } from "@/config/site"
 import Link from "next/link"
 import { RxOpenInNewWindow } from "react-icons/rx"
+import BadgeDeals from "./badge-deal"
+import BadgeOpenSource from "./badge-opensource"
 import Properties from "./properties-list"
 import VisitNumber from "./visit-number"
 
-export default function ItemAlternative({ post }: { post: App }) {
-  const alternativeApp = apps
-    .filter((app) => app.alternative?.find((item) => item.id === post.id))
-    .map((app) => ({
-      ...app,
-      url: `/app/${app.slug}`,
-    }))
-
-  const alternativeAlternative = alternatives
+export default function ItemAlternative({ post }: { post: Alternative }) {
+  const alternativeApp = alternatives
     .filter((app) => app.alternative?.find((item) => item.id === post.id))
     .map((app) => ({
       ...app,
@@ -24,12 +17,7 @@ export default function ItemAlternative({ post }: { post: App }) {
     }))
 
   const postAlternative = post.alternative
-    ?.filter(
-      (item) =>
-        ![...alternativeApp, ...alternativeApp]?.find(
-          (app) => item.id === app.id
-        )
-    )
+    ?.filter((item) => !alternativeApp?.find((app) => item.id === app.id))
     .map((item) => {
       if (item.id) {
         const alter = alternatives.find((app) => app.id === item.id)
@@ -38,23 +26,23 @@ export default function ItemAlternative({ post }: { post: App }) {
             ...alter,
             url: `/alternative/${alter.slug}`,
           }
-        const app = apps.find((app) => app.id === item.id)
-        if (app)
-          return {
-            ...app,
-            url: `/app/${app.slug}`,
-          }
-        return { ...item }
+        return { ...item, recommend: 0 }
       }
-      return { ...item }
+      return { ...item, recommend: 0 }
     })
 
   // Remove duplicates by id
   const alternative = [
     ...(postAlternative || []),
-    ...[...alternativeApp, ...alternativeAlternative].sort((a, b) => {
-      const sortA = a.visit && a.visit?.length > 0 ? a.visit[0] : 0
-      const sortB = b.visit && b.visit?.length > 0 ? b.visit[0] : 0
+    ...alternativeApp.sort((a, b) => {
+      // First, compare by `recommend`
+      if (a.recommend !== b.recommend) {
+        return b.recommend - a.recommend
+      }
+
+      // If `recommend` is equal, compare by `visit`
+      const sortA = a.visit && a.visit.length > 0 ? a.visit[0] : 0
+      const sortB = b.visit && b.visit.length > 0 ? b.visit[0] : 0
 
       return sortB - sortA
     }),
@@ -69,19 +57,23 @@ export default function ItemAlternative({ post }: { post: App }) {
         {alternative?.map((item, i) => {
           if (item.id) {
             let app = alternatives.find((app) => app.id === item.id)
-            if (!app) app = apps.find((app) => app.id === item.id)
             if (!app) return ""
             return (
               <Link
                 key={item.id}
                 className="no-underline"
                 href={item.url || ""}
-                rel={item.published === false ? "nofollow" : ""}
+                rel="nofollow"
               >
-                <Card className="px-6 pt-6 pb-2 rounded-lg border border-primary/60 hover:bg-primary/10">
-                  <h4 className="text-primary text-xl font-semibold mb-2 flex items-center">
+                <Card className="relative px-6 pt-6 pb-2 hover:bg-primary/10">
+                  <h3 className="text-primary text-xl font-semibold mb-2 flex items-center capitalize">
                     {item.name}
-                  </h4>
+                  </h3>
+                  {item.recommend > 0 && (
+                    <div className="absolute top-[28px] right-[-40px] bg-primary text-primary-foreground text-white text-[9px] font-bold px-2 py-1 transform rotate-[20deg] -translate-x-1/2 -translate-y-1/2 rounded-xl">
+                      Recommended
+                    </div>
+                  )}
                   {item.image?.url && (
                     <img
                       loading="lazy"
@@ -95,22 +87,14 @@ export default function ItemAlternative({ post }: { post: App }) {
                       }}
                     />
                   )}
-                  {item.deals && item.deals.length > 0 && (
-                    <div className="relative">
-                      <div className="absolute top-[-42px] right-0">
-                        <Badge variant="default">{item.deals[0].price}</Badge>
-                      </div>
-                    </div>
-                  )}
                   <p className="h-[4.5rem] line-clamp-3">{app.title}</p>
-                  <div className="mt-2 text-sm">
-                    <VisitNumber app={app} />
-                    <p className="text-muted-foreground">
-                      {app.pricing?.join(" | ")}
-                    </p>
+                  <div className="mt-2 text-sm flex space-x-2 items-center justify-between">
+                    <VisitNumber app={app} text="Visits" />
+                    <BadgeOpenSource app={app} />
+                    <BadgeDeals app={app} />
                   </div>
                   <div className="mt-2 text-sm">
-                    <Properties properties={app.properties} showLinks={false} />
+                    <Properties properties={app.properties} />
                   </div>
                 </Card>
               </Link>
@@ -120,13 +104,13 @@ export default function ItemAlternative({ post }: { post: App }) {
           if (item.name)
             return (
               <Card key={item.name} className="p-6 rounded-lg">
-                <h4 className="text-xl font-semibold mb-2">
+                <h4 className="text-xl font-semibold mb-2 capitalize">
                   {item.url ? (
                     <a
                       className="text-primary no-underline hover:underline flex items-center"
                       href={item.url + `?ref=${siteConfig.ref}`}
                       target="_blank"
-                      rel="noopener noreferrer"
+                      rel="nofollow"
                     >
                       {item.name} <RxOpenInNewWindow className="ml-1" />
                     </a>
@@ -149,7 +133,7 @@ export default function ItemAlternative({ post }: { post: App }) {
                 )}
                 <p className="">{item.description}</p>
                 <div className="mt-2 text-sm">
-                  <Properties properties={item?.properties} showLinks={false} />
+                  <Properties properties={item?.properties} />
                 </div>
               </Card>
             )

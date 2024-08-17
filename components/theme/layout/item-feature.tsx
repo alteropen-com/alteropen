@@ -1,7 +1,7 @@
-import { App } from "@/.velite"
+import { Alternative } from "@/.velite"
 import FeatureItem from "./feature-item"
 
-export default function ItemFeature({ post }: { post: App }) {
+export default function ItemFeature({ post }: { post: Alternative }) {
   if (!post.features) return null
   return (
     <>

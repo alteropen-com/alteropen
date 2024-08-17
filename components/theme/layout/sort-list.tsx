@@ -1,4 +1,4 @@
-import { alternatives, apps } from "@/.velite"
+import { alternatives } from "@/.velite"
 import { SearchParams } from "@/app/tasks/[slug]/page"
 import { Button } from "@/components/ui/button"
 import { ScrollArea } from "@/components/ui/scroll-area"
@@ -16,7 +16,7 @@ export default function SortList({
   slug: string
   searchParams: SearchParams
 }) {
-  const { tasks } = getAllTags([...apps, ...alternatives])
+  const { tasks } = getAllTags(alternatives)
   const sortedTasks = sortTagsByCount(tasks)
 
   const { sortBy, onlyDeal, openSource, free } = searchParams

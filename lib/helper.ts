@@ -1,6 +1,6 @@
-import { App } from "@/.velite"
+import { Alternative } from "@/.velite"
 
-export function getAllTags(posts: Array<App>) {
+export function getAllTags(posts: Array<Alternative>) {
   const tasks: Record<string, number> = {}
   posts
     .filter((post) => post.published)
