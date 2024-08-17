@@ -43,24 +43,31 @@ export default function StickyNav({ post }: { post: Alternative }) {
       const pricingElement = document.getElementById("pricing")
       const similarElement = document.getElementById("similar")
 
-      setHasSections({
+      const sectionsExist = {
         reviewFeatures: !!reviewFeaturesElement,
         pricing: !!pricingElement,
         similar: !!similarElement,
-      })
+      }
+
+      setHasSections(sectionsExist)
 
       setShowArrow(
-        !!(reviewFeaturesElement && pricingElement && similarElement)
+        sectionsExist.reviewFeatures &&
+          sectionsExist.pricing &&
+          sectionsExist.similar
       )
+
+      // If all section is missing, try again
+      if (
+        !sectionsExist.reviewFeatures &&
+        !sectionsExist.pricing &&
+        !sectionsExist.similar
+      ) {
+        setTimeout(checkElements, 2000)
+      }
     }
 
-    // Check elements after the page has fully loaded
-    if (document.readyState === "complete") {
-      checkElements()
-    } else {
-      window.addEventListener("load", checkElements)
-      return () => window.removeEventListener("load", checkElements)
-    }
+    checkElements()
   }, [])
 
   useEffect(() => {
