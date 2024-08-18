@@ -201,6 +201,12 @@ export default function Page() {
             </Button>
           ))}
         </div>
+        <hr />
+      </div>
+      <div className="flex justify-center mt-20 space-x-2">
+        <a href="https://dokeyai.com/" title="Dokey AI Tools Directory">
+          DokeyAI
+        </a>
       </div>
     </div>
   )
