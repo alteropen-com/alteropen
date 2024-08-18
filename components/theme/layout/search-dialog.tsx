@@ -1,11 +1,13 @@
 "use client"
 
+import useAiSearch from "@/components/api/hook/useAiSearch"
 import useSearch, { ItemSearch } from "@/components/api/hook/useSearch"
 import {
   CommandDialog,
   CommandGroup,
   CommandItem,
   CommandList,
+  CommandSeparator,
 } from "@/components/ui/command"
 import { Input } from "@/components/ui/input"
 import { cn, formatNumber } from "@/lib/utils"
@@ -55,7 +57,10 @@ function SearchTrigger({ setOpen }: { setOpen: (open: boolean) => void }) {
     >
       <div className="flex items-center space-x-2 text-foreground-muted">
         <Search size={18} strokeWidth={2} />
-        <p className="flex text-sm pr-2 truncate">Search with AI...</p>
+        <p className="flex items-center text-sm pr-2 truncate">
+          Search <span className="hidden sm:inline mx-1">Alternative</span> with
+          AI...
+        </p>
       </div>
       <div className="hidden md:flex items-center space-x-1">
         <div
@@ -70,6 +75,19 @@ function SearchTrigger({ setOpen }: { setOpen: (open: boolean) => void }) {
   )
 }
 
+const AI_MAX_ITEM = 5
+type AiItemProps = {
+  document_id: number
+  content: string
+}
+type ItemProps = {
+  id: string
+  name: string
+  slug: string
+  visit: number
+  content: string
+}
+
 function SearchForm({
   isOpen,
   setOpen,
@@ -77,17 +95,55 @@ function SearchForm({
   isOpen: boolean
   setOpen: (open: boolean) => void
 }) {
+  const router = useRouter()
   const [shouldFetch, setShouldFetch] = useState(false)
   const { isFetching, data: data } = useSearch(shouldFetch)
 
   const [inputValue, setInputValue] = useState("")
+  const [typing, setTyping] = useState(false)
+  const [debouncedValue, setDebouncedValue] = useState(inputValue)
   const [foundItems, setFoundItems] = useState<ItemSearch[]>([])
+
+  const [shouldFetchAI, setShouldFetchAI] = useState(false)
+  const { isFetching: isFetchingAI, data: dataAI } = useAiSearch(
+    shouldFetchAI,
+    debouncedValue
+  )
+
+  const AIList = Array.isArray(dataAI?.result)
+    ? dataAI.result
+        .map((item: AiItemProps) => {
+          const findItem = data?.find((i) => i.id === item.document_id)
+
+          if (!findItem) return item
+          return { ...findItem, content: item.content }
+        })
+        .sort((a: any, b: any) => b.visit - a.visit)
+    : null
 
   useEffect(() => {
     if (isOpen) {
       setShouldFetch(true)
     }
   }, [isOpen])
+
+  useEffect(() => {
+    setTyping(true)
+    const handler = setTimeout(() => {
+      setDebouncedValue(inputValue)
+      setTyping(false)
+    }, 1000)
+
+    return () => {
+      clearTimeout(handler)
+    }
+  }, [inputValue])
+
+  useEffect(() => {
+    if (debouncedValue.length > 0 && foundItems.length < AI_MAX_ITEM) {
+      setShouldFetchAI(true)
+    }
+  }, [debouncedValue, foundItems])
 
   const handleOnChange = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value.toLowerCase()
@@ -96,7 +152,7 @@ function SearchForm({
       const foundItems = data.filter((item) =>
         item.name.toLowerCase().includes(value.toLowerCase())
       ) as ItemSearch[]
-      setFoundItems(foundItems.slice(0, 100))
+      setFoundItems(foundItems.sort((a, b) => b.visit - a.visit).slice(0, 100))
     } else {
       setFoundItems([])
     }
@@ -133,7 +189,7 @@ function SearchForm({
         )}
         {inputValue.length > 0 && foundItems.length === 0 && (
           <CommandItem key="no-results">
-            <span className="px-4">No results found</span>
+            <span className="px-2">No exact results found</span>
           </CommandItem>
         )}
 
@@ -152,6 +208,52 @@ function SearchForm({
               runCommand={runCommand}
             />
           </>
+        )}
+        <CommandSeparator className="mx-0 my-0" />
+        {inputValue.length > 0 && foundItems.length < AI_MAX_ITEM && (
+          <CommandGroup heading="AI Suggestions">
+            {(typing || isFetchingAI) && (
+              <CommandItem key="loading">
+                <span className="text-lg">Thinking...</span>
+              </CommandItem>
+            )}
+            {!isFetchingAI && !typing && AIList?.length === 0 && (
+              <CommandItem key="no-results">
+                <span className="px-2">AI has no suggestion</span>
+              </CommandItem>
+            )}
+            {!isFetchingAI &&
+              !typing &&
+              AIList?.map((item: ItemProps) => {
+                return (
+                  <CommandItem
+                    key={item.id}
+                    value={item.id}
+                    onSelect={() => {
+                      runCommand(() => {
+                        router.push(item.slug)
+                      })
+                    }}
+                  >
+                    <div className="flex flex-col">
+                      <p className="w-full flex justify-between items-center">
+                        <span>
+                          {"🔁"} {item.name}
+                        </span>
+                        {item.visit > 0 && (
+                          <span className="p-1 text-xs text-muted-foreground">
+                            {formatNumber(item.visit)}
+                          </span>
+                        )}
+                      </p>
+                      <p className="text-sm text-muted-foreground line-clamp-2">
+                        {item.content}
+                      </p>
+                    </div>
+                  </CommandItem>
+                )
+              })}
+          </CommandGroup>
         )}
 
         {inputValue.length === 0 && (
