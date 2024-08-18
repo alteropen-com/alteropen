@@ -1,6 +1,6 @@
 "use client"
 
-import useSearch from "@/components/api/hook/useSearch"
+import useSearch, { ItemSearch } from "@/components/api/hook/useSearch"
 import {
   CommandDialog,
   CommandGroup,
@@ -12,13 +12,6 @@ import { cn, formatNumber } from "@/lib/utils"
 import { Command as CommandIcon, Search } from "lucide-react"
 import { useRouter } from "next/navigation"
 import { ChangeEvent, useCallback, useEffect, useState } from "react"
-
-type SearchResult = {
-  id: number
-  name: string
-  slug: string
-  visit: number
-}
 
 export function SearchDialog() {
   const [open, setOpen] = useState(false)
@@ -88,7 +81,7 @@ function SearchForm({
   const { isFetching, data: data } = useSearch(shouldFetch)
 
   const [inputValue, setInputValue] = useState("")
-  const [foundItems, setFoundItems] = useState<SearchResult[]>([])
+  const [foundItems, setFoundItems] = useState<ItemSearch[]>([])
 
   useEffect(() => {
     if (isOpen) {
@@ -102,7 +95,7 @@ function SearchForm({
     if (data && value) {
       const foundItems = data.filter((item) =>
         item.name.toLowerCase().includes(value.toLowerCase())
-      ) as SearchResult[]
+      ) as ItemSearch[]
       setFoundItems(foundItems.slice(0, 100))
     } else {
       setFoundItems([])
@@ -180,7 +173,7 @@ const ItemView = ({
   slugUrl,
   runCommand,
 }: {
-  data: SearchResult[] | undefined
+  data: ItemSearch[] | undefined
   type: "Apps" | "Tasks" | "Alternatives"
   slugUrl: string
   runCommand: (command: () => unknown) => void

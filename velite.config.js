@@ -4,7 +4,7 @@ import path from "path"
 import { defineConfig, s } from "velite"
 import { FEATURES, PRICING, TASKS } from "./config/selection"
 import { getAllTags, sortTagsByCount } from "./lib/helper"
-import { encodeTitleToSlug } from "./lib/utils"
+import { encodeTitleToSlug, stringToUniqueNumber } from "./lib/utils"
 
 const timestamp = () =>
   s
@@ -117,8 +117,6 @@ export default defineConfig({
     },
   },
   complete: async (data, ctx) => {
-    const filePath = path.join(ctx.config.output.assets, "search-index.json")
-
     const { alternatives } = data
 
     const { tasks } = getAllTags(alternatives)
@@ -136,22 +134,44 @@ export default defineConfig({
             slug: `/alternative/${item.slug}`,
             name: item.name,
             visit: item.visit[0],
+            title: item.title,
+            description: item.description,
+            lastModified: item.lastModified,
           }
         }),
-      ...sortedTasks.map((item, index) => {
+      ...sortedTasks.map((item) => {
         return {
-          id: index,
+          id: stringToUniqueNumber(item),
           slug: `/tasks/${encodeTitleToSlug(item)}`,
           name: item,
           visit: 0,
         }
       }),
     ]
-    const fileContent = JSON.stringify(content, null, 2)
 
     try {
-      await writeFile(filePath, fileContent)
-      console.log("File created successfully at:", filePath)
+      // csreate AI index
+      const aiContent = JSON.stringify(content, null, 2)
+      const aiPath = path.join(ctx.config.output.assets, "ai-index.json")
+      await writeFile(aiPath, aiContent)
+      console.log("File created successfully at:", aiPath)
+
+      // create search index, don't need title, description, lastModified
+      const contentSearch = content.map((item) => {
+        return {
+          id: item.id,
+          slug: item.slug,
+          name: item.name,
+          visit: item.visit,
+        }
+      })
+      const searchContent = JSON.stringify(contentSearch, null, 2)
+      const searchPath = path.join(
+        ctx.config.output.assets,
+        "search-index.json"
+      )
+      await writeFile(searchPath, searchContent)
+      console.log("File created successfully at:", searchPath)
     } catch (error) {
       console.error("Error creating file:", error)
     }
