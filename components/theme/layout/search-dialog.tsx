@@ -111,15 +111,14 @@ function SearchForm({
   )
 
   const AIList = Array.isArray(dataAI?.result)
-    ? dataAI.result
-        .map((item: AiItemProps) => {
-          const findItem = data?.find((i) => i.id === item.document_id)
+    ? dataAI.result.map((item: AiItemProps) => {
+        const findItem = data?.find((i) => i.id === item.document_id)
 
-          if (!findItem) return item
-          return { ...findItem, content: item.content }
-        })
-        .sort((a: any, b: any) => b.visit - a.visit)
-    : null
+        if (!findItem) return item
+        return { ...findItem, content: item.content }
+      })
+    : // .sort((a: any, b: any) => b.visit - a.visit)
+      null
 
   useEffect(() => {
     if (isOpen) {
