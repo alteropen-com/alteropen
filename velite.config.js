@@ -127,7 +127,7 @@ export default defineConfig({
     const content = [
       ...alternatives
         .filter((app) => app.published)
-        .sort((a, b) => (a.id > b.id ? -1 : 1))
+        .sort((a, b) => new Date(b.lastModified) - new Date(a.lastModified))
         .map((item) => {
           return {
             id: item.id,

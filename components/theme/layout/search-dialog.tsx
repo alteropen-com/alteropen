@@ -1,11 +1,13 @@
 "use client"
 
+import useAiSearch from "@/components/api/hook/useAiSearch"
 import useSearch, { ItemSearch } from "@/components/api/hook/useSearch"
 import {
   CommandDialog,
   CommandGroup,
   CommandItem,
   CommandList,
+  CommandSeparator,
 } from "@/components/ui/command"
 import { Input } from "@/components/ui/input"
 import { cn, formatNumber } from "@/lib/utils"
@@ -70,6 +72,8 @@ function SearchTrigger({ setOpen }: { setOpen: (open: boolean) => void }) {
   )
 }
 
+const AI_MAX_ITEM = 5
+
 function SearchForm({
   isOpen,
   setOpen,
@@ -77,17 +81,46 @@ function SearchForm({
   isOpen: boolean
   setOpen: (open: boolean) => void
 }) {
+  const router = useRouter()
   const [shouldFetch, setShouldFetch] = useState(false)
   const { isFetching, data: data } = useSearch(shouldFetch)
 
   const [inputValue, setInputValue] = useState("")
+  const [typing, setTyping] = useState(false)
+  const [debouncedValue, setDebouncedValue] = useState(inputValue)
   const [foundItems, setFoundItems] = useState<ItemSearch[]>([])
+
+  const [shouldFetchAI, setShouldFetchAI] = useState(false)
+  const { isFetching: isFetchingAI, data: dataAI } = useAiSearch(
+    shouldFetchAI,
+    debouncedValue
+  )
+
+  const AIList = Array.isArray(dataAI?.result) ? dataAI.result : null
 
   useEffect(() => {
     if (isOpen) {
       setShouldFetch(true)
     }
   }, [isOpen])
+
+  useEffect(() => {
+    setTyping(true)
+    const handler = setTimeout(() => {
+      setDebouncedValue(inputValue)
+      setTyping(false)
+    }, 1000)
+
+    return () => {
+      clearTimeout(handler)
+    }
+  }, [inputValue])
+
+  useEffect(() => {
+    if (debouncedValue.length > 0 && foundItems.length < AI_MAX_ITEM) {
+      setShouldFetchAI(true)
+    }
+  }, [debouncedValue, foundItems])
 
   const handleOnChange = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value.toLowerCase()
@@ -133,7 +166,7 @@ function SearchForm({
         )}
         {inputValue.length > 0 && foundItems.length === 0 && (
           <CommandItem key="no-results">
-            <span className="px-4">No results found</span>
+            <span className="px-2">No exact results found</span>
           </CommandItem>
         )}
 
@@ -152,6 +185,57 @@ function SearchForm({
               runCommand={runCommand}
             />
           </>
+        )}
+        <CommandSeparator className="mx-0 my-0" />
+        {inputValue.length > 0 && foundItems.length < AI_MAX_ITEM && (
+          <CommandGroup heading="AI Suggestions">
+            {(typing || isFetchingAI) && (
+              <CommandItem key="loading">
+                <span className="text-lg">Thinking...</span>
+              </CommandItem>
+            )}
+            {!isFetchingAI && !typing && AIList?.length === 0 && (
+              <CommandItem key="no-results">
+                <span className="px-2">AI has no suggestion</span>
+              </CommandItem>
+            )}
+            {!isFetchingAI &&
+              !typing &&
+              AIList?.map((item: { document_id: number; content: string }) => {
+                const id = item.document_id
+                const findItem = data?.find((item) => item.id === id)
+
+                if (!findItem) return null
+
+                return (
+                  <CommandItem
+                    key={findItem.id}
+                    value={findItem.name}
+                    onSelect={() => {
+                      runCommand(() => {
+                        router.push(findItem.slug)
+                      })
+                    }}
+                  >
+                    <div className="flex flex-col">
+                      <p className="w-full flex justify-between items-center">
+                        <span>
+                          {"🔁"} {findItem.name}
+                        </span>
+                        {findItem.visit > 0 && (
+                          <span className="p-1 text-xs text-muted-foreground">
+                            {formatNumber(findItem.visit)}
+                          </span>
+                        )}
+                      </p>
+                      <p className="text-sm text-muted-foreground line-clamp-2">
+                        {item.content}
+                      </p>
+                    </div>
+                  </CommandItem>
+                )
+              })}
+          </CommandGroup>
         )}
 
         {inputValue.length === 0 && (
