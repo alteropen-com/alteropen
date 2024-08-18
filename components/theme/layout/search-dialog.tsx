@@ -57,7 +57,10 @@ function SearchTrigger({ setOpen }: { setOpen: (open: boolean) => void }) {
     >
       <div className="flex items-center space-x-2 text-foreground-muted">
         <Search size={18} strokeWidth={2} />
-        <p className="flex text-sm pr-2 truncate">Search with AI...</p>
+        <p className="flex items-center text-sm pr-2 truncate">
+          Search <span className="hidden sm:inline mx-1">Alternative</span> with
+          AI...
+        </p>
       </div>
       <div className="hidden md:flex items-center space-x-1">
         <div
@@ -73,6 +76,17 @@ function SearchTrigger({ setOpen }: { setOpen: (open: boolean) => void }) {
 }
 
 const AI_MAX_ITEM = 5
+type AiItemProps = {
+  document_id: number
+  content: string
+}
+type ItemProps = {
+  id: string
+  name: string
+  slug: string
+  visit: number
+  content: string
+}
 
 function SearchForm({
   isOpen,
@@ -96,7 +110,16 @@ function SearchForm({
     debouncedValue
   )
 
-  const AIList = Array.isArray(dataAI?.result) ? dataAI.result : null
+  const AIList = Array.isArray(dataAI?.result)
+    ? dataAI.result
+        .map((item: AiItemProps) => {
+          const findItem = data?.find((i) => i.id === item.document_id)
+
+          if (!findItem) return item
+          return { ...findItem, content: item.content }
+        })
+        .sort((a: any, b: any) => b.visit - a.visit)
+    : null
 
   useEffect(() => {
     if (isOpen) {
@@ -129,7 +152,7 @@ function SearchForm({
       const foundItems = data.filter((item) =>
         item.name.toLowerCase().includes(value.toLowerCase())
       ) as ItemSearch[]
-      setFoundItems(foundItems.slice(0, 100))
+      setFoundItems(foundItems.sort((a, b) => b.visit - a.visit).slice(0, 100))
     } else {
       setFoundItems([])
     }
@@ -201,30 +224,25 @@ function SearchForm({
             )}
             {!isFetchingAI &&
               !typing &&
-              AIList?.map((item: { document_id: number; content: string }) => {
-                const id = item.document_id
-                const findItem = data?.find((item) => item.id === id)
-
-                if (!findItem) return null
-
+              AIList?.map((item: ItemProps) => {
                 return (
                   <CommandItem
-                    key={findItem.id}
-                    value={findItem.name}
+                    key={item.id}
+                    value={item.id}
                     onSelect={() => {
                       runCommand(() => {
-                        router.push(findItem.slug)
+                        router.push(item.slug)
                       })
                     }}
                   >
                     <div className="flex flex-col">
                       <p className="w-full flex justify-between items-center">
                         <span>
-                          {"🔁"} {findItem.name}
+                          {"🔁"} {item.name}
                         </span>
-                        {findItem.visit > 0 && (
+                        {item.visit > 0 && (
                           <span className="p-1 text-xs text-muted-foreground">
-                            {formatNumber(findItem.visit)}
+                            {formatNumber(item.visit)}
                           </span>
                         )}
                       </p>
