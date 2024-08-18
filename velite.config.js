@@ -132,14 +132,18 @@ export default defineConfig({
         .sort((a, b) => (a.id > b.id ? -1 : 1))
         .map((item) => {
           return {
+            id: item.id,
             slug: `/alternative/${item.slug}`,
             name: item.name,
+            visit: item.visit[0],
           }
         }),
-      ...sortedTasks.map((item) => {
+      ...sortedTasks.map((item, index) => {
         return {
+          id: index,
           slug: `/tasks/${encodeTitleToSlug(item)}`,
           name: item,
+          visit: 0,
         }
       }),
     ]

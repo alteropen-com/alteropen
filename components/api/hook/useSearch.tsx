@@ -1,8 +1,10 @@
 import { useQuery } from "@tanstack/react-query"
 
 type Item = {
+  id: number
   slug: string
   name: string
+  visit: number
 }
 
 export default function useSearch(shouldFetch: boolean) {
@@ -15,9 +17,11 @@ export default function useSearch(shouldFetch: boolean) {
       if (!data) {
         return []
       }
-      return data.map(({ slug, name }) => ({
+      return data.map(({ id, slug, name, visit }) => ({
+        id,
         slug,
         name,
+        visit,
       }))
     },
     enabled: shouldFetch,
