@@ -8,7 +8,7 @@ import Link, { LinkProps } from "next/link"
 import { useRouter } from "next/navigation"
 import { useState } from "react"
 import { FaGithub } from "react-icons/fa"
-import { CommandMenu } from "./search-commend"
+import { SearchDialog } from "./search-dialog"
 
 export function MainNav() {
   const [open, setOpen] = useState(false)
@@ -34,7 +34,7 @@ export function MainNav() {
         <span className="font-bold text-white">{siteConfig.name}</span>
       </Link>
       <div className="w-full flex-1 md:w-auto md:flex-none">
-        <CommandMenu />
+        <SearchDialog />
       </div>
       <SheetContent side="top">
         <SheetLink

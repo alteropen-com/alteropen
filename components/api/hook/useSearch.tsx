@@ -1,8 +1,10 @@
 import { useQuery } from "@tanstack/react-query"
 
-type Item = {
+export type ItemSearch = {
+  id: number
   slug: string
   name: string
+  visit: number
 }
 
 export default function useSearch(shouldFetch: boolean) {
@@ -11,13 +13,15 @@ export default function useSearch(shouldFetch: boolean) {
     queryFn: async () => {
       const url = `/static/search-index.json`
       const response = await fetch(url)
-      const data = (await response.json()) as Item[] | undefined
+      const data = (await response.json()) as ItemSearch[] | undefined
       if (!data) {
         return []
       }
-      return data.map(({ slug, name }) => ({
+      return data.map(({ id, slug, name, visit }) => ({
+        id,
         slug,
         name,
+        visit,
       }))
     },
     enabled: shouldFetch,
