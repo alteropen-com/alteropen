@@ -59,13 +59,19 @@ export async function generateMetadata({
 
   const imageUrl = image.url
 
-  const alternateApps = alternatives.filter((item) =>
-    item.alternative?.find((ia) => ia.id === app.id)
+  const postIdAlternative = app.alternative?.map((item) => ({ id: item.id }))
+
+  const similarAlternative = alternatives.filter((app) =>
+    app.alternative?.find((item) =>
+      postIdAlternative?.find((itemId) => itemId.id === item.id)
+    )
   )
 
   const pageTitle = `
     ${name || title} ${
-    alternateApps.length > 0 ? " Top " + alternateApps.length + "+" : ""
+    similarAlternative.length > 0
+      ? " Top " + similarAlternative.length + "+"
+      : ""
   } AlternativeTo (Free/OpenSource...) ${
     deals && deals.length > 0 ? `+${deals.length} Deals` : ""
   } in 2024. `
@@ -199,12 +205,6 @@ export default async function PostPage({ params }: PostPageProps) {
           </div>
           <StickyNav post={post} />
           <hr id="sticky-start" className="my-4" />
-          {(!post.deals || post.deals.length === 0) && (
-            <>
-              <ItemAlternative post={post} />
-            </>
-          )}
-          <hr className="my-4" />
           <ItemFeature post={post} />
           <hr className="my-4" />
           <div className="flex justify-end">
@@ -222,6 +222,10 @@ export default async function PostPage({ params }: PostPageProps) {
           <PopularSearch search={post.popularSearch} />
           {/* <Comment /> */}
         </div>
+        <div className="w-full max-w-[1468px]">
+          <ItemAlternative post={post} />
+          <hr className="my-4" />
+        </div>
         <div className="w-full max-w-[1468px] flex flex-wrap justify-around">
           <div>
             <ButtonFollow id={post.id} />
@@ -233,12 +237,6 @@ export default async function PostPage({ params }: PostPageProps) {
           )}
         </div>
         <div className="w-full max-w-[1468px]">
-          {post.deals && post.deals.length > 0 && (
-            <>
-              <hr className="my-4" />
-              <ItemAlternative post={post} />
-            </>
-          )}
           <hr className="my-4" />
           <SimilarProduct post={post} />
         </div>
