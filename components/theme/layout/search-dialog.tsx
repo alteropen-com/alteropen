@@ -246,7 +246,7 @@ function SearchForm({
                         )}
                       </p>
                       <p className="text-sm text-muted-foreground line-clamp-2">
-                        {item.content}
+                        {item.content.replaceAll(";", "")}
                       </p>
                     </div>
                   </CommandItem>
