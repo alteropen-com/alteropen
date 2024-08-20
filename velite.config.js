@@ -1,10 +1,14 @@
 /* eslint-disable no-console */
-import { stat, writeFile } from "node:fs/promises"
+import { exec } from "child_process"
+import { writeFile } from "node:fs/promises"
 import path from "path"
+import { promisify } from "util"
 import { defineConfig, s } from "velite"
 import { FEATURES, PRICING, TASKS } from "./config/selection"
 import { getAllTags, sortTagsByCount } from "./lib/helper"
 import { encodeTitleToSlug, stringToUniqueNumber } from "./lib/utils"
+
+const execAsync = promisify(exec)
 
 const timestamp = () =>
   s
@@ -15,12 +19,11 @@ const timestamp = () =>
           fatal: false,
           code: "custom",
           message:
-            "`s.timestamp()` schema will resolve the file modified timestamp",
+            "`s.timestamp()` schema will resolve the value from `git log -1 --format=%cd`",
         })
       }
-
-      const stats = await stat(meta.path)
-      return stats.mtime.toISOString()
+      const { stdout } = await execAsync(`git log -1 --format=%cd ${meta.path}`)
+      return new Date(stdout).toISOString()
     })
 
 const appSchema = s.object({
