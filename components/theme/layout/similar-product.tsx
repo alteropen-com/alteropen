@@ -70,7 +70,7 @@ export default function SimilarProduct({ post }: { post: Alternative }) {
                 key={item.id}
                 className="no-underline"
                 href={item.url || ""}
-                rel="nofollow"
+                // rel="nofollow"
               >
                 <Card className="relative px-6 pt-6 pb-2 hover:bg-primary/10">
                   <h3 className="text-primary text-xl font-semibold mb-2 flex items-center">
