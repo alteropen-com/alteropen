@@ -1,5 +1,6 @@
 import { alternatives } from "#site/content"
 import { CustomMDX } from "@/components/mdx/MdxRemote"
+import AlternativeTocList from "@/components/theme/layout/alternative-toc-list"
 import ButtonDeals from "@/components/theme/layout/button-deals"
 import ButtonEditPage from "@/components/theme/layout/button-edit-page"
 import ButtonFollow from "@/components/theme/layout/button-save"
@@ -177,15 +178,10 @@ export default async function PostPage({ params }: PostPageProps) {
                   {post.description}
                 </p>
               ) : null}
-              <a
-                className="text-md text-primary no-underline hover:underline"
-                href="#alternativeTo"
-              >
-                Best Alternatives
-              </a>
 
               <DetailToc toc={post.toc} />
               <Properties properties={post.properties} showDetails={true} />
+              <AlternativeTocList post={post} />
             </div>
 
             {/* Action Buttons Section */}

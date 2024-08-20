@@ -28,6 +28,7 @@ const scrollThreshold = 100 // Minimum scroll delta to trigger the check
 export default function StickyNav({ post }: { post: Alternative }) {
   const [isSticky, setIsSticky] = useState(false)
   const [hasSections, setHasSections] = useState({
+    alternatives: false,
     reviewFeatures: false,
     pricing: false,
     similar: false,
@@ -39,11 +40,13 @@ export default function StickyNav({ post }: { post: Alternative }) {
 
   useEffect(() => {
     const checkElements = () => {
+      const alternativesElement = document.getElementById("alternativeTo")
       const reviewFeaturesElement = document.getElementById("review-features")
       const pricingElement = document.getElementById("pricing")
       const similarElement = document.getElementById("similar")
 
       const sectionsExist = {
+        alternatives: !!alternativesElement,
         reviewFeatures: !!reviewFeaturesElement,
         pricing: !!pricingElement,
         similar: !!similarElement,
@@ -132,7 +135,11 @@ export default function StickyNav({ post }: { post: Alternative }) {
         <div className="hidden md:block">
           <SectionLink href="#deals" label="Deals" />
         </div>
-        <SectionLink href="#alternativeTo" label="Alternatives" />
+        <SectionLink
+          href="#alternativeTo"
+          label="Alternatives"
+          isVisible={hasSections.alternatives}
+        />
         <SectionLink
           href="#review-features"
           label="Review & Features"

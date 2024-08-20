@@ -1,6 +1,7 @@
 import { Alternative, alternatives } from "#site/content"
 import { Card } from "@/components/ui/card"
 import { siteConfig } from "@/config/site"
+import { sortItem } from "@/lib/utils"
 import Link from "next/link"
 import { RxOpenInNewWindow } from "react-icons/rx"
 import BadgeDeals from "./badge-deal"
@@ -34,25 +35,28 @@ export default function ItemAlternative({ post }: { post: Alternative }) {
   // Remove duplicates by id
   const alternative = [
     ...(postAlternative || []),
-    ...alternativeApp.sort((a, b) => {
-      // First, compare by `recommend`
-      if (a.recommend !== b.recommend) {
-        return b.recommend - a.recommend
-      }
-
-      // If `recommend` is equal, compare by `visit`
-      const sortA = a.visit && a.visit.length > 0 ? a.visit[0] : 0
-      const sortB = b.visit && b.visit.length > 0 ? b.visit[0] : 0
-
-      return sortB - sortA
-    }),
+    ...alternativeApp.sort(sortItem),
   ]
+
+  if (alternative.length === 0) return null
 
   return (
     <>
       <h2 className="text-xl font-bold my-2" id="alternativeTo">
-        Top {`${post.name.toUpperCase()} alternative to`}
+        Top {alternative.length} {`${post.name.toUpperCase()} alternative to`}
       </h2>
+      <ul className="hidden sm:flex my-2">
+        {alternative.map((app, index) => (
+          <li key={app.id} className="flex items-center text-sm py-1 mr-5">
+            <p className="flex flex-1 no-underline">
+              <span className="w-5">{index + 1}.</span>
+              <span className="flex-1 max-w-[200px] truncate capitalize">
+                {app.name}
+              </span>
+            </p>
+          </li>
+        ))}
+      </ul>
       <div className="grid gap-3 lg:gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {alternative?.map((item, i) => {
           if (item.id) {
