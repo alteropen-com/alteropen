@@ -1,5 +1,6 @@
 import { alternatives } from "#site/content"
 import { CustomMDX } from "@/components/mdx/MdxRemote"
+import AlternativeTocList from "@/components/theme/layout/alternative-toc-list"
 import ButtonDeals from "@/components/theme/layout/button-deals"
 import ButtonEditPage from "@/components/theme/layout/button-edit-page"
 import ButtonFollow from "@/components/theme/layout/button-save"
@@ -59,6 +60,10 @@ export async function generateMetadata({
 
   const imageUrl = image.url
 
+  const alternateApps = alternatives.filter((item) =>
+    item.alternative?.find((ia) => ia.id === app.id)
+  )
+
   const postIdAlternative = app.alternative?.map((item) => ({ id: item.id }))
 
   const similarAlternative = alternatives.filter((app) =>
@@ -69,8 +74,8 @@ export async function generateMetadata({
 
   const pageTitle = `
     ${name || title} ${
-    similarAlternative.length > 0
-      ? " Top " + similarAlternative.length + "+"
+    alternateApps.length > 0 || similarAlternative.length > 0
+      ? " Top " + (alternateApps.length + similarAlternative.length) + "+"
       : ""
   } AlternativeTo (Free/OpenSource...) ${
     deals && deals.length > 0 ? `+${deals.length} Deals` : ""
@@ -173,15 +178,10 @@ export default async function PostPage({ params }: PostPageProps) {
                   {post.description}
                 </p>
               ) : null}
-              <a
-                className="text-md text-primary no-underline hover:underline"
-                href="#alternativeTo"
-              >
-                Best Alternatives
-              </a>
 
               <DetailToc toc={post.toc} />
               <Properties properties={post.properties} showDetails={true} />
+              <AlternativeTocList post={post} />
             </div>
 
             {/* Action Buttons Section */}

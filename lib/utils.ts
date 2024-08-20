@@ -1,3 +1,4 @@
+import { Alternative } from "@/.velite"
 import { type ClassValue, clsx } from "clsx"
 import { twMerge } from "tailwind-merge"
 
@@ -48,7 +49,7 @@ export const isValidDate = (dateString: string | number) => {
   return !isNaN(date.getTime())
 }
 
-export const formatDateAgo = (dateString: string | number, useLast= false) => {
+export const formatDateAgo = (dateString: string | number, useLast = false) => {
   const date = new Date(dateString)
   const now = new Date()
   const diffTime = date.getTime() - now.getTime() // Calculate the difference in time
@@ -56,7 +57,8 @@ export const formatDateAgo = (dateString: string | number, useLast= false) => {
 
   if (diffTime === 0) {
     return "Today"
-  } else if (diffTime > 0) { // Future dates
+  } else if (diffTime > 0) {
+    // Future dates
     if (diffDays === 1) {
       return "in 1 day"
     } else if (diffDays < 30) {
@@ -68,7 +70,8 @@ export const formatDateAgo = (dateString: string | number, useLast= false) => {
       const diffYears = Math.ceil(diffDays / 365)
       return `in ${diffYears} year${diffYears > 1 ? "s" : ""}`
     }
-  } else { // Past dates
+  } else {
+    // Past dates
     if (useLast) {
       if (diffDays === 1) {
         return "last day"
@@ -97,12 +100,33 @@ export const formatDateAgo = (dateString: string | number, useLast= false) => {
 }
 
 export function stringToUniqueNumber(text: string) {
-  let hash = 0;
-  if (text.length === 0) return hash;
+  let hash = 0
+  if (text.length === 0) return hash
   for (let i = 0; i < text.length; i++) {
-      const char = text.charCodeAt(i);
-      hash = (hash << 5) - hash + char;
-      hash |= 0; // Convert to 32bit integer
+    const char = text.charCodeAt(i)
+    hash = (hash << 5) - hash + char
+    hash |= 0 // Convert to 32bit integer
   }
-  return hash;
+  return hash
+}
+
+export function sortItem(a: Alternative, b: Alternative) {
+  // First, compare by `recommend`
+  if (a.recommend !== b.recommend) {
+    return b.recommend - a.recommend
+  }
+
+  // If `recommend` is equal, compare by `visit`
+  const sortA = a.visit && a.visit.length > 0 ? a.visit[0] : null
+  const sortB = b.visit && b.visit.length > 0 ? b.visit[0] : null
+
+  if (sortA !== sortB) {
+    return (sortB || 0) - (sortA || 0)
+  }
+
+  // If both `recommend` and `visit` are equal or `visit` does not exist, compare by `star`
+  return (
+    (Number(b.properties?.["Star"]) || 0) -
+    (Number(a.properties?.["Star"]) || 0)
+  )
 }

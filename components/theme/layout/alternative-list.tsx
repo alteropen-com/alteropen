@@ -21,7 +21,7 @@ const AlternativeList = ({ apps }: { apps: Alternative[] }) => {
         key={id}
       >
         <Link
-          rel="nofollow"
+          // rel="nofollow"
           className="absolute h-full w-full"
           href={`/alternative/${slug}`}
         >
@@ -50,7 +50,7 @@ const AlternativeList = ({ apps }: { apps: Alternative[] }) => {
               )} */}
               <h3 className="text-lg font-bold">{name}</h3>
               <Link
-                rel="nofollow"
+                // rel="nofollow"
                 href={`/tasks/${encodeTitleToSlug(tag)}`}
                 className="relative z-1 underline capitalize"
               >

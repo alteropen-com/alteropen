@@ -1,6 +1,7 @@
 import { Alternative, alternatives } from "@/.velite"
 import { Card } from "@/components/ui/card"
 import { siteConfig } from "@/config/site"
+import { sortItem } from "@/lib/utils"
 import Link from "next/link"
 import { RxOpenInNewWindow } from "react-icons/rx"
 import BadgeDeals from "./badge-deal"
@@ -35,16 +36,7 @@ export default function SimilarProduct({ post }: { post: Alternative }) {
       }
       return acc
     }, [])
-    .sort((a, b) => {
-      if (a.recommend !== b.recommend) {
-        return b.recommend - a.recommend
-      }
-
-      const sortA = a.visit && a.visit.length > 0 ? a.visit[0] : 0
-      const sortB = b.visit && b.visit.length > 0 ? b.visit[0] : 0
-
-      return sortB - sortA
-    })
+    .sort(sortItem)
     .filter(
       (app) =>
         app.id !== post.id &&
@@ -70,7 +62,7 @@ export default function SimilarProduct({ post }: { post: Alternative }) {
                 key={item.id}
                 className="no-underline"
                 href={item.url || ""}
-                rel="nofollow"
+                // rel="nofollow"
               >
                 <Card className="relative px-6 pt-6 pb-2 hover:bg-primary/10">
                   <h3 className="text-primary text-xl font-semibold mb-2 flex items-center">
