@@ -63,7 +63,7 @@ const appSchema = s.object({
         id: s.number().optional(),
         name: s.string(),
         description: s.string().optional(),
-        published: s.boolean().default(false),
+        // published: s.boolean().default(false),
         url: s.string().optional(),
         image: s
           .object({
@@ -135,6 +135,8 @@ export default defineConfig({
             name: item.name,
             visit: item.visit[0],
             title: item.title,
+            features: item.features,
+            alternative: item.alternative,
             description: item.description,
             lastModified: item.lastModified,
           }
