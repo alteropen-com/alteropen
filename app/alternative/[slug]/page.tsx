@@ -59,6 +59,10 @@ export async function generateMetadata({
 
   const imageUrl = image.url
 
+  const alternateApps = alternatives.filter((item) =>
+    item.alternative?.find((ia) => ia.id === app.id)
+  )
+
   const postIdAlternative = app.alternative?.map((item) => ({ id: item.id }))
 
   const similarAlternative = alternatives.filter((app) =>
@@ -69,8 +73,8 @@ export async function generateMetadata({
 
   const pageTitle = `
     ${name || title} ${
-    similarAlternative.length > 0
-      ? " Top " + similarAlternative.length + "+"
+    alternateApps.length > 0 || similarAlternative.length > 0
+      ? " Top " + (alternateApps.length + similarAlternative.length) + "+"
       : ""
   } AlternativeTo (Free/OpenSource...) ${
     deals && deals.length > 0 ? `+${deals.length} Deals` : ""
