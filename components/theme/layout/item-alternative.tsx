@@ -12,6 +12,7 @@ import VisitNumber from "./visit-number"
 export default function ItemAlternative({ post }: { post: Alternative }) {
   const alternativeApp = alternatives
     .filter((app) => app.alternative?.find((item) => item.id === post.id))
+    .filter((item) => item.id !== post.id)
     .map((app) => ({
       ...app,
       url: `/alternative/${app.slug}`,
@@ -19,6 +20,7 @@ export default function ItemAlternative({ post }: { post: Alternative }) {
 
   const postAlternative = post.alternative
     ?.filter((item) => !alternativeApp?.find((app) => item.id === app.id))
+    .filter((item) => item.id !== post.id)
     .map((item) => {
       if (item.id) {
         const alter = alternatives.find((app) => app.id === item.id)
