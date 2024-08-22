@@ -5,7 +5,6 @@ import { sortItem } from "@/lib/utils"
 import Link from "next/link"
 import { RxOpenInNewWindow } from "react-icons/rx"
 import BadgeDeals from "./badge-deal"
-import BadgeOpenSource from "./badge-opensource"
 import Properties from "./properties-list"
 import VisitNumber from "./visit-number"
 
@@ -96,11 +95,10 @@ export default function ItemAlternative({ post }: { post: Alternative }) {
                   <p className="h-[4.5rem] line-clamp-3">{app.title}</p>
                   <div className="mt-2 text-sm flex space-x-2 items-center justify-between">
                     <VisitNumber app={app} text="Visits" />
-                    <BadgeOpenSource app={app} />
                     <BadgeDeals app={app} />
                   </div>
                   <div className="mt-2 text-sm">
-                    <Properties properties={app.properties} />
+                    <Properties app={app} properties={app.properties} />
                   </div>
                 </Card>
               </Link>

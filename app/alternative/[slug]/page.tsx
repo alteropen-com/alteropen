@@ -1,6 +1,7 @@
 import { alternatives } from "#site/content"
 import { CustomMDX } from "@/components/mdx/MdxRemote"
 import AlternativeTocList from "@/components/theme/layout/alternative-toc-list"
+import BadgeOpenSource from "@/components/theme/layout/badge-opensource"
 import ButtonDeals from "@/components/theme/layout/button-deals"
 import ButtonEditPage from "@/components/theme/layout/button-edit-page"
 import ButtonFollow from "@/components/theme/layout/button-save"
@@ -180,6 +181,7 @@ export default async function PostPage({ params }: PostPageProps) {
               ) : null}
 
               <DetailToc toc={post.toc} />
+              <BadgeOpenSource app={post} />
               <Properties properties={post.properties} showDetails={true} />
               <AlternativeTocList post={post} />
             </div>
