@@ -14,7 +14,9 @@ export default function SimilarProduct({ post }: { post: Alternative }) {
     app.alternative?.find((item) => item.id === post.id)
   )
 
-  const postIdAlternative = post.alternative?.map((item) => ({ id: item.id }))
+  const postIdAlternative = post.alternative
+    ?.filter((item) => item.id)
+    ?.map((item) => ({ id: item.id }))
 
   const similarAlternative = alternatives
     .filter((app) =>
