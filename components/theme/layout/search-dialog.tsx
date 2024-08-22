@@ -246,7 +246,7 @@ function SearchForm({
                       runCommand(() => router.push(item.slug))
                     }}
                   >
-                    <div className="flex flex-col">
+                    <div className="flex flex-col w-full">
                       <p className="w-full flex justify-between items-center">
                         <span>
                           {"🔁"} {item.name}
@@ -313,7 +313,7 @@ const ItemView = ({
             runCommand(() => router.push(item.slug))
           }}
         >
-          <div className="flex flex-col">
+          <div className="flex flex-col w-full">
             <p className="w-full flex justify-between items-center">
               <span>
                 {icon} {item.name}{" "}
