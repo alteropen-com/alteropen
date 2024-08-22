@@ -148,10 +148,23 @@ function SearchForm({
     const value = e.target.value.toLowerCase()
     setInputValue(value)
     if (data && value) {
-      const foundItems = data.filter((item) =>
-        item.name.toLowerCase().includes(value.toLowerCase())
-      ) as ItemSearch[]
-      setFoundItems(foundItems.sort((a, b) => b.visit - a.visit).slice(0, 100))
+      const foundItems = data
+        .filter(
+          (item) =>
+            item.name.toLowerCase().includes(value.toLowerCase()) ||
+            item.alternative.toLowerCase().includes(value.toLowerCase()) ||
+            item.title.toLowerCase().includes(value.toLowerCase())
+        )
+        .sort((a, b) => {
+          const aNameMatch = a.name.toLowerCase().includes(value.toLowerCase())
+          const bNameMatch = b.name.toLowerCase().includes(value.toLowerCase())
+          if (aNameMatch && !bNameMatch) return -1
+          if (!aNameMatch && bNameMatch) return 1
+
+          return b.visit - a.visit
+        })
+        .slice(0, 100)
+      setFoundItems(foundItems)
     } else {
       setFoundItems([])
     }
@@ -228,6 +241,7 @@ function SearchForm({
                   <CommandItem
                     key={item.id}
                     value={item.id}
+                    style={{ padding: "0.5rem" }}
                     onSelect={() => {
                       runCommand(() => {
                         router.push(item.slug)
@@ -296,16 +310,26 @@ const ItemView = ({
         <CommandItem
           key={item.id}
           value={item.name}
+          style={{ padding: "0.5rem" }}
           onSelect={() => {
             runCommand(() => router.push(item.slug))
           }}
         >
-          {icon} {item.name}{" "}
-          {item.visit > 0 && (
-            <span className="ml-auto text-xs text-muted-foreground">
-              {formatNumber(item.visit)}
-            </span>
-          )}
+          <div className="flex flex-col">
+            <p className="w-full flex justify-between items-center">
+              <span>
+                {icon} {item.name}{" "}
+              </span>
+              {item.visit > 0 && (
+                <span className="p-1 text-xs text-muted-foreground">
+                  {formatNumber(item.visit)}
+                </span>
+              )}
+            </p>
+            <p className="text-sm text-muted-foreground line-clamp-1">
+              {item.title.replaceAll(";", "")}
+            </p>
+          </div>
         </CommandItem>
       ))}
     </CommandGroup>

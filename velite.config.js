@@ -168,6 +168,9 @@ export default defineConfig({
           slug: item.slug,
           name: item.name,
           visit: item.visit,
+          title: item.title || "",
+          alternative:
+            item?.alternative?.map((item) => item?.name).join(",") || "",
         }
       })
       const searchContent = JSON.stringify(contentSearch, null, 2)
