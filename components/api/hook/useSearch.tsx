@@ -5,6 +5,8 @@ export type ItemSearch = {
   slug: string
   name: string
   visit: number
+  title: string
+  alternative: string
 }
 
 export default function useSearch(shouldFetch: boolean) {
@@ -17,12 +19,7 @@ export default function useSearch(shouldFetch: boolean) {
       if (!data) {
         return []
       }
-      return data.map(({ id, slug, name, visit }) => ({
-        id,
-        slug,
-        name,
-        visit,
-      }))
+      return data
     },
     enabled: shouldFetch,
   })
