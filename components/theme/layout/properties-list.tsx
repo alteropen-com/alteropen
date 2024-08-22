@@ -1,3 +1,4 @@
+import { Alternative } from "@/.velite"
 import { Button } from "@/components/ui/button"
 import { siteConfig } from "@/config/site"
 import {
@@ -8,21 +9,32 @@ import {
 } from "@/lib/utils"
 import Link from "next/link"
 import { RxOpenInNewWindow } from "react-icons/rx"
+import BadgeOpenSource from "./badge-opensource"
 
 interface PropertiesProps {
+  app?: Alternative
   properties?: {
     [key: string]: string | number
   }
   showDetails?: boolean
 }
 
-const Properties = ({ properties, showDetails = false }: PropertiesProps) => {
+const Properties = ({
+  app,
+  properties,
+  showDetails = false,
+}: PropertiesProps) => {
   if (!properties) return null
 
   const propertyEntries = Object.entries(properties)
 
   return (
     <div className="py-2">
+      {app && (
+        <div className="mb-2">
+          <BadgeOpenSource app={app} />
+        </div>
+      )}
       {propertyEntries.map(([key, value], index) => {
         if (
           typeof value !== "number" &&
@@ -39,6 +51,9 @@ const Properties = ({ properties, showDetails = false }: PropertiesProps) => {
           return null
 
         if (key.toLowerCase().includes("visit") && value === 0) return null
+
+        if (key.toLowerCase().includes("star")) return null
+        if (key.toLowerCase().includes("commit")) return null
 
         return (
           <div key={key} className="flex mb-2 items-center">

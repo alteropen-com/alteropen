@@ -59,9 +59,9 @@ const AlternativeList = ({ apps }: { apps: Alternative[] }) => {
               <p className="mt-2 flex-1">{title}</p>
             </div>
           </div>
-          <div className="mt-1 py-2 px-2 bg-muted/50 flex justify-between">
+          <div className="mt-1 py-2 px-2 bg-muted/50 flex justify-between items-center">
             <VisitNumber app={app} text="visit" />
-            <BadgeOpenSource app={app} />
+            <BadgeOpenSource app={app} showDetail={false} />
             <BadgeDeals app={app} />
           </div>
         </div>
