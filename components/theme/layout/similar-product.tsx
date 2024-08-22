@@ -1,9 +1,11 @@
 import { Alternative, alternatives } from "@/.velite"
-import { Badge } from "@/components/ui/badge"
 import { Card } from "@/components/ui/card"
 import { siteConfig } from "@/config/site"
+import { sortItem } from "@/lib/utils"
 import Link from "next/link"
 import { RxOpenInNewWindow } from "react-icons/rx"
+import BadgeDeals from "./badge-deal"
+import BadgeOpenSource from "./badge-opensource"
 import Properties from "./properties-list"
 import VisitNumber from "./visit-number"
 
@@ -12,7 +14,9 @@ export default function SimilarProduct({ post }: { post: Alternative }) {
     app.alternative?.find((item) => item.id === post.id)
   )
 
-  const postIdAlternative = post.alternative?.map((item) => ({ id: item.id }))
+  const postIdAlternative = post.alternative
+    ?.filter((item) => item.id)
+    ?.map((item) => ({ id: item.id }))
 
   const similarAlternative = alternatives
     .filter((app) =>
@@ -34,12 +38,7 @@ export default function SimilarProduct({ post }: { post: Alternative }) {
       }
       return acc
     }, [])
-    .sort((a, b) => {
-      const sortA = a.visit && a.visit.length > 0 ? a.visit[0] : 0
-      const sortB = b.visit && b.visit.length > 0 ? b.visit[0] : 0
-
-      return sortB - sortA
-    })
+    .sort(sortItem)
     .filter(
       (app) =>
         app.id !== post.id &&
@@ -52,8 +51,8 @@ export default function SimilarProduct({ post }: { post: Alternative }) {
 
   return (
     <>
-      <h2 className="text-xl font-bold my-2" id="alternativeTo">
-        {`${post.name.toUpperCase()} similar to`}
+      <h2 className="text-xl font-bold my-2" id="similar">
+        {`${post.name.toUpperCase()} similar to`} (Free and OpenSource)
       </h2>
       <div className="grid gap-3 lg:gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {alternative?.map((item, i) => {
@@ -65,12 +64,17 @@ export default function SimilarProduct({ post }: { post: Alternative }) {
                 key={item.id}
                 className="no-underline"
                 href={item.url || ""}
-                rel="nofollow"
+                // rel="nofollow"
               >
-                <Card className="px-6 pt-6 pb-2 rounded-lg border border-primary/60 hover:bg-primary/10">
+                <Card className="relative px-6 pt-6 pb-2 hover:bg-primary/10">
                   <h3 className="text-primary text-xl font-semibold mb-2 flex items-center">
                     {item.name}
                   </h3>
+                  {app.recommend > 0 && (
+                    <div className="absolute top-[28px] right-[-40px] bg-primary text-primary-foreground text-white text-[9px] font-bold px-2 py-1 transform rotate-[20deg] -translate-x-1/2 -translate-y-1/2 rounded-xl">
+                      Recommended
+                    </div>
+                  )}
                   {item.image?.url && (
                     <img
                       loading="lazy"
@@ -84,19 +88,20 @@ export default function SimilarProduct({ post }: { post: Alternative }) {
                       }}
                     />
                   )}
-                  {item.deals && item.deals.length > 0 && (
+                  {/*  {item.deals && item.deals.length > 0 && (
                     <div className="relative">
                       <div className="absolute top-[-42px] right-0">
-                        <Badge variant="default">{item.deals[0].price}</Badge>
+                        <Badge variant="destructive">
+                          {item.deals[0].price}
+                        </Badge>
                       </div>
                     </div>
-                  )}
+                  )} */}
                   <p className="h-[4.5rem] line-clamp-3">{app.title}</p>
                   <div className="mt-2 text-sm flex space-x-2 items-center justify-between">
                     <VisitNumber app={app} text="Visits" />
-                    <span className="font-bold">
-                      {app.pricing?.join(" | ")}
-                    </span>
+                    <BadgeOpenSource app={app} />
+                    <BadgeDeals app={app} />
                   </div>
                   <div className="mt-2 text-sm">
                     <Properties properties={app.properties} />

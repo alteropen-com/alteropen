@@ -15,6 +15,13 @@ interface CustomMDXProps extends MDXRemoteProps {
 
 const components = {
   Test: (props: any) => <Test {...props} />,
+  a: (props: any) => {
+    return (
+      <a {...props} rel="nofollow" className="text-primary">
+        {props.children}
+      </a>
+    )
+  },
   Img: (props: any) => <Img {...props} />,
   DetailYoutube: (props: any) => <DetailYoutube {...props} />,
   Twitters: (props: any) => <Twitters {...props} />,

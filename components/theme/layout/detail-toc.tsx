@@ -28,11 +28,15 @@ const DetailToc = ({ toc }: { toc: Alternative["toc"] }) => {
   }
 
   return (
-    <ul role="list" className="space-y-2 list-none py-2 pl-0">
+    <ul role="list" className="list-none pl-0 flex flex-col">
       {toc.map((tocItem) => (
-        <li key={tocItem.url} className="text-base" role="listitem">
+        <li
+          key={tocItem.url}
+          className="text-base py-2 flex-1 hover:bg-muted hover:underline hover:cursor-pointer"
+          role="listitem"
+        >
           <Link
-            rel="nofollow"
+            // rel="nofollow"
             href={tocItem.url}
             className={clsx(
               TOC_STYLES,

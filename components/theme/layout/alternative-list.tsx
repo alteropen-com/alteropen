@@ -1,9 +1,10 @@
 import { Alternative } from "@/.velite"
-import { Badge } from "@/components/ui/badge"
 import { Card } from "@/components/ui/card"
 import { siteConfig } from "@/config/site"
 import { encodeTitleToSlug } from "@/lib/utils"
 import Link from "next/link"
+import BadgeDeals from "./badge-deal"
+import BadgeOpenSource from "./badge-opensource"
 import VisitNumber from "./visit-number"
 
 const AlternativeList = ({ apps }: { apps: Alternative[] }) => {
@@ -15,9 +16,12 @@ const AlternativeList = ({ apps }: { apps: Alternative[] }) => {
     const tag = app.tasks?.[0] || ""
 
     return (
-      <Card className="relative h-full flex flex-col" key={id}>
+      <Card
+        className="relative h-full flex flex-col hover:bg-primary/10"
+        key={id}
+      >
         <Link
-          rel="nofollow"
+          // rel="nofollow"
           className="absolute h-full w-full"
           href={`/alternative/${slug}`}
         >
@@ -37,16 +41,16 @@ const AlternativeList = ({ apps }: { apps: Alternative[] }) => {
           />
           <div className="mt-1 px-2 pb-1 flex flex-col flex-1">
             <div className="flex-1 text-center">
-              {deals && deals.length > 0 && (
+              {/* {deals && deals.length > 0 && (
                 <div className="relative">
                   <div className="absolute top-[-42px] right-0">
-                    <Badge variant="default">{deals[0].price}</Badge>
+                    <Badge variant="destructive">{deals[0].price}</Badge>
                   </div>
                 </div>
-              )}
+              )} */}
               <h3 className="text-lg font-bold">{name}</h3>
               <Link
-                rel="nofollow"
+                // rel="nofollow"
                 href={`/tasks/${encodeTitleToSlug(tag)}`}
                 className="relative z-1 underline capitalize"
               >
@@ -57,7 +61,8 @@ const AlternativeList = ({ apps }: { apps: Alternative[] }) => {
           </div>
           <div className="mt-1 py-2 px-2 bg-muted/50 flex justify-between">
             <VisitNumber app={app} text="visit" />
-            <span className="text-sm">{pricing?.join("|")}</span>
+            <BadgeOpenSource app={app} />
+            <BadgeDeals app={app} />
           </div>
         </div>
       </Card>

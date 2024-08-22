@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev:content": "velite --watch",
-    "build:content": "velite --clean",
+    "build:content": "git fetch --unshallow ; velite --clean",
     "dev:next": "next dev",
     "build:next": "next build",
     "dev": "run-p dev:*",

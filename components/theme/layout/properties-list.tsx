@@ -7,6 +7,7 @@ import {
   isValidDate,
 } from "@/lib/utils"
 import Link from "next/link"
+import { RxOpenInNewWindow } from "react-icons/rx"
 
 interface PropertiesProps {
   properties?: {
@@ -36,6 +37,9 @@ const Properties = ({ properties, showDetails = false }: PropertiesProps) => {
           )
         )
           return null
+
+        if (key.toLowerCase().includes("visit") && value === 0) return null
+
         return (
           <div key={key} className="flex mb-2 items-center">
             <span className="w-[186px] truncate">
@@ -52,7 +56,10 @@ const Properties = ({ properties, showDetails = false }: PropertiesProps) => {
                   target="_blank"
                   rel="nofollow"
                 >
-                  {value.replace("https://", "")}
+                  {value.includes("github.com")
+                    ? "github"
+                    : value.replace("https://", "")}
+                  <RxOpenInNewWindow className="ml-1" />
                 </Link>
               </Button>
             ) : (

@@ -1,11 +1,11 @@
 import { alternatives } from "#site/content"
+import { SearchDialog } from "@/components/theme/layout/search-dialog"
 import { Button } from "@/components/ui/button"
 import { siteConfig } from "@/config/site"
 import { getAllTags, sortTagsByCount } from "@/lib/helper"
 import { encodeTitleToSlug } from "@/lib/utils"
 import { Metadata } from "next"
 import Link from "next/link"
-import { FaGithub } from "react-icons/fa6"
 
 const title =
   "Alternative to popular SaaS products (Free/ OpenSource or with Great Deals) build by Indie, suggest by Indie"
@@ -148,7 +148,7 @@ export default function Page() {
     <div className="container py-6">
       <div className="flex flex-col flex-1">
         <div className="mx-auto max-w-2xl lg:col-span-6 lg:flex lg:items-center justify-center text-center">
-          <div className="relative z-10 lg:h-auto pt-[90px] lg:pt-[90px] lg:min-h-[300px] flex flex-col items-center justify-center sm:mx-auto md:w-3/4 lg:mx-0 lg:w-full gap-4 lg:gap-8">
+          <div className="relative z-10 lg:h-auto pt-[90px] lg:pt-[90px] lg:min-h-[300px] flex flex-col items-center justify-center sm:mx-auto lg:mx-0 w-full gap-4 lg:gap-8">
             <div className="flex flex-col items-center">
               <p className="text-foreground text-4xl sm:text-5xl sm:leading-none lg:text-7xl">
                 <span className="block text-[#F4FFFA00] bg-clip-text bg-gradient-to-b from-foreground to-foreground-light">
@@ -168,21 +168,8 @@ export default function Page() {
                 </span>
               </h1>
             </div>
-            <div className="flex flex-wrap justify-center items-center gap-2">
-              <Button variant="outline" asChild>
-                <Link href="?isSearch=true" rel="nofollow">
-                  Search Alternative
-                </Link>
-              </Button>
-              <Button variant="outline" size="icon" asChild>
-                <Link
-                  href={siteConfig.links.github}
-                  target="_blank"
-                  rel="nofollow"
-                >
-                  <FaGithub className="h-4 w-4" />
-                </Link>
-              </Button>
+            <div className="flex flex-wrap justify-center items-center gap-2 border-2 border-gray-300 px-3 py-2 rounded-xl w-full">
+              <SearchDialog />
             </div>
           </div>
         </div>
@@ -214,6 +201,7 @@ export default function Page() {
             </Button>
           ))}
         </div>
+        <hr />
       </div>
     </div>
   )

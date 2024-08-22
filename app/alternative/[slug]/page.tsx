@@ -1,5 +1,6 @@
 import { alternatives } from "#site/content"
 import { CustomMDX } from "@/components/mdx/MdxRemote"
+import AlternativeTocList from "@/components/theme/layout/alternative-toc-list"
 import ButtonDeals from "@/components/theme/layout/button-deals"
 import ButtonEditPage from "@/components/theme/layout/button-edit-page"
 import ButtonFollow from "@/components/theme/layout/button-save"
@@ -11,6 +12,7 @@ import ItemFeature from "@/components/theme/layout/item-feature"
 import PopularSearch from "@/components/theme/layout/popular-search"
 import Properties from "@/components/theme/layout/properties-list"
 import SimilarProduct from "@/components/theme/layout/similar-product"
+import StickyNav from "@/components/theme/layout/sticky-toc"
 import TagItem from "@/components/theme/layout/tag-item"
 import TimeUpdated from "@/components/theme/layout/time-updated"
 import VisitNumber from "@/components/theme/layout/visit-number"
@@ -24,7 +26,6 @@ import {
 import { siteConfig } from "@/config/site"
 import { encodeTitleToSlug } from "@/lib/utils"
 import { Metadata } from "next"
-import Link from "next/link"
 import { notFound } from "next/navigation"
 import "./styles.css"
 
@@ -63,9 +64,19 @@ export async function generateMetadata({
     item.alternative?.find((ia) => ia.id === app.id)
   )
 
+  const postIdAlternative = app.alternative?.map((item) => ({ id: item.id }))
+
+  const similarAlternative = alternatives.filter((app) =>
+    app.alternative?.find((item) =>
+      postIdAlternative?.find((itemId) => itemId.id === item.id)
+    )
+  )
+
   const pageTitle = `
     ${name || title} ${
-    alternateApps.length > 0 ? " Top " + alternateApps.length + "+" : ""
+    alternateApps.length > 0 || similarAlternative.length > 0
+      ? " Top " + (alternateApps.length + similarAlternative.length) + "+"
+      : ""
   } AlternativeTo (Free/OpenSource...) ${
     deals && deals.length > 0 ? `+${deals.length} Deals` : ""
   } in 2024. `
@@ -167,19 +178,17 @@ export default async function PostPage({ params }: PostPageProps) {
                   {post.description}
                 </p>
               ) : null}
-              <Link
-                className="text-md text-primary no-underline hover:underline"
-                href="#alternativeTo"
-              >
-                Best Alternatives
-              </Link>
 
               <DetailToc toc={post.toc} />
               <Properties properties={post.properties} showDetails={true} />
+              <AlternativeTocList post={post} />
             </div>
 
             {/* Action Buttons Section */}
-            <div className="w-full flex-shrink-0 space-y-3 sm:w-[240px] 2xl:w-[300px]">
+            <div
+              id="deals"
+              className="w-full flex-shrink-0 space-y-3 sm:w-[240px] 2xl:w-[300px]"
+            >
               <ButtonVisitSite app={post} />
               <ButtonFollow id={post.id} />
               <ButtonDeals app={post} />
@@ -194,13 +203,8 @@ export default async function PostPage({ params }: PostPageProps) {
               </p>
             </div>
           </div>
-          {(!post.deals || post.deals.length === 0) && (
-            <>
-              <hr className="my-4" />
-              <ItemAlternative post={post} />
-            </>
-          )}
-          <hr className="my-4" />
+          <StickyNav post={post} />
+          <hr id="sticky-start" className="my-4" />
           <ItemFeature post={post} />
           <hr className="my-4" />
           <div className="flex justify-end">
@@ -218,6 +222,10 @@ export default async function PostPage({ params }: PostPageProps) {
           <PopularSearch search={post.popularSearch} />
           {/* <Comment /> */}
         </div>
+        <div className="w-full max-w-[1468px]">
+          <ItemAlternative post={post} />
+          <hr className="my-4" />
+        </div>
         <div className="w-full max-w-[1468px] flex flex-wrap justify-around">
           <div>
             <ButtonFollow id={post.id} />
@@ -229,12 +237,6 @@ export default async function PostPage({ params }: PostPageProps) {
           )}
         </div>
         <div className="w-full max-w-[1468px]">
-          {post.deals && post.deals.length > 0 && (
-            <>
-              <hr className="my-4" />
-              <ItemAlternative post={post} />
-            </>
-          )}
           <hr className="my-4" />
           <SimilarProduct post={post} />
         </div>

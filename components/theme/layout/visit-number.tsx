@@ -11,12 +11,14 @@ const VisitNumber = ({
 }) => {
   if (!app) return null
 
+  if (app.visit.length === 0 || app.visit[0] === 0) return null
+
   const lastMonth = app.visit[0]
 
   if (lastMonth > 0)
     return (
       <span className="flex items-center">
-        <Badge variant="default" className="text-sm font-bold">
+        <Badge variant="secondary" className="text-sm font-bold">
           {formatNumber(lastMonth)}
         </Badge>
         <span className="text-sm ml-1">{text}</span>

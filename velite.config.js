@@ -1,10 +1,14 @@
 /* eslint-disable no-console */
-import { stat, writeFile } from "node:fs/promises"
+import { exec } from "child_process"
+import { writeFile } from "node:fs/promises"
 import path from "path"
+import { promisify } from "util"
 import { defineConfig, s } from "velite"
 import { FEATURES, PRICING, TASKS } from "./config/selection"
 import { getAllTags, sortTagsByCount } from "./lib/helper"
-import { encodeTitleToSlug } from "./lib/utils"
+import { encodeTitleToSlug, stringToUniqueNumber } from "./lib/utils"
+
+const execAsync = promisify(exec)
 
 const timestamp = () =>
   s
@@ -15,12 +19,19 @@ const timestamp = () =>
           fatal: false,
           code: "custom",
           message:
-            "`s.timestamp()` schema will resolve the file modified timestamp",
+            "`s.timestamp()` schema will resolve the value from `git log -1 --format=%cd`",
         })
       }
-
-      const stats = await stat(meta.path)
-      return stats.mtime.toISOString()
+      try {
+        const { stdout } = await execAsync(
+          `git log -1 --format=%cd -- ${meta.path}`
+        )
+        return new Date(stdout.trim() || Date.now()).toISOString()
+      } catch (error) {
+        console.error(`Error retrieving git timestamp for ${meta.path}:`, error)
+        // Return a default or current timestamp in case of an error
+        return new Date().toISOString()
+      }
     })
 
 const appSchema = s.object({
@@ -63,7 +74,7 @@ const appSchema = s.object({
         id: s.number().optional(),
         name: s.string(),
         description: s.string().optional(),
-        published: s.boolean().default(false),
+        // published: s.boolean().default(false),
         url: s.string().optional(),
         image: s
           .object({
@@ -76,6 +87,7 @@ const appSchema = s.object({
       })
     )
     .optional(),
+  recommend: s.number().default(0),
   deals: s
     .array(
       s.object({
@@ -116,8 +128,6 @@ export default defineConfig({
     },
   },
   complete: async (data, ctx) => {
-    const filePath = path.join(ctx.config.output.assets, "search-index.json")
-
     const { alternatives } = data
 
     const { tasks } = getAllTags(alternatives)
@@ -128,25 +138,56 @@ export default defineConfig({
     const content = [
       ...alternatives
         .filter((app) => app.published)
-        .sort((a, b) => (a.id > b.id ? -1 : 1))
+        .sort((a, b) => new Date(b.lastModified) - new Date(a.lastModified))
         .map((item) => {
           return {
+            id: item.id,
             slug: `/alternative/${item.slug}`,
             name: item.name,
+            visit: item.visit[0],
+            title: item.title,
+            features: item.features,
+            alternative: item.alternative,
+            description: item.description,
+            lastModified: item.lastModified,
           }
         }),
       ...sortedTasks.map((item) => {
         return {
+          id: stringToUniqueNumber(item),
           slug: `/tasks/${encodeTitleToSlug(item)}`,
           name: item,
+          visit: 0,
         }
       }),
     ]
-    const fileContent = JSON.stringify(content, null, 2)
 
     try {
-      await writeFile(filePath, fileContent)
-      console.log("File created successfully at:", filePath)
+      // csreate AI index
+      const aiContent = JSON.stringify(content, null, 2)
+      const aiPath = path.join(ctx.config.output.assets, "ai-index.json")
+      await writeFile(aiPath, aiContent)
+      console.log("File created successfully at:", aiPath)
+
+      // create search index, don't need title, description, lastModified
+      const contentSearch = content.map((item) => {
+        return {
+          id: item.id,
+          slug: item.slug,
+          name: item.name,
+          visit: item.visit,
+          title: item.title || "",
+          alternative:
+            item?.alternative?.map((item) => item?.name).join(",") || "",
+        }
+      })
+      const searchContent = JSON.stringify(contentSearch, null, 2)
+      const searchPath = path.join(
+        ctx.config.output.assets,
+        "search-index.json"
+      )
+      await writeFile(searchPath, searchContent)
+      console.log("File created successfully at:", searchPath)
     } catch (error) {
       console.error("Error creating file:", error)
     }

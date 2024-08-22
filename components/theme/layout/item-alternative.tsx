@@ -1,15 +1,18 @@
 import { Alternative, alternatives } from "#site/content"
-import { Badge } from "@/components/ui/badge"
 import { Card } from "@/components/ui/card"
 import { siteConfig } from "@/config/site"
+import { sortItem } from "@/lib/utils"
 import Link from "next/link"
 import { RxOpenInNewWindow } from "react-icons/rx"
+import BadgeDeals from "./badge-deal"
+import BadgeOpenSource from "./badge-opensource"
 import Properties from "./properties-list"
 import VisitNumber from "./visit-number"
 
 export default function ItemAlternative({ post }: { post: Alternative }) {
   const alternativeApp = alternatives
     .filter((app) => app.alternative?.find((item) => item.id === post.id))
+    .filter((item) => item.id !== post.id)
     .map((app) => ({
       ...app,
       url: `/alternative/${app.slug}`,
@@ -17,6 +20,7 @@ export default function ItemAlternative({ post }: { post: Alternative }) {
 
   const postAlternative = post.alternative
     ?.filter((item) => !alternativeApp?.find((app) => item.id === app.id))
+    .filter((item) => item.id !== post.id)
     .map((item) => {
       if (item.id) {
         const alter = alternatives.find((app) => app.id === item.id)
@@ -25,27 +29,36 @@ export default function ItemAlternative({ post }: { post: Alternative }) {
             ...alter,
             url: `/alternative/${alter.slug}`,
           }
-        return { ...item }
+        return { ...item, recommend: 0 }
       }
-      return { ...item }
+      return { ...item, recommend: 0 }
     })
 
   // Remove duplicates by id
   const alternative = [
     ...(postAlternative || []),
-    ...alternativeApp.sort((a, b) => {
-      const sortA = a.visit && a.visit?.length > 0 ? a.visit[0] : 0
-      const sortB = b.visit && b.visit?.length > 0 ? b.visit[0] : 0
-
-      return sortB - sortA
-    }),
+    ...alternativeApp.sort(sortItem),
   ]
+
+  if (alternative.length === 0) return null
 
   return (
     <>
       <h2 className="text-xl font-bold my-2" id="alternativeTo">
-        Top {`${post.name.toUpperCase()} alternative to`}
+        Top {alternative.length} {`${post.name.toUpperCase()} alternative to`}
       </h2>
+      <ul className="hidden sm:flex my-2">
+        {alternative.map((app, index) => (
+          <li key={app.id} className="flex items-center text-sm py-1 mr-5">
+            <p className="flex flex-1 no-underline">
+              <span className="w-5">{index + 1}.</span>
+              <span className="flex-1 max-w-[200px] truncate capitalize">
+                {app.name}
+              </span>
+            </p>
+          </li>
+        ))}
+      </ul>
       <div className="grid gap-3 lg:gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {alternative?.map((item, i) => {
           if (item.id) {
@@ -56,12 +69,17 @@ export default function ItemAlternative({ post }: { post: Alternative }) {
                 key={item.id}
                 className="no-underline"
                 href={item.url || ""}
-                rel="nofollow"
+                // rel="nofollow"
               >
-                <Card className="px-6 pt-6 pb-2 rounded-lg border border-primary/60 hover:bg-primary/10">
+                <Card className="relative px-6 pt-6 pb-2 hover:bg-primary/10">
                   <h3 className="text-primary text-xl font-semibold mb-2 flex items-center capitalize">
                     {item.name}
                   </h3>
+                  {item.recommend > 0 && (
+                    <div className="absolute top-[28px] right-[-40px] bg-primary text-primary-foreground text-white text-[9px] font-bold px-2 py-1 transform rotate-[20deg] -translate-x-1/2 -translate-y-1/2 rounded-xl">
+                      Recommended
+                    </div>
+                  )}
                   {item.image?.url && (
                     <img
                       loading="lazy"
@@ -75,19 +93,11 @@ export default function ItemAlternative({ post }: { post: Alternative }) {
                       }}
                     />
                   )}
-                  {item.deals && item.deals.length > 0 && (
-                    <div className="relative">
-                      <div className="absolute top-[-42px] right-0">
-                        <Badge variant="default">{item.deals[0].price}</Badge>
-                      </div>
-                    </div>
-                  )}
                   <p className="h-[4.5rem] line-clamp-3">{app.title}</p>
                   <div className="mt-2 text-sm flex space-x-2 items-center justify-between">
                     <VisitNumber app={app} text="Visits" />
-                    <span className="font-bold">
-                      {app.pricing?.join(" | ")}
-                    </span>
+                    <BadgeOpenSource app={app} />
+                    <BadgeDeals app={app} />
                   </div>
                   <div className="mt-2 text-sm">
                     <Properties properties={app.properties} />
