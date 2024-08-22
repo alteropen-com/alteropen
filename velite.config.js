@@ -22,8 +22,16 @@ const timestamp = () =>
             "`s.timestamp()` schema will resolve the value from `git log -1 --format=%cd`",
         })
       }
-      const { stdout } = await execAsync(`git log -1 --format=%cd ${meta.path}`)
-      return new Date(stdout).toISOString()
+      try {
+        const { stdout } = await execAsync(
+          `git log -1 --format=%cd -- ${meta.path}`
+        )
+        return new Date(stdout.trim() || Date.now()).toISOString()
+      } catch (error) {
+        console.error(`Error retrieving git timestamp for ${meta.path}:`, error)
+        // Return a default or current timestamp in case of an error
+        return new Date().toISOString()
+      }
     })
 
 const appSchema = s.object({
