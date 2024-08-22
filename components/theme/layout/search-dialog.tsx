@@ -243,9 +243,7 @@ function SearchForm({
                     value={item.id}
                     style={{ padding: "0.5rem" }}
                     onSelect={() => {
-                      runCommand(() => {
-                        router.push(item.slug)
-                      })
+                      runCommand(() => router.push(item.slug))
                     }}
                   >
                     <div className="flex flex-col">
