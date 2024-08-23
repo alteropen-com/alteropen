@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import { exec } from "child_process"
-import { writeFile } from "node:fs/promises"
+import { readFile, writeFile } from "node:fs/promises"
 import path from "path"
 import { promisify } from "util"
 import { defineConfig, s } from "velite"
@@ -191,5 +191,16 @@ export default defineConfig({
     } catch (error) {
       console.error("Error creating file:", error)
     }
+
+    // copy alternative file from .velite/alternatives.json to static/alternatives.json
+    const alternativePath = path.join(
+      ctx.config.output.assets,
+      "alternatives.json"
+    )
+    const alternativeContent = await readFile(
+      path.join(".velite", "alternatives.json"),
+      "utf8"
+    )
+    await writeFile(alternativePath, alternativeContent)
   },
 })
