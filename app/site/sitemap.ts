@@ -7,7 +7,7 @@ import { MetadataRoute } from "next"
 
 // Fetch the alternatives JSON file
 async function fetchAlternatives() {
-  const response = await fetch("http://localhost:3000/static/alternatives.json")
+  const response = await fetch(`${siteConfig.url}/static/alternatives.json`)
   if (!response.ok) {
     throw new Error(`Failed to fetch alternatives: ${response.statusText}`)
   }
