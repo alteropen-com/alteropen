@@ -116,9 +116,9 @@ export default function StickyNav({ post }: { post: Alternative }) {
       id="sticky-nav"
       className={`${isSticky ? "sticky" : ""} ${
         isScrollingUp ? "scrolling-up" : ""
-      } bg-background`}
+      } bg-background/90`}
     >
-      <div id="sticky-nav-button" className="bg-background">
+      <div id="sticky-nav-button" className="bg-background/90">
         <div className="flex items-center justify-end px-0 sm:px-4 md:px-5 xl:px-8 2xl:px-0 w-full max-w-[1468px] mx-auto overflow-x-auto overflow-y-hidden">
           <div className="mr-8 mt-2">
             <SectionLink href="#deals" label="Check Deals" />

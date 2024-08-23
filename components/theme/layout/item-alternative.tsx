@@ -46,7 +46,7 @@ export default function ItemAlternative({ post }: { post: Alternative }) {
       <h2 className="text-xl font-bold my-2" id="alternativeTo">
         Top {alternative.length} {`${post.name.toUpperCase()} alternative to`}
       </h2>
-      <ul className="hidden sm:flex my-2">
+      <ul className="hidden sm:flex my-2 flex-wrap">
         {alternative.map((app, index) => (
           <li key={app.id} className="flex items-center text-sm py-1 mr-5">
             <p className="flex flex-1 no-underline">
@@ -70,7 +70,7 @@ export default function ItemAlternative({ post }: { post: Alternative }) {
                 href={item.url || ""}
                 // rel="nofollow"
               >
-                <Card className="relative px-6 pt-6 pb-2 hover:bg-primary/10">
+                <Card className="relative px-4 pt-4 pb-2 hover:bg-primary/10">
                   <h3 className="text-primary text-xl font-semibold mb-2 flex items-center capitalize">
                     {item.name}
                   </h3>
