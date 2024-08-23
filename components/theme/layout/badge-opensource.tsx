@@ -25,9 +25,9 @@ const BadgeOpenSource = ({
 
   if (githubOrgName)
     return (
-      <div className="flex justify-between items-center max-w-[300px]">
+      <div className="flex justify-between items-center max-w-[320px]">
         <img
-          className={`${showDetail ? "w-[48%]" : ""}`}
+          className={`${showDetail ? "w-[48%]" : ""} max-w-[140px]`}
           src={`https://img.shields.io/github/stars/${githubOrgName}?style=flat&label=OpenSource`}
           alt="stars"
         />
