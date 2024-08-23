@@ -29,9 +29,9 @@ const Properties = ({
   const propertyEntries = Object.entries(properties)
 
   return (
-    <div className="py-2">
+    <div className="">
       {app && (
-        <div className="mb-2">
+        <div className="my-2">
           <BadgeOpenSource app={app} />
         </div>
       )}
@@ -50,7 +50,7 @@ const Properties = ({
         )
           return null
 
-        if (key.toLowerCase().includes("visit") && value === 0) return null
+        if (key.toLowerCase().includes("visit")) return null
 
         if (key.toLowerCase().includes("star")) return null
         if (key.toLowerCase().includes("commit")) return null

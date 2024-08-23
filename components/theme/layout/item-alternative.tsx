@@ -70,10 +70,7 @@ export default function ItemAlternative({ post }: { post: Alternative }) {
                 href={item.url || ""}
                 // rel="nofollow"
               >
-                <Card className="relative px-4 pt-4 pb-2 hover:bg-primary/10">
-                  <h3 className="text-primary text-xl font-semibold mb-2 flex items-center capitalize">
-                    {item.name}
-                  </h3>
+                <Card className="relative hover:bg-primary/10">
                   {item.recommend > 0 && (
                     <div className="absolute top-[28px] right-[-40px] bg-primary text-primary-foreground text-white text-[9px] font-bold px-2 py-1 transform rotate-[20deg] -translate-x-1/2 -translate-y-1/2 rounded-xl">
                       Recommended
@@ -83,7 +80,7 @@ export default function ItemAlternative({ post }: { post: Alternative }) {
                     <img
                       loading="lazy"
                       src={item.image.url}
-                      className="w-full rounded-lg mb-2"
+                      className="w-full rounded-lg"
                       alt={`${item.name}`}
                       style={{
                         aspectRatio: "60/40",
@@ -92,12 +89,15 @@ export default function ItemAlternative({ post }: { post: Alternative }) {
                       }}
                     />
                   )}
-                  <p className="h-[4.5rem] line-clamp-3">{app.title}</p>
-                  <div className="mt-2 text-sm flex space-x-2 items-center justify-between">
-                    <VisitNumber app={app} text="Visits" />
-                    <BadgeDeals app={app} />
-                  </div>
-                  <div className="mt-2 text-sm">
+                  <div className="px-4 py-2 space-y-2">
+                    <h3 className="text-primary text-xl font-semibold flex items-center capitalize">
+                      {item.name}
+                    </h3>
+                    <p className="h-[4.5rem] line-clamp-3">{app.title}</p>
+                    <div className="text-sm flex space-x-2 items-center justify-between">
+                      <VisitNumber app={app} text="Visits" />
+                      <BadgeDeals app={app} />
+                    </div>
                     <Properties app={app} properties={app.properties} />
                   </div>
                 </Card>

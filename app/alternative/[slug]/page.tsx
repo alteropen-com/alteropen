@@ -181,7 +181,9 @@ export default async function PostPage({ params }: PostPageProps) {
               ) : null}
 
               <DetailToc toc={post.toc} />
-              <BadgeOpenSource app={post} />
+              <div className="my-2">
+                <BadgeOpenSource app={post} />
+              </div>
               <Properties properties={post.properties} showDetails={true} />
               <AlternativeTocList post={post} />
             </div>
