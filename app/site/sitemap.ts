@@ -1,13 +1,21 @@
-import { alternatives } from "#site/content"
+// import { alternatives } from "#site/content"
+import { Alternative } from "@/.velite"
 import { siteConfig } from "@/config/site"
 import { getAllTags, sortTagsByCount } from "@/lib/helper"
 import { encodeTitleToSlug } from "@/lib/utils"
 import { MetadataRoute } from "next"
 
-export default function sitemap(): MetadataRoute.Sitemap {
- 
- 
+// Fetch the alternatives JSON file
+async function fetchAlternatives() {
+  const response = await fetch("http://localhost:3000/static/alternatives.json")
+  if (!response.ok) {
+    throw new Error(`Failed to fetch alternatives: ${response.statusText}`)
+  }
+  return response.json()
+}
 
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const alternatives = (await fetchAlternatives()) as Alternative[]
   const displayAlternatives = alternatives
     .filter((app) => app.published)
     .sort((a, b) => (a.id > b.id ? -1 : 1))
