@@ -33,7 +33,7 @@ export function MainNav() {
       >
         <span className="font-bold text-white">{siteConfig.name}</span>
       </Link>
-      <div className="w-full flex-1 md:w-auto md:flex-none">
+      <div className="w-full max-w-[400px]">
         <SearchDialog />
       </div>
       <SheetContent side="top">

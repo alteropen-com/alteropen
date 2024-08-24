@@ -44,7 +44,7 @@ function SearchTrigger({ setOpen }: { setOpen: (open: boolean) => void }) {
     <button
       className={cn(
         "group",
-        "flex-grow md:w-80 lg:w-120 h-[40px] rounded-md",
+        "w-full h-[40px] rounded-md",
         "pl-1.5 md:pl-2 pr-1",
         "flex items-center justify-between",
         "bg-background",

@@ -67,7 +67,7 @@ const DetailImage = ({ post }: { post: Alternative }) => {
           </div>
         )}
       </div>
-      <div className="hidden sm:flex flex-1 flex-col sm:min-h-[80vh] max w-full">
+      <div className="hidden sm:flex flex-1 flex-col sm:min-h-[60vh] max w-full">
         <div className="min-h-[368px] w-full overflow-hidden">
           <img
             loading="lazy"
