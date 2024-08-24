@@ -126,7 +126,7 @@ export async function generateMetadata({
     description: description,
     authors: { name: siteConfig.author },
     alternates: {
-      // canonical: href,
+      canonical: href,
     },
     robots: {
       index: searchParams?.login === "true" ? false : true,
