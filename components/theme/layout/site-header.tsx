@@ -7,9 +7,9 @@ import { ThemeToggle } from "./theme-toggle"
 export function SiteHeader() {
   return (
     <header className="z-10 w-full border-b border-border bg-gray-900 h-12">
-      <div className="px-1 sm:px-4 md:px-6 flex items-center justify-center">
+      <div className="px-1 sm:px-2 flex items-center justify-center">
         <MainNav />
-        <div className="sm:flex-1"></div>
+        <div className="flex-1"></div>
         <Suspense>
           <HeaderLogin />
           <DialogLogin />
