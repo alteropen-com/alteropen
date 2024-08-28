@@ -1,5 +1,6 @@
 import { alternatives } from "#site/content"
 import { SearchDialog } from "@/components/theme/layout/search-dialog"
+import TweetCache from "@/components/theme/layout/twitter-cache"
 import { Button } from "@/components/ui/button"
 import { siteConfig } from "@/config/site"
 import { getAllTags, sortTagsByCount } from "@/lib/helper"
@@ -187,6 +188,10 @@ export default function Page() {
               <Link href={`${alternative.href}`}>{alternative.title}</Link>
             </Button>
           ))}
+        </div>
+        <hr />
+        <div className="flex justify-center items-center mx-0 sm:mx-5 my-5">
+          <TweetCache id="1828485695029260356" />
         </div>
         <hr />
         <div className="flex-1 flex-row mx-0 sm:mx-5 my-5">
