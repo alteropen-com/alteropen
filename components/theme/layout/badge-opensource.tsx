@@ -27,14 +27,14 @@ const BadgeOpenSource = ({
     return (
       <div className="flex justify-between items-center max-w-[320px]">
         <img
-          className={`${showDetail ? "w-[48%]" : ""} max-w-[140px]`}
+          className={`${showDetail ? "w-[45%]" : ""} max-w-[140px]`}
           src={`https://img.shields.io/github/stars/${githubOrgName}?style=flat&label=OpenSource`}
           alt="stars"
         />
         {showDetail && (
           <img
-            className="w-[48%]"
-            src={`https://img.shields.io/github/last-commit/${githubOrgName}?style=flat`}
+            className="w-[40%]"
+            src={`https://img.shields.io/github/last-commit/${githubOrgName}?style=social&label=commit`}
             alt="stars"
           />
         )}
