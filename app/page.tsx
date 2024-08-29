@@ -1,4 +1,5 @@
 import { alternatives } from "#site/content"
+import DetailYoutube from "@/components/mdx/detail-youtube"
 import { SearchDialog } from "@/components/theme/layout/search-dialog"
 import TweetCache from "@/components/theme/layout/twitter-cache"
 import { Button } from "@/components/ui/button"
@@ -207,6 +208,13 @@ export default function Page() {
           ))}
         </div>
         <hr />
+        <div className="mx-0 sm:mx-5 my-5">
+          <h2 className="text-xl mx-2 sm:mx-3 my-2 sm:my-3 font-bold">
+            Paying for software is stupid… 10 free and open-source SaaS
+            replacements
+          </h2>
+          <DetailYoutube videoId="e5dhaQm_J6U" startTime={0} />
+        </div>
       </div>
     </div>
   )
