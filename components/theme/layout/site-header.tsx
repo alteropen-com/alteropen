@@ -1,3 +1,5 @@
+import { CirclePlus } from "lucide-react"
+import Link from "next/link"
 import { Suspense } from "react"
 import { DialogLogin } from "../auth/dialog-login"
 import HeaderLogin from "../auth/header-login"
@@ -10,6 +12,18 @@ export function SiteHeader() {
       <div className="px-1 sm:px-2 flex items-center justify-center">
         <MainNav />
         <div className="flex-1"></div>
+        <div className="flex items-center justify-center mx-2">
+          <Link href="/submit" className="sm:hidden" aria-label="Submit">
+            <CirclePlus className="h-5 w-5 text-white" />
+          </Link>
+          <Link
+            href="/submit"
+            className="hidden sm:flex items-center space-x-2 text-white hover:text-gray-300"
+          >
+            <CirclePlus className="h-5 w-5" />
+            <span>Submit</span>
+          </Link>
+        </div>
         <Suspense>
           <HeaderLogin />
           <DialogLogin />

@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button"
 import { Sheet, SheetContent } from "@/components/ui/sheet"
 import { siteConfig } from "@/config/site"
-import { Menu } from "lucide-react"
+import { CirclePlus, Menu } from "lucide-react"
 import Link, { LinkProps } from "next/link"
 import { useRouter } from "next/navigation"
 import { useState } from "react"
@@ -45,15 +45,21 @@ export function MainNav() {
           <span className="font-bold">Home</span>
         </SheetLink>
         <div className="flex flex-col gap-3 my-3 ml-3">
-          <SheetLink onOpenChange={setOpen} href="/tasks">
-            Tasks
-          </SheetLink>
           <SheetLink onOpenChange={setOpen} href="/alternative">
             Alternatives
           </SheetLink>
         </div>
         <hr className="border-gray-600" />
+
+        <hr className="border-gray-600" />
         <div className="flex flex-col gap-3 mt-5">
+          <SheetLink
+            className="flex items-center space-x-2"
+            onOpenChange={setOpen}
+            href="/submit"
+          >
+            <CirclePlus className="h-5 w-5 mr-2" /> Submit
+          </SheetLink>
           <Link
             target="_blank"
             rel="nofollow"
