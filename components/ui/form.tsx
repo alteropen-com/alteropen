@@ -1,4 +1,4 @@
-// pages/index.tsx
+"use client"
 import Script from "next/script"
 
 export function SubmitForm() {
@@ -17,5 +17,23 @@ export function SubmitForm() {
         onLoad={() => Tally.loadEmbeds()}
       />
     </div>
+  )
+}
+
+export function SubmitVbout() {
+  return (
+    <>
+      <Script
+        src="https://www.vbt.io/ext/vbtforms.js?lang=en"
+        strategy="afterInteractive"
+      />
+      <div id="vbtEFWrapper-142525">
+        <div
+          className="vboutEmbedFormBox"
+          id="vboutEmbedFormBox-142525"
+          data-vbtfc="cba4cfc08f7b1859f6d5f745cbd411c3"
+        ></div>
+      </div>
+    </>
   )
 }

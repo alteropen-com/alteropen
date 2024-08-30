@@ -1,6 +1,5 @@
-"use client"
 import { Button } from "@/components/ui/button"
-import { SubmitForm } from "@/components/ui/form"
+import { SubmitVbout } from "@/components/ui/form"
 import Link from "next/link"
 
 export default function SubmitPage() {
@@ -12,7 +11,7 @@ export default function SubmitPage() {
       </p>
 
       <div>
-        <SubmitForm />
+        <SubmitVbout />
       </div>
 
       <div className="mt-10 text-center">
