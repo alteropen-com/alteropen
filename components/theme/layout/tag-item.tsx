@@ -9,7 +9,7 @@ interface TagProps {
   variant?: "default" | "secondary" | "destructive" | "outline"
   count?: number
   slug?: string
-  searchParams: SearchParams
+  searchParams?: SearchParams
 }
 
 export default function TagItem({
@@ -35,7 +35,9 @@ export default function TagItem({
         className: "no-underline rounded-md px-2 py-1 text-primary capitalize",
       })}
       rel="nofollow"
-      href={`/tasks/${encodeTitleToSlug(tag)}?${urlSearchParams.toString()}`}
+      href={`/tasks/${encodeTitleToSlug(tag)}${
+        searchParams ? `?${urlSearchParams.toString()}` : ""
+      }`}
     >
       {tag} {count ? `(${count})` : null}
     </Link>
