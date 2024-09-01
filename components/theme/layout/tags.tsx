@@ -10,7 +10,7 @@ export function Tags({
   tags: string[] | undefined
   tasks: Record<string, number>
   slug: string
-  searchParams: SearchParams
+  searchParams?: SearchParams
 }) {
   return (
     <div className="flex flex-col space-y-3 items-start">
