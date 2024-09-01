@@ -1,12 +1,25 @@
 import { alternatives } from "@/.velite"
+import { SearchParams } from "@/app/tasks/[slug]/page"
 import { badgeVariants } from "@/components/ui/badge"
 import { getAllTags, sortTagsByCount } from "@/lib/helper"
 import Link from "next/link"
 import Tags from "./tags"
 
-export default function NavLeft({ slug }: { slug: string }) {
+// Add searchParams to the props
+export default function NavLeft({
+  slug,
+  searchParams,
+}: {
+  slug: string
+  searchParams: SearchParams
+}) {
   const { tasks } = getAllTags(alternatives)
   const sortedTasks = sortTagsByCount(tasks)
+
+  // Create a URLSearchParams object from the current searchParams
+  const urlSearchParams = new URLSearchParams(
+    searchParams as Record<string, string>
+  )
 
   return (
     <div className="hidden md:flex flex-col w-[238px] sm:w-[248px] lg:w-[268px]">
@@ -16,7 +29,7 @@ export default function NavLeft({ slug }: { slug: string }) {
         </p>
         <Link
           rel="nofollow"
-          href="/app"
+          href={`/app?${urlSearchParams.toString()}`}
           className={badgeVariants({
             variant: slug === "all" ? "default" : "secondary",
             className:
@@ -25,7 +38,12 @@ export default function NavLeft({ slug }: { slug: string }) {
         >
           All Tasks
         </Link>
-        <Tags tags={sortedTasks} tasks={tasks} slug={slug} />
+        <Tags
+          tags={sortedTasks}
+          tasks={tasks}
+          slug={slug}
+          searchParams={searchParams}
+        />
       </div>
     </div>
   )

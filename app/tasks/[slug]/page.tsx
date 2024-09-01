@@ -164,7 +164,7 @@ export default function Page({ params, searchParams }: TaskPageProps) {
 
   return (
     <div className="container py-6 flex">
-      <NavLeft slug={slug} />
+      <NavLeft slug={slug} searchParams={searchParams} />
       <div className="flex flex-col flex-1">
         <h2 className="font-bold text-xl lg:text-2xl">
           {pageTitle(slug, searchParams)}
