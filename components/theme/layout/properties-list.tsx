@@ -57,9 +57,11 @@ const Properties = ({
 
         return (
           <div key={key} className="flex mb-2 items-center">
-            <span className="w-[186px] truncate">
-              {capitalizeFirstLetter(key.replace(/_/g, " "))}
-            </span>
+            {showDetails && (
+              <span className="w-[186px] truncate">
+                {capitalizeFirstLetter(key.replace(/_/g, " "))}
+              </span>
+            )}
             {typeof value !== "number" && value.includes("https:") ? (
               <Button
                 variant="link"
