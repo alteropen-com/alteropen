@@ -16,7 +16,7 @@ export default function SubmitPage() {
 
       <div className="mt-10 text-center">
         <p className="mb-4 text-lg">Add the code to your homepage.</p>
-        <code className="bg-gray-100 p-2 rounded-md block mb-4">
+        <code className="bg-foreground/10 p-2 rounded-md block mb-4">
           {
             '<a href="https://alteropen.com/" title="Alternative Open Directory">AlterOpen</a>'
           }
