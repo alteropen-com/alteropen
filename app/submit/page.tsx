@@ -29,10 +29,7 @@ export default function SubmitPage() {
         <p className="mt-2 text-xl">
           Try the{" "}
           <Button variant="link" className="p-0 text-xl " asChild>
-            <Link
-              href="https://alteropen.lemonsqueezy.com/buy/94b8b283-addd-4392-8d2d-42fb9576cae3"
-              className="no-underline"
-            >
+            <Link href="/submit/pack" className="no-underline">
               Submit Pack
             </Link>
           </Button>
