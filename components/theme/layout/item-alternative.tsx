@@ -44,9 +44,10 @@ export default function ItemAlternative({ post }: { post: Alternative }) {
   return (
     <>
       <h2 className="text-xl font-bold my-2" id="alternativeTo">
-        Top {alternative.length} {`${post.name.toUpperCase()} alternative to`}
+        Top {alternative.length}{" "}
+        {`${post.name.toUpperCase()} alternative to (Free, Open Source,...)`}
       </h2>
-      <ul className="hidden sm:flex my-2 flex-wrap">
+      <ul className="flex my-2 flex-wrap">
         {alternative.map((app, index) => (
           <li key={app.id} className="flex items-center text-sm py-1 mr-5">
             <p className="flex flex-1 no-underline">

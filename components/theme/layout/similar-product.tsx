@@ -51,8 +51,21 @@ export default function SimilarProduct({ post }: { post: Alternative }) {
   return (
     <>
       <h2 className="text-xl font-bold my-2" id="similar">
-        {`${post.name.toUpperCase()} similar to`} (Free and OpenSource)
+        {`${post.name.toUpperCase()} similar to`}{" "}
+        <span className="text-sm">(sort by popularity)</span>
       </h2>
+      <ul className="flex my-2 flex-wrap">
+        {alternative.map((app, index) => (
+          <li key={app.id} className="flex items-center text-sm py-1 mr-5">
+            <p className="flex flex-1 no-underline">
+              <span className="w-5">{index + 1}.</span>
+              <span className="flex-1 max-w-[200px] truncate capitalize">
+                {app.name}
+              </span>
+            </p>
+          </li>
+        ))}
+      </ul>
       <div className="grid gap-3 lg:gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5">
         {alternative?.map((item, i) => {
           if (item.id) {
