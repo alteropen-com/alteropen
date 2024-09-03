@@ -39,6 +39,10 @@ export default function PricePage() {
           <ul className="text-gray-600 mb-6 flex flex-col space-y-2 items-start">
             <li className="flex items-center justify-center">
               <CheckCircle className="text-blue-500 mr-2" />
+              No backlink required
+            </li>
+            <li className="flex items-center justify-center">
+              <CheckCircle className="text-blue-500 mr-2" />
               Review in 24 hours
             </li>
             <li className="flex items-center justify-center">
@@ -54,7 +58,7 @@ export default function PricePage() {
         <CardFooter className="flex flex-col items-center">
           <Button variant="default" className="w-full py-3" asChild>
             <Link
-              href="https://alteropen.lemonsqueezy.com/buy/94b8b283-addd-4392-8d2d-42fb9576cae3"
+              href="https://alteropen.lemonsqueezy.com/buy/754e3c84-0169-488a-92d9-24b7c9d33337"
               className="no-underline"
             >
               Get Submit Pack
