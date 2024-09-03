@@ -39,6 +39,10 @@ export default function PricePage() {
           <ul className="text-gray-600 mb-6 flex flex-col space-y-2 items-start">
             <li className="flex items-center justify-center">
               <CheckCircle className="text-blue-500 mr-2" />
+              No backlink required
+            </li>
+            <li className="flex items-center justify-center">
+              <CheckCircle className="text-blue-500 mr-2" />
               Review in 24 hours
             </li>
             <li className="flex items-center justify-center">

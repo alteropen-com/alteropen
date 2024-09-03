@@ -9,11 +9,6 @@ export default function SubmitPage() {
       <p className="text-xl text-center text-gray-600 mb-8">
         Submit Your Alternative Tool, Get Recommended
       </p>
-
-      <div>
-        <SubmitVbout />
-      </div>
-
       <div className="mt-10 text-center">
         <p className="mb-4 text-lg">Add the code to your homepage.</p>
         <code className="bg-foreground/10 p-2 rounded-md block mb-4">
@@ -25,6 +20,9 @@ export default function SubmitPage() {
           Your submission will be approved{" "}
           <span className="font-bold">Automatically for Free</span>
         </p>
+        <div className="min-h-[450px]">
+          <SubmitVbout />
+        </div>
         <p className="my-2">Or</p>
         <p className="mt-2 text-xl">
           Try the{" "}
