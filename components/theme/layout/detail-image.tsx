@@ -21,25 +21,23 @@ const DetailImage = ({ post }: { post: Alternative }) => {
   const images = [post.image, ...(post.images || [])]
 
   return (
-    <div className="not-prose flex w-full">
-      <div className="min-h-[368px] w-full pb-10">
-        <Slider {...settings}>
-          {images.map((img, index) => {
-            const { url, alt } = img
-            return (
-              <div key={index} className="w-full mt-1">
-                <img
-                  loading="lazy"
-                  src={url}
-                  className="w-full rounded-lg object-contain max-h-[86vh] sm:max-h-none"
-                  alt={`${alt} ${post.title}`}
-                />
-                <p className="text-center text-sm">{post.image.alt}</p>
-              </div>
-            )
-          })}
-        </Slider>
-      </div>
+    <div className="not-prose w-full pb-10">
+      <Slider {...settings}>
+        {images.map((img, index) => {
+          const { url, alt } = img
+          return (
+            <div key={index} className="w-full mt-1">
+              <img
+                loading="lazy"
+                src={url}
+                className="w-full rounded-lg object-contain max-h-[86vh] sm:max-h-none"
+                alt={`${alt} ${post.title}`}
+              />
+              <p className="text-center text-sm">{post.image.alt}</p>
+            </div>
+          )
+        })}
+      </Slider>
     </div>
   )
 }

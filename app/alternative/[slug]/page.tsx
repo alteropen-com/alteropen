@@ -152,12 +152,12 @@ export default async function PostPage({ params }: PostPageProps) {
           {/* Main Content */}
           <div className="min-h-[500px] flex flex-col sm:flex-row rounded-lg">
             {/* Image Section */}
-            <div className="hidden sm:block flex-[2_1_60%]">
+            <div className="hidden sm:block w-[40%] overflow-y-hidden">
               <DetailImage post={post} />
             </div>
 
             {/* Details Section */}
-            <div className="sm:px-4 flex-[2_1_40%]">
+            <div className="sm:px-4 flex-1">
               <h1 className="text-2xl font-semibold mb-2">
                 {post.name} - {post.title}
               </h1>
