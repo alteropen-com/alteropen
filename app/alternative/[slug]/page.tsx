@@ -27,7 +27,7 @@ import {
 import { siteConfig } from "@/config/site"
 import { encodeTitleToSlug } from "@/lib/utils"
 import { Metadata } from "next"
-import { notFound } from "next/navigation"
+import { notFound, redirect } from "next/navigation"
 import "./styles.css"
 
 export const dynamicParams = false
@@ -121,6 +121,12 @@ export default async function PostPage({ params }: PostPageProps) {
   })
 
   if (!post) {
+    const redirectPost = alternatives.find((app) => {
+      return app.slug === params.slug.toLowerCase()
+    })
+    if (redirectPost) {
+      return redirect(redirectPost.slug)
+    }
     notFound()
   }
 
