@@ -1,6 +1,5 @@
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-import { SubmitVbout } from "@/components/ui/form"
 import Link from "next/link"
 
 export default function SubmitPage() {
@@ -11,7 +10,7 @@ export default function SubmitPage() {
         Submit Your Tool, Get Recommended
       </p>
       <div className="flex justify-center items-center">
-        <Badge className="scale-[125%] mt-2">DR:39</Badge>
+        <Badge className="scale-[125%] mt-2">DR:46</Badge>
       </div>
       <div className="mt-8 text-center">
         <p className="mt-2 text-xl">
@@ -22,9 +21,9 @@ export default function SubmitPage() {
             </Link>
           </Button>
         </p>
-        <p className="mt-5 my-2">Or</p>
+        {/* <p className="mt-5 my-2">Or</p> */}
       </div>
-      <div className="mt-8 text-center">
+      {/* <div className="mt-8 text-center">
         <p className="mb-4 text-lg">Add the code to your homepage.</p>
         <code className="bg-foreground/10 p-2 rounded-md block mb-4">
           {
@@ -38,7 +37,7 @@ export default function SubmitPage() {
         <div className="min-h-[450px]">
           <SubmitVbout />
         </div>
-      </div>
+      </div> */}
     </div>
   )
 }

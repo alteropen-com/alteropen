@@ -30,8 +30,13 @@ export default function PricePage() {
         <CardContent className="flex flex-col items-center">
           <div className="mb-4">
             <ul className="text-gray-600 mb-6 flex flex-col space-y-2 items-center">
-              <li className="text-4xl font-bold text-blue-600">$8.90</li>
-              <li className="text-gray-500">$18.90 for the next batch</li>
+              <li className="text-4xl font-bold text-blue-600">$28.90</li>
+              <li className="text-gray-500 line-through">
+                $8.90 for the first batch
+              </li>
+              <li className="text-gray-500 line-through">
+                $18.90 for the next batch
+              </li>
               <li className="text-gray-500">$28.90 for the next batch</li>
               <li className="text-gray-500">$38.90 for the next batch</li>
             </ul>
